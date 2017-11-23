@@ -50,13 +50,16 @@ function do_verify_email() {
 //#####################################################################################################
 function doregister(){
     global $lang_global, $characters_db, $realm_db, $realm_id, $mmfpm_db, $disable_acc_creation, $limit_acc_per_ip, $valid_ip_mask, $expansion_select,
-           $send_mail_on_creation, $create_acc_locked, $from_mail, $mailer_type, $smtp_cfg, $title, $defaultoption, $require_account_verify;
+           $send_mail_on_creation, $create_acc_locked, $from_mail, $mailer_type, $smtp_cfg, $title, $defaultoption, $require_account_verify, $server_code, $enable_server_code;
 
     if (($_POST['security_code']) != ($_SESSION['security_code']))
         redirect("register.php?err=13");
 
     if (empty($_POST['pass']) || empty($_POST['email']) || empty($_POST['username']))
         redirect("register.php?err=1");
+	
+    if (($enable_server_code) == true && ($_POST['server_code']) != ($server_code))
+        redirect("register.php?err=16");
 
     if ($disable_acc_creation) 
         redirect("register.php?err=4");
@@ -116,7 +119,7 @@ function doregister(){
     }
 
     //make sure it doesnt contain non english chars.
-    if (!valid_alphabetic($user_name)) 
+    if (!ctype_alnum($user_name)) 
     {
         $sql->close();
         redirect("register.php?err=6");
@@ -124,7 +127,7 @@ function doregister(){
 
     //make sure the mail is valid mail format
     $mail = $sql->quote_smart(trim($_POST['email']));
-    if ((!valid_email($mail))||(strlen($mail) > 224)) 
+    if ((!filter_var($mail, FILTER_VALIDATE_EMAIL))||(strlen($mail) > 224)) 
     {
         $sql->close();
         redirect("register.php?err=7");
@@ -192,7 +195,7 @@ function doregister(){
         {
             $result = $sql->query("INSERT INTO account (username,sha_pass_hash,email, joindate,last_ip,failed_logins,locked,last_login,expansion)
                                    VALUES (UPPER('$user_name'),'$pass','$mail',now(),'$last_ip',0,$create_acc_locked,NULL,$expansion)");
-            $query_result = mysql_fetch_assoc($sql->query("SELECT id FROM account WHERE username = '$user_name'"));
+            $query_result = mysqli_fetch_assoc($sql->query("SELECT id FROM account WHERE username = '$user_name'"));
         }
 
         $sql->close();
@@ -253,7 +256,7 @@ function doregister(){
 // PRINT FORM
 //#####################################################################################################
 function register(){
-    global $lang_register, $lang_global, $output, $expansion_select, $lang_captcha ,$lang_command, $enable_captcha;
+    global $lang_register, $lang_global, $output, $expansion_select, $lang_captcha ,$lang_command, $enable_captcha, $enable_server_code;
 
     $output .= "
                 <center>
@@ -315,7 +318,16 @@ function register(){
                                 <tr>
                                     <td valign=\"top\">{$lang_captcha['security_code']}:</td>
                                     <td>
-                                        <input type=\"text\" name=\"security_code\" size=\"45\" /><br />
+                                        <input type=\"text\" name=\"security_code\" autocomplete=\"off\" size=\"45\" /><br />
+                                    </td>
+                                </tr>";
+								
+	if ( $enable_server_code )
+        $output .= "
+                                <tr>
+                                    <td valign=\"top\">{$lang_register['server_code']}:</td>
+                                    <td>
+                                        <input type=\"text\" name=\"server_code\" autocomplete=\"off\" size=\"45\" /><br />
                                     </td>
                                 </tr>";
     
@@ -638,6 +650,12 @@ switch ($err)
         $output .= "
             <h1>
                 <font class=\"error\">{$lang_register['account_needs_verified']}</font>
+            </h1>";
+        break;
+    case 16:
+        $output .= "
+            <h1>
+                <font class=\"error\">{$lang_register['server_code_incorrect']}</font>
             </h1>";
         break;
     default:
