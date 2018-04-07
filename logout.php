@@ -1,7 +1,7 @@
 <?php
 
 if (ini_get('session.auto_start'));
-else 
+else
     session_start();
 
 session_destroy();

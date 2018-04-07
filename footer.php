@@ -63,7 +63,7 @@
                         <tr>
                             <td class="table_buttom_left"></td>
                             <td class="table_buttom_middle">';
-                            
+
     $lang_footer = lang_footer();
     $output .=
                                 $lang_footer['bugs_to_admin'].'<a href="mailto:'.$admin_mail.'"> '.$lang_footer['site_admin'].'</a><br />';

@@ -15,7 +15,7 @@ function print_upload()
     if (isset($_FILES['uploaded_file']['name']))
     {
         if ('application/octet-stream' == $_FILES['uploaded_file']['type'] || 'text/plain' == $_FILES['uploaded_file']['type']);
-        else 
+        else
             error($lang_run_patch['run_sql_file_only'].'<br />'. $_FILES['uploaded_file']['type']);
         if (file_exists($_FILES['uploaded_file']['tmp_name']))
             $buffer = implode('', file($_FILES['uploaded_file']['tmp_name']));
@@ -55,10 +55,10 @@ function print_upload()
                                 </form>
                             </td>
                             <td>';
-                            
+
     makebutton($lang_run_patch['open'], 'javascript:do_submit()', 130);
     unset($upload_max_filesize);
-    
+
     $output .= '
                             </td>
                         </tr>
@@ -165,7 +165,7 @@ function do_run_patch()
     unset($qr);
     unset($line);
     unset($bad);
-    
+
     if ($queries)
         redirect('run_patch.php?error=2&tot='.$good.'');
     else

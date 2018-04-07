@@ -57,7 +57,7 @@ $output .= "
                         </table>
                         <br />
                     </fieldset>";
-                    
+
 $query = $sql->query("SELECT C.guid, C.name, C.race, C.class, C.todayHonorPoints AS honor , C.totalKills AS kills, C.level, C.arenaPoints AS arena, COALESCE(guild_member.guildid,0) as GNAME, C.gender FROM characters C LEFT JOIN guild_member ON C.guid = guild_member.guid WHERE race not in (1,3,4,7,11) ORDER BY $order_by DESC LIMIT 25;");
 $this_page = $sql->num_rows($query);
 $output .= "

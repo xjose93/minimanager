@@ -19,18 +19,18 @@ function dologin(&$sqlr)
         redirect('login.php?error=1');
 
     $result = $sqlr->query('SELECT account.id, username, gmlevel FROM account LEFT JOIN account_access ON account.id=account_access.id WHERE username = \''.$user_name.'\' AND sha_pass_hash = \''.$user_pass.'\'');
-    if ($require_account_verify) 
+    if ($require_account_verify)
     {
         $sql2 = new SQL;
         $sql2->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
         $query2_result = $sql2->query("SELECT * FROM mm_account WHERE username = '$user_name'");
-        if ($sql2->num_rows($query2_result) >= 1) 
+        if ($sql2->num_rows($query2_result) >= 1)
         {
             $sql2->close;
             redirect('login.php?error=7');
         }
     }
-    
+
     unset($user_name);
 
     if (1 == $sqlr->num_rows($result))
@@ -141,10 +141,10 @@ function login(&$sqlr)
                                 <tr align="right">
                                     <td width="290">
                                         <input type="submit" value="" style="display:none" />';
-                                    
+
     makebutton($lang_login['not_registrated'], 'register.php" type="wrn', 130);
     makebutton($lang_login['login'], 'javascript:dologin()" type="def', 130);
-    
+
     $output .= '
                                     </td>
                                 </tr>
@@ -193,12 +193,12 @@ function do_cookie_login(&$sqlr)
         {
             $_SESSION['user_id']   = $id;
             $_SESSION['uname']     = $sqlr->result($result, 0, 'username');
-            
+
             if (($sqlr->result($result, 0, 'gmlevel')) == null)
                 $_SESSION['user_lvl']  = 0;
             else
                 $_SESSION['user_lvl']  = $sqlr->result($result, 0, 'gmlevel');
-                
+
             $_SESSION['realm_id']  = $sqlr->quote_smart($_COOKIE['realm_id']);
             $_SESSION['client_ip'] = (isset($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : getenv('REMOTE_ADDR');
             $_SESSION['logged_in'] = true;
@@ -278,11 +278,11 @@ if ('dologin' === $action)
                 redirect('login.php?error=8');
     else
                  dologin($sqlr);
-                 
+
 }
 else
     login($sqlr);
-    
+
 unset($action);
 unset($action_permission);
 unset($lang_login);

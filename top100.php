@@ -14,23 +14,23 @@ function top100($realmid, &$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE========================
     $type = (isset($_GET['type'])) ? $sqlc->quote_smart($_GET['type']) : 'level';
-    if (preg_match('/^[_[:lower:]]{1,10}$/', $type)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,10}$/', $type));
+    else
         $type = 'level';
 
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'level';
-    if (preg_match('/^[_[:lower:]]{1,14}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,14}$/', $order_by));
+    else
         $order_by = 'level';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'DESC' : 'DESC';
@@ -39,7 +39,7 @@ function top100($realmid, &$sqlr, &$sqlc)
 
     $type_list = array('level', 'stat', 'defense', 'attack', 'resist', 'crit_hit', 'pvp');
     if (in_array($type, $type_list));
-    else 
+    else
         $type = 'level';
 
     $result = $sqlc->query('SELECT count(*) FROM characters');
@@ -95,9 +95,9 @@ function top100($realmid, &$sqlr, &$sqlc)
             $output .= '
                             <tr>
                                 <td colspan="2" align="left">';
-                                
+
             makebutton('View', 'javascript:do_submit(\'form'.$realm_id.'\',0)', 130);
-            
+
             $output .= '
                                     <form action="top100.php?type='.$type.'" method="post" name="form'.$realm_id.'">
                                         Number of Realms :
@@ -118,12 +118,12 @@ function top100($realmid, &$sqlr, &$sqlc)
                                 <td align="right">Total: '.$all_record.'</td>
                                 <td align="right" width="25%">';
     $output .= generate_pagination('top100.php?type='.$type.'&amp;order_by='.$order_by.'&amp;dir='.(($dir) ? 0 : 1).'', $all_record, $itemperpage, $start);
-    
+
     $output .= '
                                 </td>
                             </tr>
                         </table>';
-                        
+
     //==========================top tage navigaion ENDS here ========================
     $output .= '
                         <table class="lined" style="width: 720px">
@@ -196,13 +196,13 @@ function top100($realmid, &$sqlr, &$sqlc)
             $days  = floor(round($char['totaltime'] / 3600)/24);
             $hours = round($char['totaltime'] / 3600) - ($days * 24);
             $time = '';
-            
+
             if ($days)
                 $time .= $days.' days ';
-                
+
             if ($hours)
                 $time .= $hours.' hours';
-        
+
             $top_money = $char['money'];
             $money_gold = (int)($top_money/10000);
             $total_money = $top_money - ($money_gold*10000);
@@ -271,10 +271,10 @@ function top100($realmid, &$sqlr, &$sqlc)
                             <tr>
                                 <td align="right">Total: '.$all_record.'</td>
                                 <td align="right" width="25%">';
-                                
+
     $output .= generate_pagination('top100.php?type='.$type.'&amp;order_by='.$order_by.'&amp;dir='.(($dir) ? 0 : 1).'', $all_record, $itemperpage, $start);
     unset($all_record);
-    
+
     $output .= '
                                 </td>
                             </tr>

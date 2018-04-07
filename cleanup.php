@@ -50,10 +50,10 @@ function cleanup() {
                                                 <input type=\"text\" size=\"25\" maxlength=\"40\" name=\"cleanup_value\" />
                                         </td>
                                         <td>";
-                                        
+
     makebutton($lang_cleanup['run_cleanup'], "javascript:do_submit()",100);
     makebutton($lang_global['back'], "javascript:window.history.back()",100);
-    
+
     $output .= "                        </td>
                                     </tr>
                                 </table>
@@ -70,7 +70,7 @@ function cleanup() {
 function run_cleanup() {
     global $lang_cleanup, $lang_global, $output, $realm_db, $characters_db, $realm_id, $user_lvl;
 
-    if( empty($_GET['cleanup_by']) || empty($_GET['cleanup_sign']) ) 
+    if( empty($_GET['cleanup_by']) || empty($_GET['cleanup_sign']) )
         redirect("cleanup.php?error=1");
 
     $sql = new SQL;
@@ -80,7 +80,7 @@ function run_cleanup() {
     $cleanup_sign = $sql->quote_smart($_GET['cleanup_sign']);
     $cleanup_value = $sql->quote_smart($_GET['cleanup_value']);
 
-    switch ($cleanup_by) 
+    switch ($cleanup_by)
     {
         // clean by lvl
         case "char_lvl":
@@ -111,7 +111,7 @@ function run_cleanup() {
                                         <a href=\"char.php?id=$char[0]\" target=\"_blank\">$char[0], </a>";
                 $pass_array .= "-$char[0]";
             }
-            
+
             $output .= "
                                         <input type=\"hidden\" name=\"check\" value=\"$pass_array\" />
                                         <br />{$lang_cleanup['tot_of']} $total_chars {$lang_global['will_be_erased']}
@@ -120,17 +120,17 @@ function run_cleanup() {
                                     <table class=\"hidden\">
                                         <tr>
                                             <td>";
-                                            
+
             makebutton($lang_global['yes'], "javascript:do_submit()",120);
             makebutton($lang_global['no'], "cleanup.php",120);
-            
+
             $output .= "
                                             </td>
                                         </tr>
                                     </table>
                                 </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                                 <h1>
@@ -140,9 +140,9 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                        
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
@@ -181,7 +181,7 @@ function run_cleanup() {
                                         <a href=\"user.php?action=edit_user&amp;id=$acc[0]\" target=\"_blank\">$acc[0], </a>";
                     $pass_array .= "-$acc[0]";
                 }
-                
+
                 $output .= "
                                         <input type=\"hidden\" name=\"check\" value=\"$pass_array\" />
                                         <br />{$lang_cleanup['tot_of']} $total_accounts {$lang_global['will_be_erased']}
@@ -190,17 +190,17 @@ function run_cleanup() {
                                     <table class=\"hidden\">
                                         <tr>
                                             <td>";
-                                            
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                             </td>
                                         </tr>
                                     </table>
-                                </form>";                                
-            } 
-            else 
+                                </form>";
+            }
+            else
             {
                 $output .= "
                                 <h1>
@@ -210,9 +210,9 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                        
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
@@ -260,17 +260,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                        
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -280,9 +280,9 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                                    
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                     </td>
                                 </tr>
@@ -330,17 +330,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                        
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -350,9 +350,9 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                                    
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                     </td>
                                 </tr>
@@ -400,17 +400,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                    
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -420,10 +420,10 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                                
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
-                $output .= "                            
+
+                $output .= "
                                     </td>
                                 </tr>
                             </table>";
@@ -471,17 +471,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                            
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -491,9 +491,9 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                                        
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                     </td>
                                 </tr>
@@ -526,27 +526,27 @@ function run_cleanup() {
                 switch ($cleanup_sign)
                 {
                     case "=":
-                        if($total_chars_in_acc == $cleanup_value) 
+                        if($total_chars_in_acc == $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     case "<":
-                        if($total_chars_in_acc < $cleanup_value) 
+                        if($total_chars_in_acc < $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     case "<=":
-                        if($total_chars_in_acc <= $cleanup_value) 
+                        if($total_chars_in_acc <= $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     case ">":
-                        if($total_chars_in_acc > $cleanup_value) 
+                        if($total_chars_in_acc > $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     case ">=":
-                        if($total_chars_in_acc >= $cleanup_value) 
+                        if($total_chars_in_acc >= $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     case "!=":
-                        if($total_chars_in_acc <> $cleanup_value) 
+                        if($total_chars_in_acc <> $cleanup_value)
                             array_push($acc_output_array, $acc[0]);
                         break;
                     default:
@@ -584,17 +584,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                    
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -604,9 +604,9 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                                
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                     </td>
                                 </tr>
@@ -634,27 +634,27 @@ function run_cleanup() {
                 switch ($cleanup_sign)
                 {
                     case "=":
-                        if($total_chars_in_guild == $cleanup_value) 
+                        if($total_chars_in_guild == $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     case "<":
-                        if($total_chars_in_guild < $cleanup_value) 
+                        if($total_chars_in_guild < $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     case "<=":
-                        if($total_chars_in_guild <= $cleanup_value) 
+                        if($total_chars_in_guild <= $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     case ">":
-                        if($total_chars_in_guild > $cleanup_value) 
+                        if($total_chars_in_guild > $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     case ">=":
-                        if($total_chars_in_guild >= $cleanup_value) 
+                        if($total_chars_in_guild >= $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     case "!=":
-                        if($total_chars_in_guild <> $cleanup_value) 
+                        if($total_chars_in_guild <> $cleanup_value)
                             array_push($guild_output_array, $guild[0]);
                         break;
                     default:
@@ -692,17 +692,17 @@ function run_cleanup() {
                                 <table class=\"hidden\">
                                     <tr>
                                         <td>";
-                                        
+
                 makebutton($lang_global['yes'], "javascript:do_submit()",120);
                 makebutton($lang_global['no'], "cleanup.php",120);
-                
+
                 $output .= "
                                         </td>
                                     </tr>
                                 </table>
                             </form>";
-            } 
-            else 
+            }
+            else
             {
                 $output .= "
                             <h1>
@@ -712,9 +712,9 @@ function run_cleanup() {
                             <table class=\"hidden\">
                                 <tr>
                                     <td>";
-                  
+
                 makebutton($lang_global['go_back'], "cleanup.php",120);
-                
+
                 $output .= "
                                     </td>
                                 </tr>
@@ -740,19 +740,19 @@ function docleanup(){
     global $lang_cleanup, $lang_global, $output, $realm_db, $characters_db, $realm_id, $user_lvl,
             $tab_del_user_characters, $tab_del_user_realmd;
 
-    if (!isset($_POST['type']) || $_POST['type'] === '') 
+    if (!isset($_POST['type']) || $_POST['type'] === '')
         redirect("cleanup.php?error=1");
 
     $sql = new SQL;
     $sql->connect($realm_db['addr'], $realm_db['user'], $realm_db['pass'], $realm_db['name']);
 
     $type = $sql->quote_smart($_POST['type']);
-    if(isset($_POST['check']) && $_POST['check'] != '') 
+    if(isset($_POST['check']) && $_POST['check'] != '')
     {
         $check = $sql->quote_smart($_POST['check']);
         $check = explode('-',$check);
-    } 
-    else 
+    }
+    else
         redirect("cleanup.php?error=1");
 
     $deleted_acc = 0;
@@ -765,12 +765,12 @@ function docleanup(){
     {
         //we deleting account array
         case "acc":
-            for ($i = 1; $i < count($check); $i++) 
+            for ($i = 1; $i < count($check); $i++)
             {
-                if ($check[$i] != "" ) 
+                if ($check[$i] != "" )
                 {
                     list($flag,$del_char) = del_acc($check[$i]);
-                    if ($flag) 
+                    if ($flag)
                     {
                         $deleted_acc++;
                         $deleted_chars += $del_char;
@@ -781,11 +781,11 @@ function docleanup(){
 
         //we deleting character array
         case "char":
-            for ($i = 1; $i < count($check); $i++) 
+            for ($i = 1; $i < count($check); $i++)
             {
-                if ($check[$i] != "" ) 
+                if ($check[$i] != "" )
                 {
-                    if (del_char($check[$i], $realm_id)) 
+                    if (del_char($check[$i], $realm_id))
                         $deleted_chars++;
                 }
             }
@@ -793,11 +793,11 @@ function docleanup(){
 
         //cleaning guilds
         case "guild":
-            for ($i = 1; $i < count($check); $i++) 
+            for ($i = 1; $i < count($check); $i++)
             {
-                if ($check[$i] != "" ) 
+                if ($check[$i] != "" )
                 {
-                    if (del_guild($check[$i], $realm_id)) 
+                    if (del_guild($check[$i], $realm_id))
                         $deleted_gulds++;
                 }
             }
@@ -805,11 +805,11 @@ function docleanup(){
 
         //cleaning arena teams
         case "arenateam":
-            for ($i = 1; $i < count($check); $i++) 
+            for ($i = 1; $i < count($check); $i++)
             {
-                if ($check[$i] != "" ) 
+                if ($check[$i] != "" )
                 {
-                    if (del_arenateam($check[$i], $realm_id)) 
+                    if (del_arenateam($check[$i], $realm_id))
                         $deleted_arenateams++;
                 }
             }
@@ -824,45 +824,45 @@ function docleanup(){
 
     $output .= "
                 <center>";
-    if ($type == "guild") 
+    if ($type == "guild")
     {
-        if (!$deleted_gulds) 
+        if (!$deleted_gulds)
             $output .= "
                     <h1>
                         <font class=\"error\">{$lang_cleanup['no_guilds_del']}</font>
                     </h1>";
-        else 
+        else
             $output .= "
                     <h1>
                         <font class=\"error\">
                             {$lang_cleanup['total']} <font color=blue>$deleted_gulds</font> {$lang_cleanup['guilds_deleted']}
                         </font>
                     </h1>";
-    } 
-    else 
+    }
+    else
     {
-        if ($type == "arenateam") 
+        if ($type == "arenateam")
         {
-            if (!$deleted_arenateams) 
+            if (!$deleted_arenateams)
                 $output .= "
                     <h1><font class=\"error\">{$lang_cleanup['no_arenateams_del']}</font>
                     </h1>";
-            else 
+            else
                 $output .= "
                     <h1>
                         <font class=\"error\">
                             {$lang_cleanup['total']} <font color=blue>$deleted_arenateams</font> {$lang_cleanup['arenateams_deleted']}
                         </font>
                     </h1>";
-        } 
-        else 
+        }
+        else
         {
-            if (($deleted_acc+$deleted_chars) == 0) 
+            if (($deleted_acc+$deleted_chars) == 0)
                 $output .= "
                     <h1>
                         <font class=\"error\">{$lang_cleanup['no_acc_chars_deleted']}</font>
                     </h1>";
-            else 
+            else
             {
                 $output .= "
                     <h1>
@@ -884,9 +884,9 @@ function docleanup(){
                     <table class=\"hidden\">
                         <tr>
                             <td>";
-                            
+
     makebutton($lang_cleanup['back_cleaning'], "cleanup.php", 200);
-    
+
     $output .= "
                             </td>
                         </tr>

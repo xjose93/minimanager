@@ -15,13 +15,13 @@ function show_realm(&$sqlr)
 
     //==========================$_GET and SECURE=================================
     $order_by = (isset($_GET['order_by'])) ? $sqlr->quote_smart($_GET['order_by']) : 'rid';
-    if (preg_match('/^[_[:lower:]]{1,8}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,8}$/', $order_by));
+    else
         $order_by='rid';
 
     $dir = (isset($_GET['dir'])) ? $sqlr->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -135,12 +135,12 @@ function edit_realm(&$sqlr)
             $server, $action_permission, $user_lvl;
     valid_login($action_permission['update']);
 
-    if(empty($_GET['id'])) 
+    if(empty($_GET['id']))
         redirect('realm.php?error=1');
-        
+
     $id = $sqlr->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect('realm.php?error=1');
 
     if ($realm = $sqlr->fetch_assoc($sqlr->query('SELECT realmlist.id AS rid, name, address, port, icon, color, timezone,
@@ -236,10 +236,10 @@ function edit_realm(&$sqlr)
         $output .= '
                                     </td>
                                     <td>';
-                                    
+
             makebutton($lang_realm['update'], 'javascript:do_submit()', 130);
             makebutton($lang_global['back'], 'realm.php" type="def', 130);
-            
+
         $output .= '
                                     </td>
                                 </tr>
@@ -272,8 +272,8 @@ function doedit_realm(&$sqlr)
         redirect('realm.php?error=1');
 
     $id = $sqlr->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect('realm.php?error=1');
     $new_name     = $sqlr->quote_smart($_GET['new_name']);
     $new_address  = $sqlr->quote_smart($_GET['new_address']);
@@ -306,11 +306,11 @@ function del_realm(&$sqlr)
     global $output, $lang_realm, $lang_global, $action_permission;
     valid_login($action_permission['delete']);
 
-    if(empty($_GET['id'])) 
+    if(empty($_GET['id']))
         redirect('realm.php?error=1');
     $id = $sqlr->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect('realm.php?error=1');
 
     $output .= '
@@ -322,10 +322,10 @@ function del_realm(&$sqlr)
                     <table width="300" class="hidden">
                         <tr>
                             <td>';
-                            
+
     makebutton($lang_global['yes'], 'realm.php?action=dodel_realm&amp;id='.$id.'" type ="wrn', 130);
     makebutton($lang_global['no'], 'realm.php" type="def', 130);
-    
+
     unset($id);
     $output .= '
                             </td>
@@ -343,11 +343,11 @@ function dodel_realm(&$sqlr)
     global $action_permission;
     valid_login($action_permission['delete']);
 
-    if(empty($_GET['id'])) 
+    if(empty($_GET['id']))
         redirect('realm.php?error=1');
     $id = $sqlr->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect('realm.php?error=1');
 
     $sqlr->query('DELETE FROM realmlist WHERE id = '.$id.'');
@@ -385,8 +385,8 @@ function set_def_realm(&$sqlr)
     valid_login($action_permission['read']);
 
     $id = (isset($_GET['id'])) ? $sqlr->quote_smart($_GET['id']) : 1;
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         $id = 1;
 
     if ($sqlr->num_rows($sqlr->query('SELECT id FROM realmlist WHERE id = '.$id.'')))

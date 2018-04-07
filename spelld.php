@@ -20,18 +20,18 @@ function browse_spells()
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlw->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlw->quote_smart($_GET['order_by']) : 'entry';
-    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by));
+    else
         $order_by = 'entry';
 
     $dir = (isset($_GET['dir'])) ? $sqlw->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir = 1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -46,8 +46,8 @@ function browse_spells()
         $search_value = $sqlw->quote_smart($_GET['search_value']);
         $search_by = $sqlw->quote_smart($_GET['search_by']);
         $search_menu = array('entry', 'disable_mask', 'comment');
-        if (in_array($search_by, $search_menu)); 
-        else 
+        if (in_array($search_by, $search_menu));
+        else
             $search_by = 'entry';
 
         $query_1 = $sqlw->query('SELECT count(*) FROM disables WHERE sourceType=0 AND '.$search_by.' LIKE \'%'.$search_value.'%\'');
@@ -73,9 +73,9 @@ function browse_spells()
                             <td>';
     if ($user_lvl >= $action_permission['insert'])
         makebutton($lang_spelld['add_spell'], 'spelld.php?action=add_new" type="wrn', 130);
-        
+
     makebutton($lang_global['back'], 'javascript:window.history.back()', 130);
-    
+
     ($search_by && $search_value) ? makebutton($lang_spelld['spell_list'], 'spelld.php', 130) : $output .= '';
     $output .= '
                             </td>
@@ -152,10 +152,10 @@ function browse_spells()
                         </tr>
                         <tr>
                             <td colspan="2" class="hidden" align="left">';
-                            
+
     if($user_lvl >= $action_permission['delete'])
         makebutton($lang_spelld['del_selected_spells'], 'javascript:do_submit(\'form1\',0)" type="wrn', 180);
-        
+
     $output .= '
                             </td>
                             <td colspan="2" class="hidden" align="right">'.$lang_spelld['tot_spell'].' : '.$all_record.'</td>
@@ -197,12 +197,12 @@ function add_new()
                                 <tr>
                                     <td>';
     makebutton($lang_spelld['add_spell'], 'javascript:do_submit()" type="wrn', 130);
-    
+
     $output .= '
                                     </td>
                                     <td>';
     makebutton($lang_global['back'], 'javascript:window.history.back()" type="def', 130);
-    
+
     $output .= '
                                     </td>
                                 </tr>
@@ -293,17 +293,17 @@ function doadd_new()
     if (is_numeric($entry));
     else
         redirect('spelld.php?error=6');
-        
+
     $flags = $sqlw->quote_smart($_GET['flags']);
-    
+
     if (is_numeric($flags));
     else
         redirect('spelld.php?error=6');
-        
+
     $comment = $sqlw->quote_smart($_GET['comment']);
 
     $sqlw->query('INSERT INTO spell_disabled (sourceType, entry, flags, comment) VALUES (0, \''.$entry.'\', \''.$flags.'\', \''.$comment.'\')');
-    
+
     if ($sqlw->affected_rows())
         redirect('spelld.php?error=8');
     else
@@ -319,8 +319,8 @@ function del_spell()
     global $world_db, $realm_id, $action_permission;
     valid_login($action_permission['delete']);
 
-    if(isset($_GET['check'])); 
-    else 
+    if(isset($_GET['check']));
+    else
         redirect("spelld.php?error=1");
 
     $sqlw = new SQL;
@@ -329,12 +329,12 @@ function del_spell()
     $check = $sqlw->quote_smart($_GET['check']);
 
     $n_check=count($check);
-    
+
     for ($i=0; $i<$n_check; ++$i)
         if ($check[$i] == '' );
         else
             $sqlw->query('DELETE FROM spell_disabled WHERE entry = '.$check[$i].'');
-            
+
     unset($n_check);
     unset($check);
 

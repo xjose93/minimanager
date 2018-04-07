@@ -18,16 +18,16 @@ function browse_tele()
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlw->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlw->quote_smart($_GET['order_by']) : "id";
-    if (!preg_match("/^[_[:lower:]]{1,12}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,12}$/", $order_by))
         $order_by = "id";
 
     $dir = (isset($_GET['dir'])) ? $sqlw->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir = 1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -42,12 +42,12 @@ function browse_tele()
         $search_value = $sqlw->quote_smart($_GET['search_value']);
         $search_by = $sqlw->quote_smart($_GET['search_by']);
         $search_menu = array("name", "id", "map");
-        
-        if (!in_array($search_by, $search_menu)) 
+
+        if (!in_array($search_by, $search_menu))
             $search_by = 'name';
         unset($search_menu);
 
-        if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+        if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
             redirect("tele.php?error=1");
 
         $query_1 = $sqlw->query("SELECT count(*) FROM game_tele WHERE $search_by LIKE '%$search_value%'");
@@ -72,10 +72,10 @@ function browse_tele()
                             <td>";
     if($user_lvl >= $action_permission['insert'])
         makebutton($lang_tele['add_new'], "tele.php?action=add_tele",130);
-        
+
     makebutton($lang_global['back'], "javascript:window.history.back()", 130);
     ($search_by && $search_value) ? makebutton($lang_tele['teleports'], "tele.php\" type=\"def", 130) : $output .= "";
-    
+
     $output .= "
                             </td>
                             <td width=\"25%\" align=\"right\" rowspan=\"2\">";
@@ -99,9 +99,9 @@ function browse_tele()
                                             </form>
                                         </td>
                                         <td>";
-                                        
+
     makebutton($lang_global['search'], "javascript:do_submit()",80);
-    
+
     $output .= "
                                         </td>
                                     </tr>
@@ -120,7 +120,7 @@ function browse_tele()
                     </script>
                     <table class=\"lined\">
                         <tr>";
-                        
+
     if($user_lvl >= $action_permission['delete'])
         $output .= "
                             <th width=\"5%\">{$lang_global['delete_short']}</th>";
@@ -152,7 +152,7 @@ function browse_tele()
                                 <a href=\"tele.php?action=edit_tele&amp;id=$data[0]\">$data[1]</a>";
         else
             $output .="$data[1]";
-            
+
         $output .="
                             </td>
                             <td>".get_map_name($data[2], $sqlm)." ($data[2])</td>
@@ -168,7 +168,7 @@ function browse_tele()
     $output .= "
                         <tr>
                             <td  colspan=\"7\" class=\"hidden\" align=\"right\" width=\"25%\">";
-                            
+
     $output .= generate_pagination("tele.php?order_by=$order_by&amp;dir=".(($dir) ? 0 : 1).( $search_value && $search_by ? "&amp;search_by=$search_by&amp;search_value=$search_value" : "" ), $all_record, $itemperpage, $start);
 
     $output .= "
@@ -190,29 +190,29 @@ function del_tele()
     global $world_db, $realm_id, $action_permission;
     valid_login($action_permission['delete']);
 
-    if(!isset($_GET['id'])) 
+    if(!isset($_GET['id']))
         redirect("Location: tele.php?error=1");
 
     $sqlw = new SQL;
     $sqlw->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
 
     $id = $sqlw->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect("tele.php?error=1");
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlw->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlw->quote_smart($_GET['order_by']) : "id";
-    if (!preg_match("/^[_[:lower:]]{1,10}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,10}$/", $order_by))
         $order_by="id";
 
     $dir = (isset($_GET['dir'])) ? $sqlw->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir=1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -235,7 +235,7 @@ function edit_tele()
     global  $lang_tele, $lang_global, $output, $world_db, $realm_id, $mmfpm_db, $action_permission, $user_lvl;
     valid_login($action_permission['update']);
 
-    if(!isset($_GET['id'])) 
+    if(!isset($_GET['id']))
         redirect("Location: tele.php?error=1");
 
     $sqlw = new SQL;
@@ -244,8 +244,8 @@ function edit_tele()
     $sqlm->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
 
     $id = $sqlw->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect("tele.php?error=1");
 
     $query = $sqlw->query("SELECT id, name, map, position_x, position_y, position_z, orientation FROM game_tele WHERE id = '$id'");
@@ -310,17 +310,17 @@ function edit_tele()
                                 </tr>
                                 <tr>
                                     <td>";
-                                    
+
         if($user_lvl >= $action_permission['delete'])
             makebutton($lang_tele['delete_tele'], "#\" onclick=\"answerBox('{$lang_global['delete']}: &lt;font color=white&gt;{$tele[1]}&lt;/font&gt; &lt;br /&gt; {$lang_global['are_you_sure']}', 'tele.php?action=del_tele&amp;id=$id');\" type=\"wrn",130);
 
         $output .= "
                                     </td>
                                     <td>";
-                                    
+
         makebutton($lang_tele['update_tele'], "javascript:do_submit()",130);
         makebutton($lang_global['back'], "tele.php\" type=\"def",130);
-        
+
         $output .= "
                                     </td>
                                 </tr>
@@ -351,8 +351,8 @@ function do_edit_tele()
     $sqlw->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
 
     $id = $sqlw->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect("tele.php?error=1");
 
     $new_name = $sqlw->quote_smart($_GET['new_name']);
@@ -378,7 +378,7 @@ function add_tele()
 {
     global  $output, $lang_tele, $lang_global, $mmfpm_db, $action_permission;
     valid_login($action_permission['insert']);
-    
+
     $sqlw = new SQL;
     $output .= "
                 <center>
@@ -395,7 +395,7 @@ function add_tele()
                                     <td>{$lang_tele['on_map']}</td>
                                     <td>
                                         <select name=\"map\">";
-                                        
+
     $sqlw->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
     $map_query = $sqlw->query("SELECT id, name01 from dbc_map order by id");
     while ($map = $sqlw->fetch_row($map_query))
@@ -403,7 +403,7 @@ function add_tele()
                                             <option value=\"{$map[0]}\">{$map[0]} : {$map[1]}</option>";
     unset($map);
     unset($map_query);
-    
+
     $output .= "
                                         </select>
                                     </td>
@@ -428,10 +428,10 @@ function add_tele()
                                     <td>
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_tele['add_new'], "javascript:do_submit()",130);
     makebutton($lang_global['back'], "tele.php\" type=\"def",130);
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -450,7 +450,7 @@ function do_add_tele()
 {
     global $world_db, $realm_id, $action_permission;
     valid_login($action_permission['insert']);
-    
+
     if( !isset($_GET['name']) || !isset($_GET['map']) || !isset($_GET['x'])
         || !isset($_GET['y'])|| !isset($_GET['z'])|| !isset($_GET['orientation']))
         redirect("tele.php?error=1");

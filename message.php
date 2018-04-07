@@ -33,12 +33,12 @@ function main()
                                     <table align="center" class="hidden">
                                         <tr>
                                             <td>';
-                                            
+
     makebutton($lang_message['send'], 'javascript:do_submit()" type="wrn', 130);
     $output .= '
                                             </td>
                                             <td>';
-                                            
+
     makebutton($lang_global['back'], 'javascript:window.history.back()" type="def', 130);
     $output .= '
                                             </td>
@@ -85,8 +85,8 @@ function send(&$sqlc)
     if (empty($_POST['msg'])) redirect('message.php?action=result&mess='.$lang_message['empty_fields'].'');
 
     $type = (isset($_POST['type'])) ? $sqlc->quote_smart($_POST['type']) : 3;
-    if (is_numeric($type)); 
-    else 
+    if (is_numeric($type));
+    else
         $type = 3;
 
     $msg = $sqlc->quote_smart($_POST['msg']);

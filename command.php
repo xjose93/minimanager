@@ -10,7 +10,7 @@ valid_login($action_permission['read']);
 function print_commands_form()
 {
     global $output, $lang_command, $realm_id, $world_db, $action_permission, $user_lvl, $gm_level_arr;
-    
+
     $levels = $gm_level_arr;
     $sqlw = new SQL;
     $sqlw->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
@@ -82,9 +82,9 @@ function update_commands()
     global $output, $lang_global, $lang_command, $action_permission, $user_lvl, $gm_level_arr;
     valid_login($action_permission['update']);
 
-    if(isset($_GET['check'])) 
+    if(isset($_GET['check']))
         $check = $_GET['check'];
-    else 
+    else
         redirect('command.php?error=1');
 
     $output .= '
@@ -97,7 +97,7 @@ function update_commands()
     for ($i=0; $i<=$user_lvl; ++$i)
     $output .= '
                                     <th width="1%">'.$gm_level_arr[$i][1].'</th>';
-                                    
+
     $output .= '
                                 </tr>';
 
@@ -113,10 +113,10 @@ function update_commands()
             $output .= '
                                     <td>
                                         <input type="radio" name="change['.$commands[$i].']" value="'.$j.'"';
-                            
+
             if ($j==$check[$commands[$i]])
                 $output .= ' checked="checked"';
-                
+
             $output .= ' />
                                     </td>';
         }
@@ -132,10 +132,10 @@ function update_commands()
                         <table width="300" class="hidden">
                         <tr>
                             <td>';
-                            
+
     makebutton($lang_command['save'], 'javascript:do_submit()" type="wrn', 130);
     makebutton($lang_global['back'], 'command.php" type="def', 130);
-    
+
     $output .= '
                             </td>
                         </tr>
@@ -160,12 +160,12 @@ function doupdate_commands()
 
     $commands = array_keys($change);
     $n_commands = count($change);
-    
+
     for ($i=0; $i<$n_commands; ++$i)
     {
         $query = $sqlw->query('UPDATE command SET security = '.$change[$commands[$i]].' WHERE name= \''.$commands[$i].'\'');
     }
-    
+
     unset($n_commands);
     unset($commands);
     unset($change);

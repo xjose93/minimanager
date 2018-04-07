@@ -29,7 +29,7 @@ $output .= '
                 <table width="300" class="hidden">
                     <tr>
                         <td align="center">';
-                        
+
 makebutton($lang_global['home'], 'index.php', 130);
 makebutton($lang_global['back'], 'javascript:window.history.back()', 130);
 unset($err);
@@ -41,7 +41,7 @@ $output .= '
                 <br />
                 </center>
                 <!-- end of error.php -->';
-                
+
 require_once 'footer.php';
 
 ?>

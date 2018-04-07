@@ -99,9 +99,9 @@ function print_mail_form()
                         <table>
                             <tr>
                                 <td>";
-                                
+
     makebutton($lang_mail['send'], "javascript:do_submit()",130);
-    
+
     $output .= "
                                 </td>
                             </tr>
@@ -219,7 +219,7 @@ function send_mail()
                             if($user[0] != "") array_push($email_array, $user[0]);
                         }
                         break;
-                    
+
                     case "locked":
                         $result = $sql->query("SELECT email FROM account WHERE locked $group_sign '$group_value'");
                         while($user = $sql->fetch_row($result))
@@ -228,7 +228,7 @@ function send_mail()
                                 array_push($email_array, $user[0]);
                         }
                         break;
-                        
+
                     case "banned":
                         $que = $sqlr->query("SELECT id FROM account_banned");
                         while ($banned = $sql->fetch_row($que))
@@ -238,7 +238,7 @@ function send_mail()
                                 array_push($email_array, $sql->result($result, 0, 'email'));
                         }
                         break;
-                        
+
                     default:
                         redirect("mail.php?error=5");
                         break;
@@ -261,7 +261,7 @@ function send_mail()
             else
                 redirect("mail.php?error=1");
             break;
-            
+
         case "ingame_mail":
             $value = NULL;
             for($i=0;$i<(count($body));$i++)
@@ -302,19 +302,19 @@ function send_mail()
                                 array_push($char_array, $char[0]);
                         }
                         break;
-                        
+
                     case "online":
                         $result = $sqlc->query("SELECT name FROM `characters` WHERE online $group_sign '$group_value'");
                         while($user = $sqlc->fetch_row($result))
                             array_push($char_array, $user[0]);
                         break;
-                        
+
                     case "char_level":
                         $result = $sqlc->query("SELECT name FROM `characters` WHERE level $group_sign '$group_value'");
                         while($user = $sqlc->fetch_row($result))
                             array_push($char_array, $user[0]);
                         break;
-                        
+
                     default:
                         redirect("mail.php?error=5");
                 }
@@ -341,7 +341,7 @@ function send_ingame_mail($realm_id, $massmails)
 {
     require_once 'libs/telnet_lib.php';
     global $server, $lang_telnet;
-    
+
     $telnet = new telnet_lib();
 
     //$massmails array format
@@ -439,9 +439,9 @@ function result()
             <table width="400" class="hidden">
                 <tr>
                     <td align="center">';
-                    
+
     makebutton($lang_global['back'], 'javascript:window.history.back()', 130);
-    
+
     $output .= '
                     </td>
                 </tr>
@@ -519,11 +519,11 @@ switch ($action)
     case "send_mail":
         send_mail();
         break;
-        
+
     case "result":
         result();
         break;
-        
+
     default:
         print_mail_form();
 }

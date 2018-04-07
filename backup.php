@@ -39,10 +39,10 @@ function backup_step1()
                                 </select>
                             </td>
                             <td>";
-                            
+
     makebutton($lang_backup['go'], "javascript:do_submit()",130);
     makebutton($lang_global['back'], "javascript:window.history.back()",130);
-    
+
     $output .= "
                         </tr>
                         <tr>
@@ -84,9 +84,9 @@ function backup_step2()
     }
 
     $upload_max_filesize=ini_get("upload_max_filesize");
-    if (eregi("([0-9]+)K",$upload_max_filesize,$tempregs)) 
+    if (eregi("([0-9]+)K",$upload_max_filesize,$tempregs))
         $upload_max_filesize=$tempregs[1]*1024;
-    if (eregi("([0-9]+)M",$upload_max_filesize,$tempregs)) 
+    if (eregi("([0-9]+)M",$upload_max_filesize,$tempregs))
         $upload_max_filesize=$tempregs[1]*1024*1024;
 
     switch ($backup_action)
@@ -118,7 +118,7 @@ function backup_step2()
                     foreach ($characters_db as $db)
                         $output .= "
                                     <option value=\"{$db['name']}\">{$db['name']}</option>";
-                      
+
                     $output .= "
                                     <option value=\"{$realm_db['name']}\">{$realm_db['name']}</option>
                                 </select>
@@ -128,18 +128,18 @@ function backup_step2()
                         <td>";
                     makebutton($lang_backup['upload'], "javascript:do_submit()",130);
                     break;
-                    
+
                 case "web":
                     $output .= "
                     <tr>
                         <td>
                             <form action=\"backup.php?action=dobackup&amp;backup_action=$backup_action&amp;backup_from_to=$backup_from_to\" method=\"post\" name=\"form\">
                                 <select name=\"use_db\">";
-                                
+
                     foreach ($characters_db as $db)
                         $output .= "
                                     <option value=\"{$db['name']}\">{$db['name']}</option>";
-                                    
+
                     $output .= "
                                     <option value=\"{$realm_db['name']}\">{$realm_db['name']}</option>
                                 </select>
@@ -157,13 +157,13 @@ function backup_step2()
                             closedir($dh);
                         }
                     }
-                    
+
                     $output .= "
                                 </select>
                             </form>
                         </td>
                         <td>";
-                        
+
                     makebutton($lang_backup['go'], "javascript:do_submit()",130);
                     break;
                 case "acc_on_file":
@@ -180,7 +180,7 @@ function backup_step2()
                     foreach ($characters_db as $db)
                         $output .= "
                                     <option value=\"{$db['name']}\">{$db['name']}</option>";
-                                    
+
                     $output .= "
                                     <option value=\"{$realm_db['name']}\">{$realm_db['name']}</option>
                                 </select>
@@ -198,20 +198,20 @@ function backup_step2()
                             closedir($dh);
                         }
                     }
-                    
+
                     $output .= "
                                 </select>
                                 <input type=\"text\" name=\"selected_file_name\" size=\"20\" maxlength=\"35\" />
                             </form>
                         </td>
                         <td>";
-                        
+
                     makebutton($lang_backup['go'], "javascript:do_submit()",80);
                     break;
-                    
+
                 default:
             }
-            
+
             makebutton($lang_global['back'], "javascript:window.history.back()",80);
             $output .= "
                         </td>
@@ -222,11 +222,11 @@ function backup_step2()
             <br /><br />
         </center>";
             break;
-            
+
         case "save":
             redirect("backup.php?action=dobackup&backup_action=$backup_action&backup_from_to=$backup_from_to&struc_backup=$struc_backup&save_all_realms=$save_all_realms");
             break;
-            
+
         default:
             redirect("backup.php?error=1");
     }
@@ -268,7 +268,7 @@ function dobackup()
             else
             {
                 foreach ($characters_db as $db)
-                    if ($use_db == $db['name']) 
+                    if ($use_db == $db['name'])
                         $queries = run_sql_script($db['addr'], $db['user'], $db['pass'], $db['name'], "$backup_dir/$file_name_new",true);
             }
             redirect("backup.php?error=4&tot=$queries");
@@ -312,7 +312,7 @@ function dobackup()
             $temp_id = "all_realms";
         else
             $temp_id = "realmid_".$realm_id;
-            
+
         $file_name_new = $temp_id."_backup_".date("m.d.y_H.i.s").".sql";
 
         $fp = fopen("$backup_dir/$file_name_new", 'w') or die (error($lang_backup['file_write_err']));
@@ -363,7 +363,7 @@ function dobackup()
             $output_file = fread($fp, 1024);
             echo $output_file;
         }
-        
+
         fclose($fp);
         unlink("$backup_dir/$file_name_new");
         exit();
@@ -402,7 +402,7 @@ function dobackup()
 
                 foreach ($tables_backup_characters as $value)
                     sql_table_dump ($db['addr'], $db['user'], $db['pass'], $db['name'],$value,$struc_backup,"$backup_dir/$file_name_new");
-                    
+
                 fclose($fp);
             }
         }
@@ -468,7 +468,7 @@ function dobackup()
                         if ($count < ($num_fields-1))
                             $result .= ",";
                     }
-                    
+
                     $result .= ") VALUES \n";
 
                     for ($i =0; $i<$numrow; $i++)
@@ -488,17 +488,17 @@ function dobackup()
                             }
                             else
                                 $result .= "''";
-                                
+
                             if ($j<($num_fields-1))
                                 $result .= ",";
                         }
-                        
+
                         if ($i < ($numrow-1))
                             $result .= "),\n";
                     }
                     $result .= ");\n";
                 }
-                
+
                 $result .= "UNLOCK TABLES;\n";
                 $result .= "\n";
                 fwrite($fp, $result)or die (error($lang_backup['file_write_err']));
@@ -542,12 +542,12 @@ function dobackup()
                             {
                                 $result .= "\t(";
                                 $row = $sql->fetch_row($char_query);
-                                
+
                                 for($j=0; $j<$num_fields; $j++)
                                 {
                                     $row[$j] = addslashes($row[$j]);
                                     $row[$j] = ereg_replace("\n","\\n",$row[$j]);
-                                    
+
                                     if (isset($row[$j]))
                                     {
                                         if ($sql->field_type($char_query,$j) == "int")
@@ -557,19 +557,19 @@ function dobackup()
                                     }
                                     else
                                         $result .= "''";
-                                        
+
                                     if ($j<($num_fields-1))
                                         $result .= ",";
-                                   
+
                                 }
-                                
+
                                 if ($i < ($numrow-1))
                                     $result .= "),\n";
                             }
                             $result .= ");\n";
 
                         }
-                        
+
                         $result .= "UNLOCK TABLES;\n";
                         $result .= "\n";
                         fwrite($fp, $result)or die (error($lang_backup['file_write_err']));
@@ -637,7 +637,7 @@ switch ($err)
             </h1>
         </div>";
         break;
-        
+
     case 2:
         $output .= "
             <h1>
@@ -645,31 +645,31 @@ switch ($err)
             </h1>
         </div>";
         break;
-        
+
     case 3:
         $output .= "
             <h1>{$lang_backup['select_backup']}</h1>
         </div>";
         break;
-        
+
     case 4:
         if(isset($_GET['tot']))
             $total_queries = $_GET['tot'];
         else
             $total_queries = NULL;
-            
+
         $output .= "
             <h1>
                 <font class=\"error\">{$lang_backup['file_loaded']} $total_queries {$lang_backup['que_executed']}.</font>
             </h1>
         </div>";
         break;
-        
+
     default: //no error
         $output .= "
             <h1>{$lang_backup['backup_acc']}</h1>
         </div>";
-        
+
         $output .= "
         <center>
             <font class=\"large\">{$lang_backup['tables_to_save']}:</font>
@@ -677,7 +677,7 @@ switch ($err)
             <table width=\"700\" class=\"hidden\">
                 <tr>
                     <td>";
-                    
+
         foreach ($tables_backup_realmd as $value)
             $output .= "
                         {$realm_db['name']}.$value / ";
@@ -698,11 +698,11 @@ switch ($action)
     case "backup_step2":
         backup_step2();
         break;
-        
+
     case "dobackup":
         dobackup();
         break;
-        
+
     default:
         backup_step1();
 }

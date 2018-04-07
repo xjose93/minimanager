@@ -30,18 +30,18 @@ function browse_guilds(&$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'gid';
-    if (preg_match('/^[_[:lower:]]{1,10}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,10}$/', $order_by));
+    else
         $order_by='gid';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -107,14 +107,14 @@ function browse_guilds(&$sqlr, &$sqlc)
         $search_value = $sqlc->quote_smart($_GET['search_value']);
 
         $search_menu = array('name', 'leadername', 'guildid');
-        if (in_array($search_by, $search_menu)); 
-        else 
+        if (in_array($search_by, $search_menu));
+        else
             $search_by = 'name';
 
         switch($search_by)
         {
             case "name":
-                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
                     redirect("guild.php?error=5&amp;realm=$realmid");
                 $query = $sqlc->query("SELECT g.guildid as gid, g.name,g.leaderguid as lguid,
                                       (SELECT name from characters where guid = lguid) as lname, c.race in (2,5,6,8,10) as lfaction,
@@ -123,9 +123,9 @@ function browse_guilds(&$sqlr, &$sqlc)
                                       where g.name like '%$search_value%' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
                 $query_count = $sqlc->query("SELECT 1 from guild where name like '%$search_value%'");
                 break;
-                
+
             case "leadername" :
-                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
                     redirect("guild.php?error=5&amp;realm=$realmid");
                 $query = $sqlc->query("SELECT g.guildid as gid, g.name,g.leaderguid as lguid,
                                       (SELECT name from characters where guid = lguid) as lname, c.race in (2,5,6,8,10) as lfaction,
@@ -134,10 +134,10 @@ function browse_guilds(&$sqlr, &$sqlc)
                                       (SELECT guid from characters where name like '%$search_value%') ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
                 $query_count = $sqlc->query("SELECT 1 from guild where leaderguid in (select guid from characters where name like '%$search_value%')");
                 break;
-        
+
             case "guildid" :
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     redirect("guild.php?error=5&amp;realm=$realmid");
                 $query = $sqlc->query("SELECT g.guildid as gid, g.name,g.leaderguid as lguid,
                                       (SELECT name from characters where guid = lguid) as lname, c.race in (2,5,6,8,10) as lfaction,
@@ -146,7 +146,7 @@ function browse_guilds(&$sqlr, &$sqlc)
                                       where g.guildid = '$search_value' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
                 $query_count = $sqlc->query("SELECT 1 from guild where guildid = '$search_value'");
                 break;
-        
+
             default :
                     redirect("guild.php?error=2&amp;realm=$realmid");
         }
@@ -179,11 +179,11 @@ function browse_guilds(&$sqlr, &$sqlc)
                                             </form>
                                         </td>
                                         <td width=\"300\">";
-                                        
+
     makebutton($lang_global['search'], "javascript:do_submit()",80);
-    
+
     ($search_by &&  $search_value) ? makebutton($lang_guild['show_guilds'], "guild.php?realm=$realmid\" type=\"def", 130) : $output .= "";
-    
+
     $output .= "
                                         </td>
                                     </tr>
@@ -213,7 +213,7 @@ function browse_guilds(&$sqlr, &$sqlc)
                                 <th width=\"20%\"><a href=\"guild.php?order_by=createdate&amp;realm=$realmid&amp;start=$start&amp;dir=$dir".( $search_value && $search_by ? "&amp;search_by=$search_by&amp;search_value=$search_value" : "" )."\">".($order_by=='createdate' ? "<img src=\"img/arr_".($dir ? "up" : "dw").".gif\" alt=\"\" /> " : "")."{$lang_guild['create_date']}</a></th>
                             </tr>";
     while ($data = $sqlr->fetch_row($query))
-    { 
+    {
         $result = $sqlr->query("SELECT gmlevel FROM account_access WHERE id ='$data[7]'");
         $owner_gmlvl = $sqlr->result($result, 0, 'gmlevel');
         $output .= "
@@ -248,7 +248,7 @@ function count_days( $a, $b )
     $gd_b = getdate( $b );
     $a_new = mktime( 12, 0, 0, $gd_a['mon'], $gd_a['mday'], $gd_a['year'] );
     $b_new = mktime( 12, 0, 0, $gd_b['mon'], $gd_b['mday'], $gd_b['year'] );
-    
+
     return round( abs( $a_new - $b_new ) / 86400 );
 }
 
@@ -260,8 +260,8 @@ function view_guild()
 {
     global $lang_guild, $lang_global, $output, $realm_db, $characters_db, $mmfpm_db, $realm_id, $itemperpage,
             $action_permission, $user_lvl, $user_id, $showcountryflag;
-            
-    if(!isset($_GET['id'])) 
+
+    if(!isset($_GET['id']))
         redirect("guild.php?error=1&amp;realm=$realmid");
 
     $sqlr = new SQL;
@@ -272,7 +272,7 @@ function view_guild()
     else
     {
         $realmid = $sqlr->quote_smart($_GET['realm']);
-        if (!is_numeric($realmid)) 
+        if (!is_numeric($realmid))
             $realmid = $realm_id;
     }
 
@@ -280,8 +280,8 @@ function view_guild()
     $sqlc->connect($characters_db[$realmid]['addr'], $characters_db[$realmid]['user'], $characters_db[$realmid]['pass'], $characters_db[$realmid]['name']);
 
     $guild_id = $sqlc->quote_smart($_GET['id']);
-    if(is_numeric($guild_id)); 
-    else 
+    if(is_numeric($guild_id));
+    else
         redirect("guild.php?error=6&amp;realm=$realmid");
 
     //==========================SQL INGUILD and GUILDLEADER======================
@@ -299,16 +299,16 @@ function view_guild()
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : "mrank";
-    if (!preg_match("/^[_[:lower:]]{1,10}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,10}$/", $order_by))
         $order_by="mrank";
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir=1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -451,13 +451,13 @@ function view_guild()
     if ($user_lvl >= $action_permission['delete'] || $amIguildleader)
     {
         makebutton($lang_guild['del_guild'], "guild.php?action=del_guild&amp;realm=$realmid&amp;id=$guild_id\" type=\"wrn", 130);
-        
+
         $output .= "
                             </td>
                             <td>";
     }
     makebutton($lang_guild['show_guilds'], "guild.php?realm=$realmid\" type=\"def", 130);
-    
+
     $output .= "
                             </td>
                         </tr>
@@ -482,7 +482,7 @@ function del_guild()
     else
     {
         $realmid = $sqlr->quote_smart($_GET['realm']);
-        if (!is_numeric($realmid)) 
+        if (!is_numeric($realmid))
             $realmid = $realm_id;
     }
 
@@ -493,15 +493,15 @@ function del_guild()
     if (is_numeric($id));
     else
         redirect("guild.php?error=5&amp;realm=$realmid");
-        
+
     $sqlc = new SQL;
     $sqlc->connect($characters_db[$realmid]['addr'], $characters_db[$realmid]['user'], $characters_db[$realmid]['pass'], $characters_db[$realmid]['name']);
     $q_amIguildleader = $sqlc->query("select 1 from guild where guildid = '$id' and leaderguid in (select guid from characters where account = '$user_id')");
     $amIguildleader = $sqlc->result($q_amIguildleader, 0, '1');
-    
+
     if ($user_lvl < $action_permission['delete'] && !$amIguildleader)
         redirect("guild.php?error=6&amp;realm=$realmid");
-        
+
     $output .= "
                 <center>
                     <h1><font class=\"error\">{$lang_global['are_you_sure']}</font></h1>
@@ -554,25 +554,25 @@ function rem_char_from_guild(&$sqlr, &$sqlc)
         $guid = $_GET['id'];
     else
         redirect("guild.php?error=1&amp;realm=$realmid");
-        
+
     if (is_numeric($guid));
-    else 
+    else
         redirect("guild.php?error=5&amp;realm=$realmid");
-        
+
     if(isset($_GET['guld_id']))
         $guld_id = $_GET['guld_id'];
     else
         redirect("guild.php?error=1&amp;realm=$realmid");
-        
+
     if (is_numeric($guld_id));
-    else 
+    else
         redirect("guild.php?error=5&amp;realm=$realmid");
 
     $q_amIguildleaderOrSelfRemoval = $sqlc->query("select 1 from guild as g left outer join guild_member as gm on gm.guildid = g.guildid
                                                    where g.guildid = '$guld_id' and
                                                    (g.leaderguid in (select guid from characters where account = '$user_id')
                                                    or gm.guid in (select guid from characters where account = '$user_id' and guid = '$guid'))");
-                                                   
+
     $amIguildleaderOrSelfRemoval = $sqlc->result($q_amIguildleaderOrSelfRemoval, 0, '1');
     if ($user_lvl < $action_permission['delete'] && !$amIguildleaderOrSelfRemoval )
         redirect("guild.php?error=6&amp;realm=$realmid");

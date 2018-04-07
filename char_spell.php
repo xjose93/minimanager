@@ -46,9 +46,9 @@ function char_spell(&$sqlr, &$sqlc)
                             <div id="tab_content">
                                 <h1>'.$lang_char['spells'].'</h1>
                                 <br />';
-                  
+
             require_once 'core/char/char_header.php';
-          
+
             $output .= '
                                 <br /><br />';
 
@@ -89,7 +89,7 @@ function char_spell(&$sqlr, &$sqlc)
                                         <td></td>
                                     </tr>';
                 }
-                
+
                 $output .= '
                                     <tr align="right">
                                         <td colspan="4">';
@@ -99,7 +99,7 @@ function char_spell(&$sqlr, &$sqlc)
                                     </tr>
                                 </table>';
             }
-            
+
             //---------------Page Specific Data Ends here----------------------------
             //---------------Character Tabs Footer-----------------------------------
             $output .= '
@@ -108,7 +108,7 @@ function char_spell(&$sqlr, &$sqlc)
                                 <br />';
 
             require_once 'core/char/char_footer.php';
-          
+
             $output .='
                                 <br />
                             </center>

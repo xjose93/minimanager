@@ -15,15 +15,15 @@ function browse_teams()
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
+    if (is_numeric($start));
     else $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : "atid";
-    if (!preg_match("/^[_[:lower:]]{1,17}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,17}$/", $order_by))
         $order_by="atid";
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir=1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -37,10 +37,10 @@ function browse_teams()
         $search_value = $sqlc->quote_smart($_GET['search_value']);
         $search_by = $sqlc->quote_smart($_GET['search_by']);
         $search_menu = array('atname', 'leadername', 'atid');
-        
-        if (!in_array($search_by, $search_menu)) 
+
+        if (!in_array($search_by, $search_menu))
             $search_by = 'atid';
-            
+
         switch($search_by)
         {
             case "atname":
@@ -73,7 +73,7 @@ function browse_teams()
         $query = $sqlc->query("SELECT arena_team.arenateamid AS atid, arena_team.name AS atname, arena_team.captainguid AS lguid, arena_team.type AS attype, (SELECT NAME FROM `characters` WHERE guid = lguid) AS lname,(SELECT COUNT(*) FROM  arena_team_member WHERE arenateamid = atid) AS tot_chars, rating AS atrating, seasonGames AS atgames, seasonWins AS atwins, (SELECT COUNT(*) AS GCNT  FROM `arena_team_member`, `characters`, `arena_team` WHERE arena_team.arenateamid = atid AND arena_team_member.arenateamid = arena_team.arenateamid AND arena_team_member.guid = characters.guid AND characters.online = 1) AS arenateam_online FROM arena_team ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
         $query_1 = $sqlc->query("SELECT count(*) FROM arena_team");
     }
-    
+
     $all_record = $sqlc->result($query_1,0);
     unset($query_1);
     $this_page = $sqlc->num_rows($query);
@@ -84,10 +84,10 @@ function browse_teams()
             <table class=\"top_hidden\">
                 <tr>
                     <td>";
-                    
+
     makebutton($lang_global['back'], "javascript:window.history.back()", 130);
     ($search_by &&  $search_value) ? makebutton($lang_arenateam['arenateams'], "arenateam.php", 130) : $output .= "";
-    
+
     $output .= "
                     </td>
                 </tr>
@@ -107,16 +107,16 @@ function browse_teams()
                                     </form>
                                 </td>
                                 <td>";
-                                
+
     makebutton($lang_global['search'], "javascript:do_submit()",80);
-    
+
     $output .= "
                                 </td>
                             </tr>
                         </table>
                     </td>
                     <td align=\"right\">";
-                    
+
     $output .= generate_pagination("arenateam.php?order_by=$order_by".( $search_value && $search_by ? "&amp;search_by=$search_by&amp;search_value=$search_value" : "" )."&amp;dir=".!$dir, $all_record, $itemperpage, $start);
     $output .= "
                     </td>
@@ -136,7 +136,7 @@ function browse_teams()
                     <th width=\"1%\"><a href=\"arenateam.php?order_by=atgames&amp;start=$start".( $search_value && $search_by ? "&amp;search_by=$search_by&amp;search_value=$search_value" : "" )."&amp;dir=$dir\">".($order_by=='atgames' ? "<img src=\"img/arr_".($dir ? "up" : "dw").".gif\" /> " : "")."{$lang_arenateam['games']}</a></th>
                     <th width=\"1%\"><a href=\"arenateam.php?order_by=atwins&amp;start=$start".( $search_value && $search_by ? "&amp;search_by=$search_by&amp;search_value=$search_value" : "" )."&amp;dir=$dir\">".($order_by=='atwins' ? "<img src=\"img/arr_".($dir ? "up" : "dw").".gif\" /> " : "")."{$lang_arenateam['wins']}</a></th>
                 </tr>";
-                
+
     while ($data = $sqlc->fetch_row($query))
     {
         $gonline = $sqlc->query("SELECT count(*) AS GCNT  FROM `arena_team_member`, `characters`, `arena_team` WHERE arena_team.arenateamid = ".$data[0]." AND arena_team_member.arenateamid = arena_team.arenateamid AND arena_team_member.guid = characters.guid AND characters.online = 1;");
@@ -154,7 +154,7 @@ function browse_teams()
                     <td>$data[8]</td>
                 </tr>";
     }
-    
+
     $output .= "
                 <tr>
                     <td colspan=\"9\" class=\"hidden\" align=\"right\">{$lang_arenateam['tot_teams']} : $all_record</td>
@@ -178,7 +178,7 @@ function view_team()
 {
     global $lang_arenateam, $lang_global, $output, $characters_db, $realm_id, $realm_db, $mmfpm_db, $action_permission, $user_lvl, $user_id, $showcountryflag;
 
-    if(!isset($_GET['id'])) 
+    if(!isset($_GET['id']))
         redirect("arenateam.php?error=1");
 
     $sqlc = new SQL;
@@ -203,12 +203,12 @@ function view_team()
     else
         $winperc_week = $arenateamstats_data[2];
     $losses_season = $arenateamstats_data[4]-$arenateamstats_data[5];
-    
+
     if($arenateamstats_data[4])
         $winperc_season = round((10000 * $arenateamstats_data[5]) / $arenateamstats_data[4]) / 100;
     else
         $winperc_season = $arenateamstats_data[4];
-        
+
     $output .= "
         <script type=\"text/javascript\">
             answerbox.btn_ok='{$lang_global['yes_low']}';
@@ -267,7 +267,7 @@ function view_team()
         $output .="
                         <th width=\"1%\">{$lang_global['country']}</th>";
     }
-    
+
     $output .="
                     </tr>";
 
@@ -286,12 +286,12 @@ function view_team()
             $ww_pct = round((10000 * $member[5]) / $member[4]) / 100;
         else
             $ww_pct = $member[4];
-            
+
         if($member[6])
             $ws_pct = round((10000 * $member[7]) / $member[6]) / 100;
         else
             $ws_pct = $member[6];
-            
+
         $output .= "
                         <td><a href=\"char.php?id=$member[0]\">".htmlentities($member[1])."</a></td>
                         <td><img src='img/c_icons/{$member[8]}-{$member[13]}.gif' onmousemove='toolTip(\"".char_get_race_name($member[8])."\",\"item_tooltip\")' onmouseout='toolTip()' /></td>
@@ -305,32 +305,32 @@ function view_team()
                         <td>$member[6]</td>
                         <td>$member[7]</td>
                         <td>$ws_pct %</td>";
-                        
+
         if ($showcountryflag)
         {
             $country = misc_get_country_by_account($member[14], $sqlr, $sqlm);
             $output .="
                         <td>".(($country['code']) ? "<img src='img/flags/".$country['code'].".png' onmousemove='toolTip(\"".($country['country'])."\",\"item_tooltip\")' onmouseout='toolTip()' alt=\"\" />" : "-")."</td>";
         }
-        
+
         $output .="
                     </tr>";
     }
-    
+
     $output .= "
                 </table>
                 <br />
                 <table class=\"hidden\">
                     <tr>
                         <td>";
-                        
+
     if($user_lvl >= $action_permission['delete'])
     {
         makebutton($lang_arenateam['del_team'], "arenateam.php?action=del_team&amp;id=$arenateam_id\" type=\"wrn", 180);
         $output .= "
                         </td>
                         <td>";
-                        
+
         makebutton($lang_arenateam['arenateams'], "arenateam.php\" type=\"def", 130);
         $output .= "
                         </td>
@@ -345,7 +345,7 @@ function view_team()
                         </td>
                     </tr>";
     }
-    
+
     $output .= "
                 </table>
             </fieldset>
@@ -359,9 +359,9 @@ function del_team()
 {
     global $lang_arenateam, $lang_global, $output;
 
-    if(isset($_GET['id'])) 
+    if(isset($_GET['id']))
         $id = $_GET['id'];
-    else 
+    else
         redirect("arenateam.php?error=1");
 
     $output .= "
@@ -378,10 +378,10 @@ function del_team()
                 <table class=\"hidden\">
                     <tr>
                         <td>";
-                        
+
     makebutton($lang_global['yes'], "javascript:do_submit()",130);
     makebutton($lang_global['no'], "arenateam.php?action=view_team&amp;id=$id",130);
-    
+
     $output .= "
                         </td>
                     </tr>
@@ -398,14 +398,14 @@ function rem_char_from_team()
 {
     global $characters_db, $realm_id, $user_lvl;
 
-    if(isset($_GET['id'])) 
+    if(isset($_GET['id']))
         $guid = $_GET['id'];
-    else 
+    else
         redirect("arenateam.php?error=1");
-        
-    if(isset($_GET['arenateam_id'])) 
+
+    if(isset($_GET['arenateam_id']))
         $arenateam_id = $_GET['arenateam_id'];
-    else 
+    else
         redirect("arenateam.php?error=1");
 
     $sqlc = new SQL;

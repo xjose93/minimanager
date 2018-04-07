@@ -20,7 +20,7 @@ $lang_verify = lang_verify();
 
 if ($sql->num_rows($query) < 1)
     $output .= "<h1><font class=\"error\">{$lang_verify['verify_failed']}</font></h1>";
-else 
+else
 {
     $output .= "<h1><font class=\"error\">{$lang_verify['verify_success']}</font></h1>";
     $sql2 = new SQL;
@@ -30,7 +30,7 @@ else
     list($id,$username,$pass,$mail,$joindate,$last_ip,$failed_logins,$locked,$last_login,$expansion) = $data;
     $sql2->query("INSERT INTO account (id,username,sha_pass_hash,email, joindate,last_ip,failed_logins,locked,last_login,expansion) VALUES ('',UPPER('$username'),'$pass','$mail',now(),'$last_ip','0','$locked',NULL,'$expansion')");
     $result = $sql2->query("SELECT * FROM account WHERE username='$username'");
-    $data = mysql_fetch_assoc($result); 
+    $data = mysql_fetch_assoc($result);
     $sql2->query("INSERT INTO account_access (`id`,`gmlevel`) VALUES ('{$data['id']}','0')");
 
 }

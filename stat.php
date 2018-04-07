@@ -95,11 +95,11 @@ function stats($action, &$sqlr, &$sqlc)
             $data_1day = mktime(date('H'), date('i'), date('s'), date('m'), date('d')-1, date('Y'));
             $data_1day = date('Y-m-d H:i:s', $data_1day);
             $uniqueIPs = $sqlr->result($sqlr->query('select distinct count(last_ip) from account where last_login > \''.$data_1day.'\' and last_login < \''.$data.'\''), 0);
-   
+
             $data_2day = mktime(date('H'), date('i'), date('s'), date('m'), date('d')-2, date('Y'));
             $data_2day = date('Y-m-d H:i:s', $data_2day);
             $uniqueIPs2 = $sqlr->result($sqlr->query('select distinct count(last_ip) from account where last_login > \''.$data_2day.'\' and last_login < \''.$data.'\''), 0);
-      
+
             $data_1week = mktime(date('H'), date('i'), date('s'), date('m'), date('d')-7, date('Y'));
             $data_1week = date('Y-m-d H:i:s', $data_1week);
             $uniqueIPsWeek = $sqlr->result($sqlr->query('select distinct count(last_ip) from account where last_login > \''.$data_1week.'\' and last_login < \''.$data.'\''), 0);
@@ -171,32 +171,32 @@ function stats($action, &$sqlr, &$sqlc)
         $horde1day = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(2,5,6,8,10) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_1day.'\')'));
         $allys1day = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(1,3,4,7,11) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_1day.'\')'));
         $day1total = $horde1day + $allys1day;
-        
-        if ($day1total == 0) 
+
+        if ($day1total == 0)
             $day1total = 1;
-            
+
         $horde1daytotal = round(($horde1day)*100/$day1total ,1);
         $allys1daytotal = round(($allys1day)*100/$day1total ,1);
 
         // Total players in 48 Hours
         $horde2day = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(2,5,6,8,10) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_2day.'\')'));
         $allys2day = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(1,3,4,7,11) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_2day.'\')'));
-        $day2total = $horde2day + $allys2day; 
-        
-        if ($day2total == 0) 
+        $day2total = $horde2day + $allys2day;
+
+        if ($day2total == 0)
             $day2total = 1;
-        
+
         $horde2daytotal = round(($horde1day)*100/$day2total ,1);
         $allys2daytotal = round(($allys1day)*100/$day2total ,1);
 
         // Total players in 1 Week
         $horde1week = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(2,5,6,8,10) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_1week.'\')'));
         $allys1week = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race IN(1,3,4,7,11) AND account IN (SELECT account.id FROM '.$realm_db['name'].'.account WHERE last_login > \''.$data_1week.'\')'));
-        $week1total = $horde1week + $allys1week; 
-        
-        if ($week1total == 0) 
+        $week1total = $horde1week + $allys1week;
+
+        if ($week1total == 0)
             $week1total = 1;
-        
+
         $horde1weektotal = round(($horde1week)*100/$week1total ,1);
         $allys1weektotal = round(($allys1week)*100/$week1total ,1);
 
@@ -206,9 +206,6 @@ function stats($action, &$sqlr, &$sqlc)
         $allies_chars = $total_chars - $horde_chars;
         $allies_pros  = 100 - $horde_pros;
 
-
-
- 
         $output .= '
                                             <p align="center"><b>'.$lang_stat['acc_24'].'</b></p>
                                             <table class="tot_bar">
@@ -241,7 +238,7 @@ function stats($action, &$sqlr, &$sqlc)
                                                     <td width="'.$allies_pros.'%" background="img/bar_allie.gif" height="30"><a href="stat.php?action='.$action.'&amp;side=a">'.$lang_stat['alliance'].': '.$allies_chars.' ('.$allies_pros.'%)</a></td>
                                                 </tr>
                                             </table>';
-        
+
         unset($horde_chars);
         unset($horde_pros);
         unset($allies_chars);
@@ -251,7 +248,6 @@ function stats($action, &$sqlr, &$sqlc)
         unset($data_2day);
         unset($data_1week);
         unset($data);
-
 
         $order_race = (isset($_GET['race'])) ? 'AND race ='.$sqlc->quote_smart($_GET['race']) : '';
         $order_class = (isset($_GET['class'])) ? 'AND class ='.$sqlc->quote_smart($_GET['class']) : '';
@@ -281,7 +277,7 @@ function stats($action, &$sqlr, &$sqlc)
             $race[$id[0]][2] = $sqlc->result($sqlc->query('SELECT count(guid) FROM characters WHERE race = '.$id[0].' '.$order_class.' '.$order_level.' '.$order_side.(($action) ? ' AND online= 1' : '')), 0);
             $race[$id[0]][3] = round((($race[$id[0]][2])*100)/$total_chars,1);
         }
-        
+
         $output .= '
                                     <tr align="left">
                                         <td>
@@ -314,7 +310,7 @@ function stats($action, &$sqlr, &$sqlc)
                                             <br />
                                         </td>
                                     </tr>';
-                                    
+
         // RACE END
         // CLASS
         foreach ($class as $id)
@@ -323,7 +319,7 @@ function stats($action, &$sqlr, &$sqlc)
             $class[$id[0]][3] = round((($class[$id[0]][2])*100)/$total_chars,1);
         }
         unset($order_level);
-        
+
         $output .= '
                                     <tr align="left">
                                         <td>
@@ -357,7 +353,7 @@ function stats($action, &$sqlr, &$sqlc)
                                             <br />
                                         </td>
                                     </tr>';
-                                    
+
     // CLASS END
     // LEVEL
     foreach ($level as $id)
@@ -371,7 +367,7 @@ function stats($action, &$sqlr, &$sqlc)
     unset($order_race);
     unset($total_chars);
     unset($order_side);
-    
+
     $output .= '
                     <tr align="left">
                         <td>
@@ -389,7 +385,7 @@ function stats($action, &$sqlr, &$sqlc)
                                     <td><a href="stat.php?action='.$action.'&amp;level='.$id[1].'" class="graph_link">'.$level[$id[0]][4].'%<img src="themes/'.$theme.'/column.gif" width="77" height="'.$height.'" alt="'.$level[$id[0]][3].'" /></a></td>';
     }
     unset($height);
-    
+
     $output .= '
                                 </tr>
                                 <tr>';
@@ -398,7 +394,7 @@ function stats($action, &$sqlr, &$sqlc)
                                     <th>'.$level[$id[0]][1].'-'.$level[$id[0]][2].'<br />'.$level[$id[0]][3].'</th>';
     unset($id);
     unset($level);
-    
+
     $output .= '
                                 </tr>
                             </table>
@@ -409,9 +405,9 @@ function stats($action, &$sqlr, &$sqlc)
                     <tr>
                         <td>';
     // LEVEL END
-    
+
     makebutton($lang_stat['reset'], 'stat.php', 720);
-    
+
     $output .= '
                         </td>
                     </tr>

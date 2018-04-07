@@ -19,18 +19,18 @@ function events()
     //-------------------SQL Injection Prevention--------------------------------
     // this page has multipage support and field ordering, so we need these
     $start = (isset($_GET['start'])) ? $sqlw->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlw->quote_smart($_GET['order_by']) : 'description';
-    if (preg_match('/^[_[:lower:]]{1,11}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,11}$/', $order_by));
+    else
         $order_by='description';
 
     $dir = (isset($_GET['dir'])) ? $sqlw->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -57,7 +57,7 @@ function events()
     // multi page links
     $output .= $lang_events['total'].' : '.$all_record.'<br /><br />'.
     generate_pagination('events.php?order_by='.$order_by.'&amp;dir='.(($dir) ? 0 : 1), $all_record, $itemperpage, $start);
-    
+
     // column headers, with links for sorting
     $output .= '
                             </td>
@@ -76,12 +76,12 @@ function events()
         $days  = floor(round($events['occurence'] / 60) / 24);
         $hours = round($events['occurence'] / 60) - ($days * 24);
         $event_occurance = '';
-        
+
         if ($days)
             $event_occurance .= $days.' days ';
         if ($hours)
             $event_occurance .= $hours.' hours';
-            
+
         $days  = floor(round($events['length'] / 60) / 24);
         $hours = round($events['length'] / 60) - ($days * 24);
         $event_duration = '';

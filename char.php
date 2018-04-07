@@ -32,10 +32,10 @@ function char_main(&$sqlr, &$sqlc)
         $query = $sqlr->query('SELECT `username`, `gmlevel` FROM `account` LEFT JOIN `account_access` ON `account`.`id`=`account_access`.`id` WHERE `account`.`id` = '.$owner_acc_id.' ORDER BY `gmlevel` DESC LIMIT 1');
         $owner_name = $sqlr->result($query, 0, 'username');
         $owner_gmlvl = $sqlr->result($query, 0, 'gmlevel');
-        
+
         if (empty($owner_gmlvl))
             $owner_gmlvl = 0;
-        
+
         if($user_lvl || $server[$realmid]['both_factions'])
         {
             $side_v = 0;
@@ -45,12 +45,12 @@ function char_main(&$sqlr, &$sqlc)
         {
             $side_p = (in_array($sqlc->result($result, 0, 'race'),array(2,5,6,8,10))) ? 1 : 2;
             $result_1 = $sqlc->query('SELECT race FROM characters WHERE account = '.$user_id.' LIMIT 1');
-            
+
             if ($sqlc->num_rows($result))
                 $side_v = (in_array($sqlc->result($result_1, 0, 'race'), array(2,5,6,8,10))) ? 1 : 2;
             else
                 $side_v = 0;
-                
+
             unset($result_1);
         }
 
@@ -60,9 +60,9 @@ function char_main(&$sqlr, &$sqlc)
                                     character_stats.dodgePct, character_stats.parryPct, character_stats.critPct, character_stats.rangedCritPct, character_stats.spellCritPct, COALESCE(guild_member.guildid,0) AS guildid, COALESCE(guild_member.rank,0) AS rank, 
                                     characters.totalHonorPoints, characters.arenaPoints, characters.totalKills, character_stats.maxhealth, character_stats.maxpower1, character_stats.strength, character_stats.agility, character_stats.stamina, character_stats.intellect,
                                     character_stats.spirit, character_stats.armor, character_stats.resHoly, character_stats.resFire, character_stats.resNature, character_stats.resFrost, character_stats.resShadow, character_stats.resArcane, character_stats.attackPower,
-                                    character_stats.rangedAttackPower, character_stats.spellPower, characters.power2, character_stats.maxpower2, characters.power4, character_stats.maxpower4, characters.power3, character_stats.maxpower3   
+                                    character_stats.rangedAttackPower, character_stats.spellPower, characters.power2, character_stats.maxpower2, characters.power4, character_stats.maxpower4, characters.power3, character_stats.maxpower3
                                     FROM characters LEFT JOIN character_stats ON characters.guid = character_stats.guid LEFT JOIN guild_member ON characters.guid = guild_member.guid WHERE characters.guid = '.$id);
-                                    
+
             $char = $sqlc->fetch_assoc($result);
             $eq_data = explode(' ',$char['equipmentCache']);
 
@@ -90,7 +90,7 @@ function char_main(&$sqlr, &$sqlc)
             $spell_damage = $char['spellPower'];
             $rage       = round($char['power2'] / 10);
             $maxrage    = round($char['maxpower2'] / 10);
-      
+
             //preventing undefined variables, didnt want to remove all this stuff so just filling the missing variables with 0
             define('CHAR_DATA_OFFSET_MELEE_HIT',0);
             define('CHAR_DATA_OFFSET_SPELL_HEAL',1);
@@ -224,15 +224,15 @@ function char_main(&$sqlr, &$sqlc)
                                             <img src="'.char_get_avatar_img($char['level'], $char['gender'], $char['race'], $char['class'], 0).'" alt="avatar" />
                                         </div>
                                         <div>';
-                                        
+
             $a_results = $sqlc->query('SELECT DISTINCT spell FROM character_aura WHERE guid = '.$id.'');
-            if ($sqlc->num_rows($a_results)) 
+            if ($sqlc->num_rows($a_results))
                 while ($aura = $sqlc->fetch_assoc($a_results))
                     $output .= '
                                             <a style="padding:2px;" href="'.$spell_datasite.$aura['spell'].'" target="_blank">
                                                 <img src="'.spell_get_icon($aura['spell'], $sqlm).'" alt="'.$aura['spell'].'" width="24" height="24" />
                                             </a>';
-                                            
+
             $output .= '
                                         </div>
                                     </td>
@@ -504,7 +504,7 @@ function char_main(&$sqlr, &$sqlc)
                                         <a style="padding:2px;" href="'.$item_datasite.$EQU_FINGER2.'" target="_blank">
                                             <img src="'.$equiped_items[12][1].'" class="'.$equiped_items[12][2].'" alt="Finger2" />
                                         </a>';
-            else 
+            else
                 $output .= '
                                         <img src="img/INV/INV_empty_finger.png" class="icon_border_0" alt="empty" />';
             $output .= '
@@ -517,7 +517,7 @@ function char_main(&$sqlr, &$sqlc)
                                         <a style="padding:2px;" href="'.$item_datasite.$EQU_TABARD.'" target="_blank">
                                             <img src="'.$equiped_items[19][1].'" class="'.$equiped_items[19][2].'" alt="Tabard" />
                                         </a>';
-            else 
+            else
                 $output .= '
                                         <img src="img/INV/INV_empty_tabard.png" class="icon_border_0" alt="empty" />';
             $output .= '
@@ -647,9 +647,9 @@ function char_main(&$sqlr, &$sqlc)
                         <br />
                     </div>
                     <br />';
-            
+
         require_once 'core/char/char_footer.php';
-      
+
         $output .= '
                     <br />
                 </center>';

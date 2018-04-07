@@ -12,8 +12,8 @@ valid_login($action_permission['read']);
 //########################################################################################################################
 function do_search(&$sqlc)
 {
-    global $lang_global, $lang_mail, 
-            $output, $itemperpage, $item_datasite, 
+    global $lang_global, $lang_mail,
+            $output, $itemperpage, $item_datasite,
             $world_db, $characters_db, $realm_id;
     wowhead_tt();
 
@@ -22,18 +22,18 @@ function do_search(&$sqlc)
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start = 0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'id';
-    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by));
+    else
         $order_by = 'id';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir = 1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -103,7 +103,7 @@ function do_search(&$sqlc)
         $money = "";
         if ($mail[7] > 0)
             $money = $g."<img src=\"./img/gold.gif\" /> ".$s."<img src=\"./img/silver.gif\" /> ".$c."<img src=\"./img/copper.gif\" /> ";
-            
+
         $output .= "
             <tr valign=top>
                 <td>$mail[0]</td>
@@ -111,7 +111,7 @@ function do_search(&$sqlc)
                 <td><a href=\"char.php?id=$mail[2]\">".get_char_name($mail[2])."</a></td>
                 <td><a href=\"char.php?id=$mail[3]\">".get_char_name($mail[3])."</a></td>
                 <td>$mail[4]</td>";
-                
+
         $output .= "
                 <td>
                     <a style=\"padding:2px;\" href=\"$item_datasite{$mail[11]}\" target=\"_blank\">
@@ -142,11 +142,11 @@ function do_search(&$sqlc)
 //########################################################################################################################
 function search() {
     global $lang_global, $lang_mail,
-            $output, $itemperpage, $item_datasite, 
+            $output, $itemperpage, $item_datasite,
             $mangos_db, $characters_db, $realm_id, $sql_search_limit;
     wowhead_tt();
 
-    if(!isset($_GET['search_value']) || !isset($_GET['search_by'])) 
+    if(!isset($_GET['search_value']) || !isset($_GET['search_by']))
         redirect("mail_on.php?error=2");
 
     $sql = new SQL;
@@ -199,15 +199,15 @@ function search() {
                                         </form>
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_global['search'], "javascript:do_submit()",80);
-    
+
     $output .= "
                                     </td>
                                 </tr>
                             </table>
                     <td align=\"right\">";
-                        
+
     $output .= generate_pagination("mail_on.php?action=search&amp;order_by=$order_by&amp;dir=".!$dir, $all_record, $itemperpage, $start);
     $output .= "
                     </td>
@@ -229,7 +229,7 @@ function search() {
                     <th width=\"5%\">".$lang_mail['checked']."</th>
                 </tr>";
 
-    while ($mail = $sql->fetch_array($query))       
+    while ($mail = $sql->fetch_array($query))
     {
         $g = floor($mail[7]/10000);
         $mail[7] -= $g*10000;
@@ -237,7 +237,7 @@ function search() {
         $mail[7] -= $s*100;
         $c = $mail[7];
         $money = "";
-        
+
         if ($mail[7] > 0)
             $money = $g."<img src=\"./img/gold.gif\" /> ".$s."<img src=\"./img/silver.gif\" /> ".$c."<img src=\"./img/copper.gif\" /> ";
 
@@ -253,7 +253,7 @@ function search() {
                         <a style=\"padding:2px;\" href=\"$item_datasite{$mail[11]}\" target=\"_blank\">
                             <img class=\"bag_icon\" src=\"".get_item_icon($mail[11])."\" alt=\"\" />
                         </a>";
-                        
+
         //maketooltip("<img src=\"./img/up.gif\" alt=\"\">", $item_datasite{$mail[11]}, $mail[11], "item_tooltip", "target=\"_blank\"");
         $output .= "</td>
                     <td>".$mail[5]."</td>

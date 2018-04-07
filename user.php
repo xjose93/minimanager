@@ -22,18 +22,18 @@ function browse_users(&$sqlr, &$sqlc)
 
     //-------------------SQL Injection Prevention--------------------------------
     $start = (isset($_GET['start'])) ? $sqlr->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlr->quote_smart($_GET['order_by']) : 'id';
-    if (preg_match('/^[_[:lower:]]{1,15}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,15}$/', $order_by));
+    else
         $order_by='id';
 
     $dir = (isset($_GET['dir'])) ? $sqlr->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -44,16 +44,16 @@ function browse_users(&$sqlr, &$sqlc)
     $search_value = '';
 
     $order_by2 = $order_by;
-    if ($order_by == 'gmlevel') 
+    if ($order_by == 'gmlevel')
         $order_by = 'account_access.gmlevel';
-    elseif ($order_by == 'online') 
+    elseif ($order_by == 'online')
         $order_by = 'account.online';
     else
     {
         $order_by = 'account.'.$order_by2;
         unset($order_by2);
-    } 
-    
+    }
+
     // if we have a search request, if not we just return everything
     if(isset($_GET['search_value']) && isset($_GET['search_by']))
     {
@@ -62,7 +62,7 @@ function browse_users(&$sqlr, &$sqlc)
         $search_by = $sqlr->quote_smart($_GET['search_by']);
         $search_menu = array('username', 'id', 'gmlevel', 'greater_gmlevel', 'email', 'joindate', 'last_ip', 'failed_logins', 'last_login', 'online', 'banned', 'locked', 'expansion');
         if (in_array($search_by, $search_menu));
-        else 
+        else
             $search_by = 'username';
         unset($search_menu);
 
@@ -113,7 +113,7 @@ function browse_users(&$sqlr, &$sqlc)
     }
     // this is for multipage support
     $all_record = $sqlr->result($query_1,0);
-    unset($query_1);	
+    unset($query_1);
 
     //==========================top tage navigaion starts here========================
     // we start with a lead of 10 spaces,
@@ -295,7 +295,7 @@ function browse_users(&$sqlr, &$sqlc)
     }
     else
         $output .= '11';
-        
+
     $output .= '" class="hidden" align="right" width="25%">';
     $output .= generate_pagination('user.php?order_by='.$order_by.'&amp;dir='.(($dir) ? 0 : 1).( $search_value && $search_by ? '&amp;search_by='.$search_by.'&amp;search_value='.$search_value.'' : '' ).'', $all_record, $itemperpage, $start);
     $output .= '
@@ -305,7 +305,7 @@ function browse_users(&$sqlr, &$sqlc)
                                 <td colspan="8" align="left" class="hidden">';
     if($user_lvl >= $action_permission['delete'])
         makebutton($lang_user['del_selected_users'], 'javascript:do_submit(\'form1\',0)" type="wrn',230);
-        
+
     // backup is broken
     //if($user_lvl >= $action_permission['insert'])
     //    makebutton($lang_user['backup_selected_users'], 'javascript:do_submit(\'form1\',1)',230);
@@ -338,10 +338,10 @@ function del_user()
 {
     global $lang_global, $lang_user, $output, $realm_db, $action_permission;
     valid_login($action_permission['delete']);
-    
-    if(isset($_GET['check'])) 
+
+    if(isset($_GET['check']))
         $check = $_GET['check'];
-    else 
+    else
         redirect("user.php?error=1");
 
     $pass_array = "";
@@ -380,10 +380,10 @@ function del_user()
                         <table width=\"300\" class=\"hidden\">
                             <tr>
                                 <td>";
-                                
+
     makebutton($lang_global['yes'], "user.php?action=dodel_user$pass_array\" type=\"wrn" ,130);
     makebutton($lang_global['no'], "user.php\" type=\"def" ,130);
-    
+
     $output .= "
                                 </td>
                             </tr>
@@ -445,9 +445,9 @@ function dodel_user()
                     <table class=\"hidden\">
                         <tr>
                             <td>";
-                            
+
     makebutton($lang_user['back_browsing'], "user.php", 230);
-    
+
     $output .= "
                             </td>
                         </tr>
@@ -489,8 +489,8 @@ function backup_user()
             $fp = fopen("$subdir/$file_name_new", 'w') or die (error($lang_backup['file_write_err']));
             fwrite($fp, "CREATE DATABASE /*!32312 IF NOT EXISTS*/ {$realm_db['name']};\n")or die (error($lang_backup['file_write_err']));
             fwrite($fp, "USE {$realm_db['name']};\n\n")or die (error($lang_backup['file_write_err']));
-            
-            foreach ($tab_backup_user_realmd as $value) 
+
+            foreach ($tab_backup_user_realmd as $value)
             {
                 $acc_query = $sql->query("SELECT * FROM $value[0] WHERE $value[1] = $acc[0]");
                 $num_fields = $sql->num_fields($acc_query);
@@ -505,21 +505,21 @@ function backup_user()
                     for($count = 0; $count < $num_fields; $count++)
                     {
                         $result .= "`".$sql->field_name($acc_query,$count)."`";
-                        if ($count < ($num_fields-1)) 
+                        if ($count < ($num_fields-1))
                             $result .= ",";
                     }
                     $result .= ") VALUES \n";
-                    
+
                     for ($i =0; $i<$numrow; $i++)
                     {
                         $result .= "\t(";
                         $row = $sql->fetch_row($acc_query);
-                        
+
                         for($j=0; $j<$num_fields; $j++)
                         {
                             $row[$j] = addslashes($row[$j]);
                             $row[$j] = ereg_replace("\n","\\n",$row[$j]);
-                            
+
                             if (isset($row[$j]))
                             {
                                 if ($sql->field_type($acc_query,$j) == "int")
@@ -529,7 +529,7 @@ function backup_user()
                             }
                             else
                                 $result .= "''";
-                                
+
                             if ($j<($num_fields-1))
                                 $result .= ",";
                         }
@@ -564,15 +564,15 @@ function backup_user()
                         $numrow = $sql->num_rows($char_query);
                         $result = "LOCK TABLES $value[0] WRITE;\n";
                         $result .= "DELETE FROM $value[0] WHERE $value[1] = $char[0];\n";
-                        
+
                         if ($numrow)
                         {
                             $result .= "INSERT INTO $value[0] (";
-                            
+
                             for($count = 0; $count < $num_fields; $count++)
                             {
                                 $result .= "`".$sql->field_name($char_query,$count)."`";
-                                if ($count < ($num_fields-1)) 
+                                if ($count < ($num_fields-1))
                                     $result .= ",";
                             }
                             $result .= ") VALUES \n";
@@ -584,7 +584,7 @@ function backup_user()
                                 {
                                     $row[$j] = addslashes($row[$j]);
                                     $row[$j] = ereg_replace("\n","\\n",$row[$j]);
-                                    
+
                                     if (isset($row[$j]))
                                     {
                                         if ($sql->field_type($char_query,$j) == "int")
@@ -685,15 +685,15 @@ function add_new()
     $output .="
                                 <tr>
                                     <td>";
-    
+
     makebutton($lang_user['create_acc'], "javascript:do_submit_data()\" type=\"wrn",130);
-    
+
     $output .= "
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_global['back'], "javascript:window.history.back()\" type=\"def",130);
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -725,18 +725,18 @@ function doadd_new()
     //make sure username/pass at least 4 chars long and less than max
     if ((strlen($new_user) < 4) || (strlen($new_user) > 15))
         redirect("user.php?action=add_new&error=8");
-    
+
     //make sure it doesnt contain non english chars.
     if (!valid_alphabetic($new_user))
         redirect("user.php?action=add_new&error=9");
-        
+
     $result = $sqlc->query("SELECT username FROM account WHERE username = '$new_user'");
     //there is already someone with same username
     if ($sqlc->num_rows($result))
         redirect("user.php?action=add_new&error=7");
     else
         $last_ip = "0.0.0.0";
-        
+
     $new_mail = (isset($_GET['new_mail'])) ? $sqlc->quote_smart(trim($_GET['new_mail'])) : NULL;
     $locked = (isset($_GET['new_locked'])) ? $sqlc->quote_smart($_GET['new_locked']) : 0;
     $expansion = (isset($_GET['new_expansion'])) ? $sqlc->quote_smart($_GET['new_expansion']) : 0;
@@ -919,7 +919,7 @@ function edit_user()
                                     </tr>
                                     <tr>
                                         <td>{$lang_user['banned']}</td>";
-                                        
+
         $que = $sqlr->query("SELECT bandate, unbandate, bannedby, banreason FROM account_banned WHERE id = $id");
         if ($sqlr->num_rows($que))
         {
@@ -1096,15 +1096,15 @@ function edit_user()
                                             <td>";
         if($user_lvl >= $action_permission['delete'])
             makebutton($lang_user['del_acc'], "user.php?action=del_user&amp;check%5B%5D=$id\" type=\"wrn",130);
-            
+
         $output .= "
                                             </td>
                                             <td>";
         if($user_lvl >= $action_permission['update'])
             makebutton($lang_user['update_data'], "javascript:do_submit_data()",130);
-            
+
         makebutton($lang_global['back'], "javascript:window.history.back()\" type=\"def",130);
-        
+
         $output .= "
                                         </td>
                                     </tr>
@@ -1114,7 +1114,7 @@ function edit_user()
                         <br /><br />
                     </center>";
     }
-    else 
+    else
         error($lang_global['err_no_user']);
 }
 
@@ -1126,7 +1126,7 @@ function doedit_user()
 {
     global $lang_global, $realm_db, $mmfpm_db, $user_lvl, $user_name, $action_permission;
     valid_login($action_permission['update']);
-    
+
     if ( (!isset($_POST['pass'])||($_POST['pass'] === ''))
             && (!isset($_POST['mail'])||($_POST['mail'] === ''))
             && (!isset($_POST['expansion'])||($_POST['expansion'] === ''))
@@ -1162,9 +1162,9 @@ function doedit_user()
     $result = $sqlr->query("SELECT account.username, IFNULL(account_access.gmlevel,0) as gmlevel FROM account LEFT JOIN account_access ON account.id=account_access.id WHERE account.id = '$id'");
     if (($user_lvl <= $sqlr->result($result, 0, 'gmlevel')) && ($user_name != $sqlr->result($result, 0, 'username')))
         redirect("user.php?error=14");
-        
+
     $accgmlevel = $sqlr->result($result, 0, 'gmlevel');
-    
+
     if (!$banned)
         $sqlr->query("DELETE FROM account_banned WHERE id='$id'");
     else
@@ -1175,11 +1175,11 @@ function doedit_user()
                           VALUES ($id, ".time().",".(time()+(365*24*3600)).",'$user_name','$banreason', 1)");
     }
     $error = false;
-    
+
     $sqlr->query("UPDATE account SET email='$mail', $user_pass_change v=0,s=0,failed_logins='$failed',locked='$locked',expansion='$expansion' WHERE id='$id'");
     if (!$sqlr->affected_rows())
         $error = true;
-        
+
     if ($gmlevel != $accgmlevel) //gmlevel changed..
     {
         if ($gmlevel == 0 && $accgmlevel > 0)
@@ -1188,12 +1188,12 @@ function doedit_user()
             $sqlr->query("REPLACE INTO account_access (`id`,`gmlevel`,`RealmID`) VALUES ('$id','$gmlevel','-1')"); //RealmID needs to be fixed!!
         else
             $sqlr->query("UPDATE account_access SET gmlevel='$gmlevel' WHERE id='$id'");
-            
+
         $sqlr->query("SELECT IFNULL((SELECT gmlevel FROM account_access WHERE id='$id'),0)");
         if (!$sqlr->affected_rows() || $sqlr->result($result, 0) != $accgmlevel) //temporary errorhandling
             $error = true;
     }
-    
+
     if (doupdate_referral($referredby, $id) || $error)
         redirect("user.php?action=edit_user&error=13&id=$id");
     else

@@ -43,9 +43,9 @@ function char_talent(&$sqlr, &$sqlc)
                             <div id="tab_content">
                                 <h1>'.$lang_char['talents'].'</h1>
                                 <br />';
-              
+
             require_once 'core/char/char_header.php';
-      
+
             $output .= '
                                 <br /><br />
                                 <table class="lined" style="width: 550px;">
@@ -82,7 +82,7 @@ function char_talent(&$sqlr, &$sqlc)
 
                         $tabs[$tab['field_1']][$tab['field_2']][$tab['field_3']] = array($talent['spell'], '4', ($tab['field_8'] ? '2' : '5'));
                         $l += 4;
-                        
+
                         if ($tab['field_13'])
                             talent_dependencies($tabs, $tab, $l, $sqlm);
                     }
@@ -93,7 +93,7 @@ function char_talent(&$sqlr, &$sqlc)
 
                         $tabs[$tab['field_1']][$tab['field_2']][$tab['field_3']] = array($talent['spell'],'3', ($tab['field_7'] ? '2' : '5'));
                         $l += 3;
-                        
+
                         if ($tab['field_13'])
                             talent_dependencies($tabs, $tab, $l, $sqlm);
                     }
@@ -104,7 +104,7 @@ function char_talent(&$sqlr, &$sqlc)
 
                         $tabs[$tab['field_1']][$tab['field_2']][$tab['field_3']] = array($talent['spell'],'2', ($tab['field_6'] ? '2' : '5'));
                         $l += 2;
-                        
+
                         if ($tab['field_13'])
                             talent_dependencies($tabs, $tab, $l, $sqlm);
                     }
@@ -115,7 +115,7 @@ function char_talent(&$sqlr, &$sqlc)
 
                         $tabs[$tab['field_1']][$tab['field_2']][$tab['field_3']] = array($talent['spell'],'1', ($tab['field_5'] ? '2' : '5'));
                         $l += 1;
-                        
+
                         if ($tab['field_13'])
                             talent_dependencies($tabs, $tab, $l, $sqlm);
                     }
@@ -211,7 +211,7 @@ function char_talent(&$sqlr, &$sqlc)
                 }
                 else
                     $glyphs = array(0,0,0,0,0,0,0);
-                    
+
                 for($i=0;$i<6;++$i)
                 {
                   if ($glyphs[$i] && $glyphs[$i] > 0)
@@ -227,7 +227,7 @@ function char_talent(&$sqlr, &$sqlc)
                 $output .='
                                         </td>';
             }
-            
+
             //---------------Page Specific Data Ends here----------------------------
             //---------------Character Tabs Footer-----------------------------------
             $output .= '
@@ -238,7 +238,7 @@ function char_talent(&$sqlr, &$sqlc)
                             <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                             <br />
                         </center>
@@ -260,7 +260,7 @@ function talent_dependencies(&$tabs, &$tab, &$i, &$sqlm)
         {
             $tabs[$dep['field_1']][$dep['field_2']][$dep['field_3']] = array($dep['field_'.($tab['field_16'] + 1).''], ''.($tab['field_16'] + 1).'', (($tab['field_16'] < 4) ? ($dep['field_'.($tab['field_16'] + 2).''] ? '2' : '5') : '5'));
             $i += ($tab['field_16'] + 1);
-            
+
             if ($dep['field_13'])
                 talent_dependencies($tabs, $dep, $i, $sqlm);
         }

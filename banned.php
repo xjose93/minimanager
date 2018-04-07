@@ -20,15 +20,15 @@ function show_list()
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlr->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
+    if (is_numeric($start));
     else $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlr->quote_smart($_GET['order_by']) : "$key_field";
-    if (!preg_match("/^[_[:lower:]]{1,12}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,12}$/", $order_by))
         $order_by="$key_field";
 
     $dir = (isset($_GET['dir'])) ? $sqlr->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir=1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -51,10 +51,10 @@ function show_list()
         makebutton($lang_banned['add_to_banned'], "banned.php?action=add_entry\" type=\"wrn",180);
     if ($ban_type === "account_banned")
         makebutton($lang_banned['banned_ips'], "banned.php?ban_type=ip_banned",130);
-    else 
+    else
         makebutton($lang_banned['banned_accounts'], "banned.php?ban_type=account_banned",130);
     makebutton($lang_global['back'], "javascript:window.history.back()\" type=\"def",130);
-    
+
     $output .= "
                     </td>
                     <td align=\"right\">".generate_pagination("banned.php?action=show_list&amp;order_by=$order_by&amp;ban_type=$ban_type&amp;dir=".!$dir, $all_record, $itemperpage, $start)."</td>
@@ -124,16 +124,16 @@ function do_delete_entry()
     $sqlr = new SQL;
     $sqlr->connect($realm_db['addr'], $realm_db['user'], $realm_db['pass'], $realm_db['name']);
 
-    if(isset($_GET['ban_type'])) 
+    if(isset($_GET['ban_type']))
         $ban_type = $sqlr->quote_smart($_GET['ban_type']);
-    else 
+    else
         redirect("banned.php?error=1");
 
     $key_field = ($ban_type == "account_banned") ? "id" : "ip";
 
-    if(isset($_GET[$key_field])) 
+    if(isset($_GET[$key_field]))
         $entry = $sqlr->quote_smart($_GET[$key_field]);
-    else 
+    else
         redirect("banned.php?error=1");
 
     if($ban_type == 'account_banned')
@@ -192,15 +192,15 @@ function add_entry()
                         </tr>
                         <tr>
                             <td>";
-                            
+
     makebutton($lang_banned['ban_entry'], "javascript:do_submit()\" type=\"wrn",180);
-    
+
     $output .= "
                             </td>
                             <td>";
-                            
+
     makebutton($lang_global['back'], "banned.php\" type=\"def",130);
-    
+
     $output .= "
                             </td>
                         </tr>
@@ -277,28 +277,28 @@ switch ($err)
             <font class=\"error\">{$lang_global['empty_fields']}</font>
           </h1>";
         break;
-        
+
     case 2:
         $output .= "
           <h1>
             <font class=\"error\">{$lang_banned['err_del_entry']}</font>
           </h1>";
         break;
-        
+
     case 3:
         $output .= "
           <h1>
             <font class=\"error\">{$lang_banned['updated']}</font>
           </h1>";
         break;
-        
+
     case 4:
         $output .= "
           <h1>
             <font class=\"error\">{$lang_banned['acc_not_found']}</font>
           </h1>";
         break;
-        
+
     default: //no error
         $output .= "
           <h1>{$lang_banned['banned_list']}</h1>";
@@ -315,15 +315,15 @@ switch ($action)
     case "do_delete_entry":
         do_delete_entry();
         break;
-        
+
     case "add_entry":
         add_entry();
         break;
-    
+
     case "do_add_entry":
         do_add_entry();
         break;
-    
+
     default:
         show_list();
 }

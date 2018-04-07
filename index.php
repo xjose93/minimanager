@@ -90,8 +90,8 @@ function front(&$sqlr, &$sqlc, &$sqlm)
 
     //MOTD part
     $start_m = (isset($_GET['start_m'])) ? $sqlc->quote_smart($_GET['start_m']) : 0;
-    if (is_numeric($start_m)); 
-    else 
+    if (is_numeric($start_m));
+    else
         $start_m = 0;
 
     $sqlm = new SQL;
@@ -166,18 +166,18 @@ function front(&$sqlr, &$sqlc, &$sqlm)
     {
         //==========================$_GET and SECURE=================================
         $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-        if (is_numeric($start)); 
-        else 
+        if (is_numeric($start));
+        else
             $start = 0;
 
         $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'level';
-        if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by)); 
-        else 
+        if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by));
+        else
             $order_by = 'level';
 
         $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-        if (preg_match('/^[01]{1}$/', $dir)); 
-        else 
+        if (preg_match('/^[01]{1}$/', $dir));
+        else
             $dir = 1;
 
         $order_dir = ($dir) ? 'DESC' : 'ASC';

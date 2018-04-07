@@ -20,18 +20,18 @@ function browse_chars(&$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE========================
     $start = (isset($_GET['start'])) ? $sqlr->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlr->quote_smart($_GET['order_by']) : 'guid';
-    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by));
+    else
         $order_by = 'guid';
 
     $dir = (isset($_GET['dir'])) ? $sqlr->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -52,18 +52,18 @@ function browse_chars(&$sqlr, &$sqlc)
         $search_menu = array('name', 'guid', 'account', 'level', 'greater_level', 'guild', 'race', 'class', 'map', 'greater_rank', 'online', 'gold', 'item');
 
         if (in_array($search_by, $search_menu));
-        else 
+        else
             $search_by = 'name';
-            
+
         unset($search_menu);
 
         switch ($search_by)
         {
             //need to get the acc id from other table since input comes as name
             case "account":
-                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
                     redirect("char_list.php?error=2");
-                    
+
                 $result = $sqlr->query("SELECT id FROM account WHERE username LIKE '%$search_value%' LIMIT $start, $itemperpage");
 
                 $where_out = "characters.account IN (0 ";
@@ -77,39 +77,39 @@ function browse_chars(&$sqlr, &$sqlc)
                 break;
 
             case "level":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 1;
-                    
+
                 $where_out ="characters.level = $search_value";
                 break;
 
             case "greater_level":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 1;
-                    
+
                 $where_out ="characters.level > $search_value";
                 break;
 
             case "gold":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 1;
-                
+
                 $where_out ="characters.money > $search_value";
                 break;
 
             case "guild":
-                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+                if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
                     redirect("char_list.php?error=2");
-                    
+
                 $result = $sqlc->query("SELECT guildid FROM guild WHERE name LIKE '%$search_value%'");
                 $guildid = $sqlc->result($result, 0, 'guildid');
 
                 if (!$search_value)
                     $guildid = 0;
-                    
+
                 $Q1 = "SELECT guid FROM guild_member WHERE guildid = ";
                 $Q1 .= $guildid;
 
@@ -127,10 +127,10 @@ function browse_chars(&$sqlr, &$sqlc)
                 break;
 
             case "item":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 0;
-                    
+
                 $result = $sqlc->query("SELECT owner_guid FROM item_instance WHERE itemEntry = '$search_value'");
 
                 $where_out = "characters.guid IN (0 ";
@@ -144,25 +144,25 @@ function browse_chars(&$sqlr, &$sqlc)
                 break;
 
             case "greater_rank":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 0;
-                
+
                 $where_out ="characters.totalKills > $search_value";
                 break;
 
            /* case "highest_rank":
-                if (is_numeric($search_value)); 
-                else 
+                if (is_numeric($search_value));
+                else
                     $search_value = 0;
-                    
+
                 $where_out ="characters.totalKills = $search_value";
                 break; */
 
                 default:
-                    if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value)) 
+                    if (preg_match('/^[\t\v\b\f\a\n\r\\\"\'\? <>[](){}_=+-|!@#$%^&*~`.,0123456789\0]{1,30}$/', $search_value))
                         redirect("char_list.php?error=2");
-                        
+
                     $where_out ="characters.".$search_by." LIKE '%".$search_value."%'";
         }
         $sql_query = "SELECT characters.guid, characters.name, characters.account, characters.race, characters.class, characters.zone, characters.map, characters.online, characters.level, characters.gender, characters.logout_time, COALESCE(guild_member.guildid,0) AS gname FROM characters LEFT JOIN guild_member ON characters.guid = guild_member.guid WHERE $where_out AND name != '' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage";
@@ -271,10 +271,10 @@ function browse_chars(&$sqlr, &$sqlc)
         // to disalow lower lvl gm to  view accounts of other gms
         $result = $sqlr->query("SELECT `account_access`.`gmlevel`, `account`.`username` FROM account LEFT JOIN account_access ON account.id=account_access.id WHERE account.id ='$char[2]'");
         $owner_gmlvl = $sqlr->result($result, 0, 'gmlevel');
-        
+
         if ($owner_gmlvl == null)
             $owner_gmlvl = 0;
-            
+
         $owner_acc_name = $sqlr->result($result, 0, 'username');
         $lastseen = date('Y-m-d G:i:s', $char[10]);
 
@@ -348,7 +348,7 @@ function browse_chars(&$sqlr, &$sqlc)
                                 <td colspan="6" align="left" class="hidden">';
     if (($user_lvl >= $action_permission['delete']) || ($owner_acc_name == $user_name))
         makebutton($lang_char_list['del_selected_chars'], 'javascript:do_submit(\'form1\',0)" type="wrn', 220);
-        
+
     $output .= '
                                 </td>
                                 <td colspan="7" align="right" class="hidden">'.$lang_char_list['tot_chars'].' : '.$all_record.'</td>
@@ -369,9 +369,9 @@ function del_char_form(&$sqlc)
             $action_permission;
     valid_login($action_permission['delete']);
 
-    if(isset($_GET['check'])) 
+    if(isset($_GET['check']))
         $check = $_GET['check'];
-    else 
+    else
         redirect('char_list.php?error=1');
 
     $output .= '
@@ -405,7 +405,7 @@ function del_char_form(&$sqlc)
                             <td>';
     makebutton($lang_global['yes'], 'char_list.php?action=dodel_char'.$pass_array.'" type="wrn', 130);
     makebutton($lang_global['no'], 'char_list.php" type="def', 130);
-    
+
     unset($pass_array);
     $output .= '
                             </td>
@@ -426,9 +426,9 @@ function dodel_char(&$sqlc)
             $tab_del_user_characters;
     valid_login($action_permission['delete']);
 
-    if(isset($_GET['check'])) 
+    if(isset($_GET['check']))
         $check = $sqlc->quote_smart($_GET['check']);
-    else 
+    else
         redirect('char_list.php?error=1');
 
     $deleted_chars = 0;
@@ -447,7 +447,7 @@ function dodel_char(&$sqlc)
 
     $output .= '
                 <center>';
-                
+
     if ($deleted_chars)
         $output .= '
                     <h1>
@@ -458,7 +458,7 @@ function dodel_char(&$sqlc)
                     <h1>
                         <font class="error">'.$lang_char_list['no_chars_del'].'</font>
                     </h1>';
-                    
+
     unset($deleted_chars);
     $output .= '
                     <br /><br />';
@@ -495,7 +495,7 @@ switch ($err)
                 <font class=\"error\">{$lang_global['empty_fields']}</font>
             </h1>";
         break;
-        
+
     case 2:
         $output .= "
             <h1>
@@ -527,11 +527,11 @@ switch ($action)
     case "del_char_form":
         del_char_form($sqlc);
         break;
-        
+
     case "dodel_char":
         dodel_char($sqlc);
         break;
-        
+
     default:
         browse_chars($sqlr, $sqlc);
 }

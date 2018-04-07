@@ -144,9 +144,9 @@ function char_inv(&$sqlr, &$sqlc)
                         <div id="tab_content">
                             <h1>'.$lang_char['inventory'].'</h1>
                             <br />';
-              
+
             require_once 'core/char/char_header.php';
-              
+
             $output .= '
                             <br /><br />
                             <table class="lined" style="width: 700px;">
@@ -308,7 +308,7 @@ function char_inv(&$sqlr, &$sqlc)
                         }
                         $output .= '
                                         </th>';
-                    }   
+                    }
                     $output .= '
                                         <th>
                                         </th>
@@ -319,7 +319,7 @@ function char_inv(&$sqlr, &$sqlc)
                                         <td class="bank" align="center">
                                             <div style="width:'.(4*43).'px;height:'.(ceil($equip_bnk_bag_id[$t][1]/4)*41).'px;">';
                 $dsp=$equip_bnk_bag_id[$t][1]%4;
-                
+
                 if ($dsp)
                     $output .= '
                                                 <div class="no_slot"></div>';
@@ -344,7 +344,7 @@ function char_inv(&$sqlr, &$sqlc)
             unset($bank);
             $output .= '
                                         <td class="bank"></td>';
-                                        
+
             //---------------Page Specific Data Ends here----------------------------
             //---------------Character Tabs Footer-----------------------------------
             $output .= '
@@ -355,7 +355,7 @@ function char_inv(&$sqlr, &$sqlc)
                         <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                         <br />
                     </center>

@@ -24,7 +24,7 @@ function char_achievements(&$sqlr, &$sqlc)
     require_once 'core/char/char_security.php';
 
     $show_type = (isset($_POST['show_type'])) ? $sqlc->quote_smart($_POST['show_type']) : 0;
-    if (is_numeric($show_type)); 
+    if (is_numeric($show_type));
         else $show_type = 0;
 
     // getting character data from database
@@ -178,7 +178,7 @@ function char_achievements(&$sqlr, &$sqlc)
                     <div id="tab_content">
                         <h1>'.$lang_char['achievements'].'</h1>
                         <br />';
-            
+
             require_once 'core/char/char_header.php';
 
             $output .= '
@@ -201,25 +201,25 @@ function char_achievements(&$sqlr, &$sqlc)
                                             <option value="1"';
             if (1 == $show_type)
                 $output .= ' selected="selected"';
-                
+
             $output .= '>'.$lang_char['all'].'</option>
                                             <option value="0"';
             if (0 == $show_type)
                 $output .= ' selected="selected"';
-                
+
             $output .= '>'.$lang_char['earned'].'</option>
                                             <option value="2"';
             if (2 == $show_type)
                 $output .= ' selected="selected"';
-                
+
             $output .= '>'.$lang_char['incomplete'].'</option>
                                         </select>
                                     </form>
                                 </td>
                                 <td align="right">';
-                                
+
             makebutton('View', 'javascript:do_submit()', 130);
-            
+
             $output .= '
                                 </td>
                             </tr>
@@ -483,7 +483,7 @@ function char_achievements(&$sqlr, &$sqlc)
                 $output .= $temp;
             foreach($output_achieve_sub_cat as $temp)
                 $output .= $temp;
-                
+
             unset($temp);
             unset($output_achieve_main_cat);
             unset($output_achieve_sub_cat);
@@ -536,9 +536,9 @@ function char_achievements(&$sqlr, &$sqlc)
                     </div>
                 </div>
                 <br />';
-            
+
             require_once 'core/char/char_footer.php';
-          
+
             $output .= '
                 <br />
             </center>

@@ -16,7 +16,7 @@ function char_extra(&$sqlr, &$sqlc, &$sqlw)
             $realm_id, $characters_db, $world_db,
             $action_permission, $user_lvl, $user_name,
             $item_datasite;
-            
+
     // this page uses wowhead tooltops
     wowhead_tt();
 
@@ -44,7 +44,7 @@ function char_extra(&$sqlr, &$sqlc, &$sqlw)
                 <div id="tab_content">
                     <h1>'.$lang_char['extra'].'</h1>
                     <br />';
-    
+
             require_once 'core/char/char_header.php';
 
             //---------------Page Specific Data Starts Here--------------------------
@@ -60,7 +60,7 @@ function char_extra(&$sqlr, &$sqlc, &$sqlw)
 
             $sqlw = new SQL;
             $sqlw->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
-              
+
             $result = $sqlw->query('SELECT entry, description FROM item_template WHERE BagFamily = 8192');
             while($bag = $sqlw->fetch_assoc($result))
             {
@@ -88,9 +88,9 @@ function char_extra(&$sqlr, &$sqlc, &$sqlw)
 
             $output .= '
                     </table>';
-                  
+
             unset($bag);
-    
+
             //---------------Page Specific Data Ends Here--------------------------
 
             $output .= '

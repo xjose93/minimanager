@@ -16,18 +16,18 @@ function browse_tickets(&$sqlc)
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'guid';
-    if (preg_match('/^[_[:lower:]]{1,10}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,10}$/', $order_by));
+    else
         $order_by = 'guid';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -93,7 +93,7 @@ function browse_tickets(&$sqlc)
     }
     unset($query);
     unset($ticket);
-    
+
     $output .= "
                         <tr>
                             <td colspan=\"5\" align=\"right\" class=\"hidden\" width=\"25%\">";
@@ -124,7 +124,7 @@ function delete_tickets()
     global $lang_global, $characters_db, $realm_id, $action_permission;
     valid_login($action_permission['delete']);
 
-    if(!isset($_GET['check'])) 
+    if(!isset($_GET['check']))
         redirect("ticket.php?error=1");
 
     $sqlc = new SQL;
@@ -156,15 +156,15 @@ function edit_ticket()
     global  $lang_global, $lang_ticket, $output, $characters_db, $realm_id, $action_permission;
     valid_login($action_permission['update']);
 
-    if(!isset($_GET['id'])) 
+    if(!isset($_GET['id']))
         redirect("Location: ticket.php?error=1");
 
     $sqlc = new SQL;
     $sqlc->connect($characters_db[$realm_id]['addr'], $characters_db[$realm_id]['user'], $characters_db[$realm_id]['pass'], $characters_db[$realm_id]['name']);
 
     $id = $sqlc->quote_smart($_GET['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect("ticket.php?error=1");
 
     $query = $sqlc->query("SELECT gm_tickets.guid, gm_tickets.message text, `characters`.name
@@ -196,7 +196,7 @@ function edit_ticket()
                                 <tr>
                                     <td>";
         makebutton($lang_ticket['update'], "javascript:do_submit()\" type=\"wrn",130);
-        
+
         $output .= "
                                     </td>
                                     <td>
@@ -242,8 +242,8 @@ function do_edit_ticket()
 
     $new_text = $sqlc->quote_smart($_POST['new_text']);
     $id = $sqlc->quote_smart($_POST['id']);
-    if(is_numeric($id)); 
-    else 
+    if(is_numeric($id));
+    else
         redirect("ticket.php?error=1");
 
     $query = $sqlc->query("UPDATE gm_tickets SET message='$new_text' WHERE guid = '$id'");

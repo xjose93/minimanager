@@ -20,18 +20,18 @@ function char_quest(&$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 1;
-    if (is_numeric($order_by)); 
-    else 
+    if (is_numeric($order_by));
+    else
         $order_by=1;
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 0;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir=0;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -59,10 +59,10 @@ function char_quest(&$sqlr, &$sqlc)
                         <div id="tab_content">
                             <h1>'.$lang_char['quests'].'</h1>
                             <br />';
-              
+
             require_once 'core/char/char_header.php';
-              
-            $output .= '            
+
+            $output .= '
                             <br /><br />
                             <table class="lined" style="width: 550px;">
                                 <tr>
@@ -83,21 +83,21 @@ function char_quest(&$sqlr, &$sqlc)
                     $deplang = get_lang_id();
                     $query1 = $sqlc->query('SELECT Level, IFNULL('.($deplang<>0 ? '`title_loc'.$deplang.'`' : 'NULL').', title) as Title FROM `'.$world_db[$realmid]['name'].'`.`quest_template` LEFT JOIN `'.$world_db[$realmid]['name'].'`.`locales_quest` ON `quest_template`.`id` = `locales_quest`.`entry` WHERE `quest_template`.`id` = \''.$quest['quest'].'\'');
                     $quest_info = $sqlc->fetch_assoc($query1);
-                    
+
                     if(1 == $quest['status'])
                         array_push($quests_1, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title'], $quest['rewarded']));
                     else
                         array_push($quests_3, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title']));
                 }
-                
+
                 unset($quest);
                 unset($quest_info);
                 aasort($quests_1, $order_by, $dir);
                 $orderby = $order_by;
-                
+
                 if (2 < $orderby)
                     $orderby = 1;
-                    
+
                 aasort($quests_3, $orderby, $dir);
                 $all_record = count($quests_1);
 
@@ -111,9 +111,9 @@ function char_quest(&$sqlr, &$sqlc)
                                     <td><img src="img/aff_qst.png" width="14" height="14" alt="" /></td>
                                 </tr>';
                 }
-                
+
                 unset($quest_3);
-                
+
                 if(count($quests_1))
                 {
                     $output .= '
@@ -134,9 +134,9 @@ function char_quest(&$sqlr, &$sqlc)
                                     <th width="10%"><a href="char_quest.php?id='.$id.'&amp;realm='.$realmid.'&amp;start='.$start.'&amp;order_by=3&amp;dir='.$dir.'"'.($order_by == 3 ? ' class="'.$order_dir.'"' : '').'>'.$lang_char['rewarded'].'</a></th>
                                     <th width="5%"><img src="img/aff_tick.png" width="14" height="14" border="0" alt="" /></th>
                                 </tr>';
-                                
+
                     $i = 0;
-                    
+
                     foreach ($quests_1 as $data)
                     {
                         if($i < ($start+$itemperpage) && $i >= $start)
@@ -150,7 +150,7 @@ function char_quest(&$sqlr, &$sqlc)
                                 </tr>';
                         $i++;
                     }
-                    
+
                     unset($data);
                     unset($quest_1);
                     $output .= '
@@ -167,7 +167,7 @@ function char_quest(&$sqlr, &$sqlc)
                                 <tr>
                                     <td colspan="4"><p>'.$lang_char['no_act_quests'].'</p></td>
                                 </tr>';
-                                    
+
             //---------------Page Specific Data Ends here----------------------------
             //---------------Character Tabs Footer-----------------------------------
             $output .= '
@@ -177,7 +177,7 @@ function char_quest(&$sqlr, &$sqlc)
                         <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                         <br />
                     </center>

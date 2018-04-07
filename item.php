@@ -201,7 +201,7 @@ function search()
                             <td align=\"right\" colspan=\"3\">
                                 <select name=\"itemset\">
                                     <option value=\"\">{$lang_item_edit['all']}</option>";
-                                    
+
     $itemset_id = $sqlm->query("SELECT `id`, `field_1` FROM `dbc_itemset`");
     while($set = $sqlm->fetch_row($itemset_id))
         $output .= "
@@ -234,12 +234,12 @@ function search()
                         <tr>
                             <td align=\"right\"></td>
                             <td align=\"right\" colspan=\"4\">";
-                            
+
     if($user_lvl >= $action_permission['insert'])
         makebutton($lang_item_edit['add_new_item'], "item.php?action=add_new&error=3",130);
-        
+
     makebutton($lang_item_edit['search'], "javascript:do_submit()",130);
-    
+
     $output .= "
                             </td>
                             <td align=\"right\" colspan=\"2\">{$lang_item_edit['tot_items_in_db']}: $tot_items</td>
@@ -260,7 +260,7 @@ function do_search()
 {
     global $lang_global, $lang_item, $lang_item_edit, $output, $world_db, $realm_id, $item_datasite, $sql_search_limit, $itemperpage,
         $action_permission, $user_lvl;
-        
+
     valid_login($action_permission['read']);
     wowhead_tt();
 
@@ -325,9 +325,9 @@ function do_search()
                     <table class=\"top_hidden\">
                         <tr>
                             <td>";
-                    
+
     makebutton($lang_item_edit['new_search'], "item.php",130);
-    
+
     $output .= "
                             </td>
                             <td align=\"right\">{$lang_item_edit['items_found']} : $total_items_found : {$lang_global['limit']} $sql_search_limit</td>
@@ -374,7 +374,7 @@ function do_search()
 //########################################################################################################################
 function add_new() {
     global $lang_global, $lang_item, $lang_id_tab, $lang_item_edit, $output, $item_datasite, $action_permission, $user_lvl;
-    
+
     valid_login($action_permission['insert']);
     wowhead_tt();
 
@@ -1232,11 +1232,11 @@ function add_new() {
         <table class=\"hidden\">
             <tr>
                 <td>";
-                
+
     makebutton($lang_item_edit['update'], "javascript:do_submit('form1',0)",180);
     makebutton($lang_item_edit['export_sql'], "javascript:do_submit('form1',1)",180);
     makebutton($lang_item_edit['search_items'], "item.php",180);
-       
+
     $output .= "
                 </td>
             </tr>
@@ -1255,7 +1255,7 @@ function edit() {
 
     valid_login($action_permission['read']);
 
-    if (!isset($_GET['entry'])) 
+    if (!isset($_GET['entry']))
         redirect("item.php?error=1");
 
     $sql = new SQL;
@@ -1290,7 +1290,7 @@ function edit() {
                                 <li><a href=\"#\" onclick=\"return showPane('pane7', this)\">{$lang_item_edit['sock_tab']}</a></li>
                                 <li><a href=\"#\" onclick=\"return showPane('pane6', this)\">{$lang_item_edit['req_tab']}</a></li>
                                 <li><a href=\"#\" onclick=\"return showPane('pane8', this)\">{$lang_item_edit['info']}</a></li>";
-        if ($item['DisenchantID']) 
+        if ($item['DisenchantID'])
             $output .= "
                                 <li><a href=\"#\" onclick=\"return showPane('pane9', this)\">{$lang_item_edit['disenchant_tab']}</a></li>";
         $output .= "
@@ -1373,7 +1373,7 @@ function edit() {
           11 => array(2 => "", 3 => ""),
           13 => array(0 => "", 1 => "")
         );
-        
+
         $subclass[$item['class']][$item['subclass']] = " selected=\"selected\" ";
 
         $output .= "
@@ -1607,7 +1607,7 @@ function edit() {
                                 </tr>
                                 <tr>
                                 <tr class=\"large_bold\"><td colspan=\"8\" class=\"hidden\" align=\"left\">{$lang_item_edit['materials']}:</td></tr>";
-                                
+
         unset($bagfamily);
 
         $Material = array( -1 => "", 0 => "", 1 => "", 2 => "", 3 => "", 4 => "", 5 => "", 6 => "", 7 => "", 8 => "");
@@ -2129,7 +2129,7 @@ function edit() {
             if ($item['AllowableClass'] & 512) $AllowableClass[512] = " selected=\"selected\" ";
             if ($item['AllowableClass'] & 1024) $AllowableClass[1024] = " selected=\"selected\" ";
         }
-    
+
         $output .= "
                         <td>".makeinfocell($lang_item_edit['allow_class'],$lang_item_edit['allow_class_desc'])."</td>
                         <td>
@@ -2154,7 +2154,7 @@ function edit() {
                      256 => "", 512 => "");
 
         if($item['AllowableRace'] == -1) $AllowableRace[-1] = " selected=\"selected\" ";
-        else 
+        else
         {
             if ($item['AllowableRace'] & 1) $AllowableRace[1] = " selected=\"selected\" ";
             if ($item['AllowableRace'] & 2) $AllowableRace[2] = " selected=\"selected\" ";
@@ -2317,7 +2317,7 @@ function edit() {
                         <th width=\"25%\">{$lang_item_edit['mob_drop_chance']}</th>
                         <th width=\"25%\">{$lang_item_edit['mob_quest_drop_chance']}</th>
                     </tr>";
-                    
+
         $result2 = $sql->query("SELECT entry,ChanceOrQuestChance,`groupid` FROM creature_loot_template WHERE item = {$item['entry']} ORDER BY `groupid`,ChanceOrQuestChance DESC LIMIT 5");
         while ($info = $sql->fetch_row($result2))
         {
@@ -2369,7 +2369,7 @@ function edit() {
         $result2 = $sql->query("SELECT quest_template.Id,IFNULL(".($deplang<>0?"title_loc$deplang":"NULL").",`title`) as title,Level FROM quest_template LEFT JOIN locales_quest ON quest_template.Id = locales_quest.entry WHERE ( SourceItemId = {$item['entry']} OR RequiredItemId1 = {$item['entry']} OR
                             RequiredItemId2 = {$item['entry']} OR RequiredItemId3 = {$item['entry']} OR RequiredItemId4 = {$item['entry']} OR RewardItemId1 = {$item['entry']} OR
                             RewardItemId2 = {$item['entry']} OR RewardItemId3 = {$item['entry']} OR RewardItemId4 = {$item['entry']} ) ORDER BY Level DESC");
-                          
+
         if ($sql->num_rows($result2))
         {
             $output .= "
@@ -2400,7 +2400,7 @@ function edit() {
                     </tr>";
             }
         }
-    
+
         $output .= "
                     </tr>
                 </table>
@@ -2531,12 +2531,12 @@ function edit() {
 //########################################################################################################################
 function do_update() {
     global $world_db, $realm_id, $action_permission, $user_lvl;
-    
+
     valid_login($action_permission['update']);
 
-    if (!isset($_POST['type']) || $_POST['type'] === '') 
+    if (!isset($_POST['type']) || $_POST['type'] === '')
         redirect("item.php?error=1");
-    if (!isset($_POST['entry']) || $_POST['entry'] === '') 
+    if (!isset($_POST['entry']) || $_POST['entry'] === '')
         redirect("item.php?error=1");
 
     $sql = new SQL;
@@ -3020,15 +3020,15 @@ function do_update() {
             {
                 $sql->close();
                 redirect("item.php?action=edit&entry=$entry&error=6");
-            } 
-            else 
+            }
+            else
             {
                 if ($sql_query != "UPDATE item_template SET  ")
                 {
                     $sql_query[strlen($sql_query)-1] = " ";
                     $sql_query .= " WHERE entry = '$entry';\n";
-                } 
-                else 
+                }
+                else
                     $sql_query = "";
             }
 
@@ -3043,14 +3043,14 @@ function do_update() {
                 foreach($del_de_items as $item_id)
                     $sql_query .= "DELETE FROM disenchant_loot_template WHERE entry = $DisenchantID AND item = $item_id;\n";
             }
-        } 
-        else 
+        }
+        else
         {
             $sql->close();
             redirect("item.php?error=5");
         }
-    } 
-    else 
+    }
+    else
     {
         $sql->close();
         redirect("item.php?error=5");
@@ -3063,11 +3063,11 @@ function do_update() {
         Header("Content-Disposition: attachment; filename=itemid_$entry.sql");
         echo $sql_query;
         exit();
-    } 
-    else 
+    }
+    else
     {
         $sql_query = explode(';',$sql_query);
-        foreach($sql_query as $tmp_query) 
+        foreach($sql_query as $tmp_query)
             if(($tmp_query)&&($tmp_query != "\n")) $result = $sql->query($tmp_query);
         $sql->close();
     }
@@ -3085,9 +3085,9 @@ function delete()
     global $lang_global, $lang_item_edit, $output, $action_permission, $user_lvl;
     valid_login($action_permission['delete']);
 
-    if(isset($_GET['entry'])) 
+    if(isset($_GET['entry']))
         $entry = $_GET['entry'];
-    else 
+    else
         redirect("item.php?error=1");
 
     $output .= "
@@ -3121,9 +3121,9 @@ function do_delete()
     global $world_db, $realm_id, $action_permission, $user_lvl;
     valid_login($action_permission['delete']);
 
-    if(isset($_GET['entry'])) 
+    if(isset($_GET['entry']))
         $entry = $_GET['entry'];
-    else 
+    else
         redirect("item.php?error=1");
 
     $sqlw = new SQL;

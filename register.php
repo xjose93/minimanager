@@ -6,18 +6,18 @@ require_once("header.php");
 //#####################################################################################################
 function do_verify_email() {
     global $user_name, $authkey, $mail, $from_mail, $title, $mailer_type, $smtp_cfg;
-    
+
     require_once("libs/mailer/class.phpmailer.php");
-    
+
     $mail2 = new PHPMailer();
     $mail2->Mailer = $mailer_type;
-    
+
     if ($mailer_type == "smtp")
     {
         $mail2->Host = $smtp_cfg['host'];
         $mail2->Port = $smtp_cfg['port'];
         $mail2->SMTP_sec = $smtp_cfg['sec'];
-        
+
         if($smtp_cfg['user'] != '') {
             $mail2->SMTPAuth  = true;
             $mail2->Username  = $smtp_cfg['user'];
@@ -37,11 +37,11 @@ function do_verify_email() {
     $mail2->Body = $body;
     $mail2->AddAddress($mail);
 
-    if(!$mail2->Send()) 
+    if(!$mail2->Send())
     {
         $mail2->ClearAddresses();
         redirect("register.php?&err=11&usr=".$mail2->ErrorInfo);
-    } 
+    }
     else
         return "Excellent job!";
 }
@@ -57,11 +57,11 @@ function doregister(){
 
     if (empty($_POST['pass']) || empty($_POST['email']) || empty($_POST['username']))
         redirect("register.php?err=1");
-	
+
     if (($enable_server_code) == true && ($_POST['server_code']) != ($server_code))
         redirect("register.php?err=16");
 
-    if ($disable_acc_creation) 
+    if ($disable_acc_creation)
         redirect("register.php?err=4");
 
     $last_ip =  (getenv('HTTP_X_FORWARDED_FOR')) ? getenv('HTTP_X_FORWARDED_FOR') : getenv('REMOTE_ADDR');
@@ -76,31 +76,31 @@ function doregister(){
             $vmask = explode('.', $mask);
             $v_count = 4;
             $i = 0;
-            
+
             foreach($vmask as $range)
             {
                 $vmask_h = explode('-', $range);
-                
+
                 if (isset($vmask_h[1]))
                 {
-                    if (($vmask_h[0]>=$user_ip_mask[$i]) && ($vmask_h[1]<=$user_ip_mask[$i])) 
+                    if (($vmask_h[0]>=$user_ip_mask[$i]) && ($vmask_h[1]<=$user_ip_mask[$i]))
                         $v_count--;
                 }
                 else
                 {
-                    if ($vmask_h[0] == $user_ip_mask[$i]) 
+                    if ($vmask_h[0] == $user_ip_mask[$i])
                         $v_count--;
                 }
                 $i++;
             }
-            
+
             if (!$v_count)
             {
                 $qFlag++;
                 break;
             }
         }
-        if (!$qFlag) 
+        if (!$qFlag)
             redirect("register.php?err=9&usr=$last_ip");
     }
 
@@ -119,7 +119,7 @@ function doregister(){
     }
 
     //make sure it doesnt contain non english chars.
-    if (!ctype_alnum($user_name)) 
+    if (!ctype_alnum($user_name))
     {
         $sql->close();
         redirect("register.php?err=6");
@@ -127,7 +127,7 @@ function doregister(){
 
     //make sure the mail is valid mail format
     $mail = $sql->quote_smart(trim($_POST['email']));
-    if ((!filter_var($mail, FILTER_VALIDATE_EMAIL))||(strlen($mail) > 224)) 
+    if ((!filter_var($mail, FILTER_VALIDATE_EMAIL))||(strlen($mail) > 224))
     {
         $sql->close();
         redirect("register.php?err=7");
@@ -150,7 +150,7 @@ function doregister(){
         $sql->close();
         redirect("register.php?err=14");
     }
-  
+
     //Username check
     $result = $sql->query("SELECT username FROM account WHERE username='$user_name' $per_ip");
     if ($sql->num_rows($result))
@@ -165,22 +165,22 @@ function doregister(){
         $sql->close();
         redirect("register.php?err=3&usr=$user_name");
     }
-    else 
+    else
     {
         if ($expansion_select)
             $expansion = (isset($_POST['expansion'])) ? $sql->quote_smart($_POST['expansion']) : 0;
-        else 
+        else
             $expansion = $defaultoption;
 
-        if ($require_account_verify) 
+        if ($require_account_verify)
         {
             $sql2 = new SQL;
             $sql2->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
             $query2_result = $sql2->query("SELECT * FROM mm_account WHERE username = '$user_name' OR email = '$mail'");
-            
-            if ($sql2->num_rows($query2_result) > 0) 
+
+            if ($sql2->num_rows($query2_result) > 0)
               redirect("register.php?err=15");
-            else 
+            else
             {
                 $client_ip = $_SERVER['REMOTE_ADDR'];
                 $authkey = sha1($client_ip . time());
@@ -191,7 +191,7 @@ function doregister(){
             }
             $sql2->close();
         }
-        else 
+        else
         {
             $result = $sql->query("INSERT INTO account (username,sha_pass_hash,email, joindate,last_ip,failed_logins,locked,last_login,expansion)
                                    VALUES (UPPER('$user_name'),'$pass','$mail',now(),'$last_ip',0,$create_acc_locked,NULL,$expansion)");
@@ -205,17 +205,17 @@ function doregister(){
         if ($send_mail_on_creation)
         {
             require_once("libs/mailer/class.phpmailer.php");
-            
+
             $mailer = new PHPMailer();
             $mailer->Mailer = $mailer_type;
-            
+
             if ($mailer_type == "smtp")
             {
                 $mailer->Host = $smtp_cfg['host'];
                 $mailer->Port = $smtp_cfg['port'];
                 $mailer->SMTP_sec = $smtp_cfg['sec'];
-                
-                if($smtp_cfg['user'] != '') 
+
+                if($smtp_cfg['user'] != '')
                 {
                     $mailer->SMTPAuth  = true;
                     $mailer->Username  = $smtp_cfg['user'];
@@ -247,7 +247,7 @@ function doregister(){
             $mailer->ClearAddresses();
         }
 
-        if ($result) 
+        if ($result)
             redirect("login.php?error=6");
     }
 }
@@ -308,8 +308,8 @@ function register(){
                                         <input type=\"text\" name=\"email\" size=\"45\" maxlength=\"225\" /><br />
                                         {$lang_register['use_valid_mail']}</td>
                                 </tr>";
-                                
-    if ( $enable_captcha ) 
+
+    if ( $enable_captcha )
         $output .= "
                                 <tr>
                                     <td></td>
@@ -321,7 +321,7 @@ function register(){
                                         <input type=\"text\" name=\"security_code\" autocomplete=\"off\" size=\"45\" /><br />
                                     </td>
                                 </tr>";
-								
+
 	if ( $enable_server_code )
         $output .= "
                                 <tr>
@@ -330,8 +330,8 @@ function register(){
                                         <input type=\"text\" name=\"server_code\" autocomplete=\"off\" size=\"45\" /><br />
                                     </td>
                                 </tr>";
-    
-    if ( $expansion_select ) 
+
+    if ( $expansion_select )
         $output .= "
                                 <tr>
                                     <td valign=\"top\">{$lang_register['acc_type']}:</td>
@@ -361,20 +361,20 @@ function register(){
     $terms = "
                                         <textarea rows=\'18\' cols=\'80\' readonly=\'readonly\'>";
     $fp = fopen("mail_templates/terms.tpl", 'r') or die (error("Couldn't Open terms.tpl File!"));
-    while (!feof($fp)) 
+    while (!feof($fp))
         $terms .= fgets($fp, 1024);
     fclose($fp);
     $terms .= "
                                         </textarea>";
 
     makebutton($lang_register['create_acc_button'], "javascript:answerBox('{$lang_register['terms']}<br />$terms', 'javascript:do_submit_data()')",150);
-    
+
     $output .= "
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_global['back'], "login.php", 328);
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -391,7 +391,7 @@ function register(){
 //#####################################################################################################
 function pass_recovery(){
     global $lang_register, $lang_global, $output;
-    
+
     $output .= "
                 <center>
                     <fieldset class=\"half_frame\">
@@ -414,15 +414,15 @@ function pass_recovery(){
                                 </tr>
                                 <tr>
                                     <td>";
-                                    
+
     makebutton($lang_register['recover_pass'], "javascript:do_submit()",150);
-    
+
     $output .= "
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_global['back'], "javascript:window.history.back()", 328);
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -439,7 +439,7 @@ function pass_recovery(){
 function do_pass_recovery(){
     global $lang_global, $realm_db, $from_mail, $mailer_type, $smtp_cfg, $title;
 
-    if ( empty($_POST['username']) || empty($_POST['email']) ) 
+    if ( empty($_POST['username']) || empty($_POST['email']) )
         redirect("register.php?action=pass_recovery&err=1");
 
     $sql = new SQL;
@@ -453,17 +453,17 @@ function do_pass_recovery(){
     if ($sql->num_rows($result) == 1)
     {
         require_once("libs/mailer/class.phpmailer.php");
-        
+
         $mail = new PHPMailer();
         $mail->Mailer = $mailer_type;
-        
+
         if ($mailer_type == "smtp")
         {
             $mail->Host = $smtp_cfg['host'];
             $mail->Port = $smtp_cfg['port'];
             $mail->SMTP_sec = $smtp_cfg['sec'];
-            
-            if($smtp_cfg['user'] != '') 
+
+            if($smtp_cfg['user'] != '')
             {
                 $mail->SMTPAuth  = true;
                 $mail->Username  = $smtp_cfg['user'];
@@ -493,18 +493,18 @@ function do_pass_recovery(){
         $mail->Body = $body;
         $mail->AddAddress($email_addr);
 
-        if(!$mail->Send()) 
+        if(!$mail->Send())
         {
             $mail->ClearAddresses();
             redirect("register.php?action=pass_recovery&err=11&usr=".$mail->ErrorInfo);
-        } 
-        else 
+        }
+        else
         {
             $mail->ClearAddresses();
             redirect("register.php?action=pass_recovery&err=12");
         }
-    } 
-    else 
+    }
+    else
         redirect("register.php?action=pass_recovery&err=10");
 }
 
@@ -515,7 +515,7 @@ function do_pass_recovery(){
 function do_pass_activate(){
     global $lang_global, $realm_db;
 
-    if (empty($_GET['h']) || empty($_GET['p'])) 
+    if (empty($_GET['h']) || empty($_GET['p']))
         redirect("register.php?action=pass_recovery&err=1");
 
     $sql = new SQL;
@@ -530,15 +530,15 @@ function do_pass_activate(){
     {
         $username = $sql->result($result, 0, 'username');
         $id = $sql->result($result, 0, 'id');
-        
+
         if (substr(sha1(strtoupper($sql->result($result, 0, 'username'))),0,7) == $pass)
         {
             $sql->query("UPDATE account SET sha_pass_hash=SHA1(CONCAT(UPPER('$username'),':',UPPER('$pass'))), v=0, s=0 WHERE id = '$id'");
             redirect("login.php");
         }
 
-    } 
-    else 
+    }
+    else
         redirect("register.php?action=pass_recovery&err=1");
 
     redirect("register.php?action=pass_recovery&err=1");
@@ -550,7 +550,7 @@ function do_pass_activate(){
 //#####################################################################################################
 $err = (isset($_GET['err'])) ? $_GET['err'] : NULL;
 
-if (isset($_GET['usr'])) 
+if (isset($_GET['usr']))
     $usr = $_GET['usr'];
 else
     $usr = NULL;

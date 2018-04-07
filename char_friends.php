@@ -19,13 +19,13 @@ function char_friends(&$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE========================
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'name';
-    if (preg_match('/^[[:lower:]]{1,6}$/', $order_by)); 
-    else 
+    if (preg_match('/^[[:lower:]]{1,6}$/', $order_by));
+    else
         $order_by = 'name';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir = 1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -64,9 +64,9 @@ function char_friends(&$sqlr, &$sqlc)
                     <div id="tab_content">
                         <h1>'.$lang_char['friends'].'</h1>
                         <br />';
-              
+
             require_once 'core/char/char_header.php';
-                    
+
             $output .= '
                         <br /><br />
                         <table class="hidden"  style="width: 1%;">
@@ -106,7 +106,7 @@ function char_friends(&$sqlr, &$sqlc)
                                                 <a href="char.php?id='.$data['guid'].'">'.$data['name'].'</a>';
                     else
                         $output .= $data['name'];
-                        
+
                     $output .='
                                             </td>
                                             <td><img src="img/c_icons/'.$data['race'].'-'.$data['gender'].'.gif" onmousemove="toolTip(\''.char_get_race_name($data['race']).'\', \'item_tooltip\')" onmouseout="toolTip()" alt="" /></td>
@@ -185,7 +185,7 @@ function char_friends(&$sqlr, &$sqlc)
                                             <th width="1%"><a href="char_friends.php?id='.$id.'&amp;realm='.$realmid.'&amp;order_by=zone&amp;dir='.$dir.'"'.($order_by==='zone '.$order_dir.', map' ? ' class="'.$order_dir.'"' : '').'>'.$lang_char['zone'].'</a></th>
                                             <th width="1%"><a href="char_friends.php?id='.$id.'&amp;realm='.$realmid.'&amp;order_by=online&amp;dir='.$dir.'"'.($order_by==='online' ? ' class="'.$order_dir.'"' : '').'>'.$lang_char['online'].'</a></th>
                                         </tr>';
-                                        
+
                 while ($data = $sqlc->fetch_assoc($result))
                 {
                     $char_gm_level=$sqlr->result($sqlr->query('SELECT gmlevel FROM account_access WHERE id = '.$data['account'].''), 0, 'gmlevel');
@@ -262,7 +262,7 @@ function char_friends(&$sqlr, &$sqlc)
                 <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                 <br />
             </center>

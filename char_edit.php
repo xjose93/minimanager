@@ -15,7 +15,7 @@ function edit_char() { //form needs update, uneditable fields have been removed 
     wowhead_tt();
 
     valid_login($action_permission['delete']);
-    if (empty($_GET['id'])) 
+    if (empty($_GET['id']))
         error($lang_global['empty_fields']);
 
     $sql = new SQL;
@@ -49,26 +49,26 @@ function edit_char() { //form needs update, uneditable fields have been removed 
             $char = $sql->fetch_assoc($result);
             $eq_data = explode(' ',$char['equipmentCache']);
 
-            if($char['online']) 
+            if($char['online'])
                 $online = "<font class=\"error\">{$lang_char['online']}</font>{$lang_char['edit_offline_only_char']}";
-            else 
+            else
                 $online = $lang_char['offline'];
 
             if($char['guildid'])
             {
                 $query = $sql->query("SELECT name FROM guild WHERE guildid ='{$char['guildid']}'");
                 $guild_name = $sql->result($query, 0, 'name');
-                if ($user_lvl > 0 ) 
+                if ($user_lvl > 0 )
                     $guild_name = "<a href=\"guild.php?action=view_guild&amp;error=3&amp;id={$char['guildid']}\" >$guild_name</a>";
                 if ($char['grank'])
                 {
                     $guild_rank_query = $sql->query("SELECT rname FROM guild_rank WHERE guildid ='{$char['guildid']}' AND rid='{$char['grank']}'");
                     $guild_rank = $sql->result($guild_rank_query, 0, 'rname');
-                } 
-                else 
+                }
+                else
                     $guild_rank = $lang_char['guild_leader'];
-            } 
-            else 
+            }
+            else
             {
                 $guild_name = $lang_global['none'];
                 $guild_rank = $lang_global['none'];
@@ -169,7 +169,7 @@ function edit_char() { //form needs update, uneditable fields have been removed 
                         $inv[$count][0] = $slot[3];
                         $inv[$count][1] = $slot[2];
                     }
-                } 
+                }
                 else
                 {
                     $count++;
@@ -197,7 +197,7 @@ function edit_char() { //form needs update, uneditable fields have been removed 
                                                         <br />
                                                         <input type=\"checkbox\" name=\"check[]\" value=\"{$inv[$i][1]}\" />
                                                     </td>";
-                if ($j == 15) 
+                if ($j == 15)
                 {
                     $output .= "</tr><tr align=\"center\">";
                     $j = 0;
@@ -217,7 +217,7 @@ function edit_char() { //form needs update, uneditable fields have been removed 
             makebutton($lang_char['to_char_view'], "char.php?id=$id",160);
             makebutton($lang_char['del_char'], "char_list.php?action=del_char_form&amp;check%5B%5D=$id",160);
             makebutton($lang_global['back'], "javascript:window.history.back()",160);
-            
+
             $output .= "
                                         </td>
                                     </tr>
@@ -235,8 +235,8 @@ function edit_char() { //form needs update, uneditable fields have been removed 
             error($lang_char['no_permission']);
             exit();
         }
-    } 
-    else 
+    }
+    else
         error($lang_char['no_char_found']);
 }
 
@@ -248,7 +248,7 @@ function do_edit_char() {
     global $lang_global, $lang_char, $output, $realm_db,
             $characters_db, $realm_id, $action_permission, $user_lvl, $world_db;
     valid_login($action_permission['delete']);
-    if (empty($_GET['id']) || empty($_GET['name'])) 
+    if (empty($_GET['id']) || empty($_GET['name']))
         error($lang_global['empty_fields']);
 
     $sql = new SQL;
@@ -271,50 +271,50 @@ function do_edit_char() {
             $new_owner_name = $_GET['owner_name'];
             $query = $sql->query("SELECT id FROM account WHERE username ='$new_owner_name'");
             $new_owner_acc_id = $sql->result($query, 0, 'id');
-            
-            if ($owner_acc_id != $new_owner_acc_id)  
+
+            if ($owner_acc_id != $new_owner_acc_id)
             {
                 $max_players = $sql->query("SELECT numchars FROM realmcharacters WHERE acctid ='$new_owner_acc_id'");
                 $max_players = $max_players[0];
-                
+
                 if($max_players <= 9)
                     $result = $sql->query("UPDATE `{$characters_db[$realm_id]['name']}`.`characters` SET account = $new_owner_acc_id WHERE guid = $id"); //there should be a seperate SQL-object for characterdb. what if realmdbuser can't access characterdb?
-                else 
+                else
                     redirect("char_edit.php?action=edit_char&id=$id&error=5");
             }
-            
+
             if ($user_lvl > $owner_gmlvl)
             {
-                if(isset($_GET['check'])) 
+                if(isset($_GET['check']))
                     $check = $sql->quote_smart($_GET['check']);
-                else 
+                else
                     $check = NULL;
 
                 $new_name = $sql->quote_smart($_GET['name']);
 
-                if (isset($_GET['tot_time'])) 
+                if (isset($_GET['tot_time']))
                     $new_tot_time = $sql->quote_smart($_GET['tot_time']);
-                else 
+                else
                     $new_tot_time =  0;
-                    
-                if (isset($_GET['money'])) 
+
+                if (isset($_GET['money']))
                     $new_money = $sql->quote_smart($_GET['money']);
-                else 
+                else
                     $new_money =  0;
-                    
-                if (isset($_GET['arena_points'])) 
+
+                if (isset($_GET['arena_points']))
                     $new_arena_points = $sql->quote_smart($_GET['arena_points']);
-                else 
+                else
                     $new_arena_points =  0;
-                    
-                if (isset($_GET['honor_points'])) 
+
+                if (isset($_GET['honor_points']))
                     $new_honor_points = $sql->quote_smart($_GET['honor_points']);
-                else 
+                else
                     $new_honor_points =  0;
-                    
-                if (isset($_GET['total_kills'])) 
+
+                if (isset($_GET['total_kills']))
                     $new_total_kills = $sql->quote_smart($_GET['total_kills']);
-                else 
+                else
                     $new_total_kills =  0;
 
                 if ((!is_numeric($new_tot_time))||(!is_numeric($new_money))||(!is_numeric($new_arena_points))||(!is_numeric($new_honor_points)))
@@ -357,7 +357,7 @@ function do_edit_char() {
                         "a18" => EQ_DATA_OFFSET_EQU_TABARD
                     );
 
-                    foreach ($check as $item_num) 
+                    foreach ($check as $item_num)
                     {
                         //deleting equiped items
                         if ($item_num[0] == "a")
@@ -370,54 +370,54 @@ function do_edit_char() {
 
                             $sql->query("DELETE FROM character_inventory WHERE guid = '$id' AND slot = $item_num AND bag = 0");
                             $sql->query("DELETE FROM item_instance WHERE guid = '$item_inst_id' AND owner_guid = '$id'");
-                        } 
-                        else 
+                        }
+                        else
                         { //deleting inv/bank items
                             $sql->query("DELETE FROM character_inventory WHERE guid = '$id' AND item = '$item_num'");
                             $sql->query("DELETE FROM item_instance WHERE guid = '$item_num' AND owner_guid = '$id'");
                         }
                     }
                 }
-    
+
                 $data = implode(' ',$eq_data);
 
                 if ($tp_to)
                 {
                     $query = $sql->query("SELECT map, position_x, position_y, position_z, orientation FROM `".$world_db[$realm_id]['name']."`.`game_tele` WHERE LOWER(name) = '".strtolower($tp_to)."'");
                     $tele = $sql->fetch_row($query);
-                    
-                    if($tele) 
+
+                    if($tele)
                         $teleport = "map='$tele[0]', position_x='$tele[1]', position_y='$tele[2]', position_z='$tele[3]', orientation='$tele[4]',";
-                    else 
+                    else
                         error($lang_char['no_tp_location']);
-                } 
-                else 
+                }
+                else
                     $teleport = "map='$map', position_x='$x', position_y='$y', position_z='$z',";
 
                 $result = $sql->query("UPDATE characters SET equipmentCache = '$data', name = '$new_name', $teleport totaltime = '$new_tot_time', money = '$new_money', arenaPoints = '$new_arena_points', totalHonorPoints = '$new_honor_points', totalKills = '$new_total_kills' WHERE guid = $id");
                 $sql->close();
                 unset($sql);
 
-                if ($result) 
+                if ($result)
                     redirect("char_edit.php?action=edit_char&id=$id&error=3");
-                else 
+                else
                     redirect("char_edit.php?action=edit_char&id=$id&error=4");
-            } 
-            else 
+            }
+            else
             {
                 $sql->close();
                 unset($sql);
                 error($lang_char['no_permission']);
             }
-        } 
-        else 
+        }
+        else
         {
             $sql->close();
             unset($sql);
             redirect("char_edit.php?action=edit_char&id=$id&error=2");
         }
-    } 
-    else 
+    }
+    else
         error($lang_char['no_char_found']);
     $sql->close();
     unset($sql);

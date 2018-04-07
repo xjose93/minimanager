@@ -5,7 +5,7 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 $time_start = microtime(true);
 // resuming login session if available, or start new one
 if (ini_get('session.auto_start'));
-else 
+else
     session_start();
 
 //---------------------Load Default and User Configuration---------------------
@@ -24,7 +24,7 @@ else
         <code>\'scripts/config.php\'</code> and make appropriate changes.');
 
 //---------------------Error reports for Debugging-----------------------------
-if ($debug) 
+if ($debug)
     $tot_queries = 0;
 if (1 < $debug)
     error_reporting (E_ALL);
@@ -32,7 +32,7 @@ else
     error_reporting (E_COMPILE_ERROR);
 
 //---------------------Security Fix + load SQLLib----------------
-    
+
 require_once 'libs/db_lib.php';
 
 // Try to globally fix security vulnerabilities (very dirty way..)
@@ -197,7 +197,7 @@ if (isset($_SESSION['user_lvl']) && isset($_SESSION['uname']) && isset($_SESSION
             if(isset($trunk[2][0]))
                 $output .= '
                         </ul>';
-                        
+
             $output .= '
                     </li>';
         }
@@ -247,7 +247,7 @@ if (isset($_SESSION['user_lvl']) && isset($_SESSION['uname']) && isset($_SESSION
     else
     {
         $result = $sqlc->query('SELECT guid, name, race, class, level, gender
-                            FROM characters 
+                            FROM characters
                             WHERE account = '.$user_id.'');
 
         // this puts links to user characters of active realm in "My Account" menu
@@ -273,7 +273,7 @@ if (isset($_SESSION['user_lvl']) && isset($_SESSION['uname']) && isset($_SESSION
                             <li><a href="logout.php">'.$lang_header['logout'].'</a></li>';
     }
     unset($result);
-    
+
     $output .= '
                         </ul>
                     </li>

@@ -21,25 +21,23 @@ function char_mail(&$sqlr, &$sqlc)
 
     //==========================$_GET and SECURE=================================
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
-    if (is_numeric($start)); 
-    else 
+    if (is_numeric($start));
+    else
         $start = 0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 'id';
-    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by)); 
-    else 
+    if (preg_match('/^[_[:lower:]]{1,12}$/', $order_by));
+    else
         $order_by = 'id';
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir = 1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
     $dir = ($dir) ? 0 : 1;
     //==========================$_GET and SECURE end=============================
-
-  
 
     // getting character data from database
     $result = $sqlc->query('SELECT account, name, race, class, level, gender
@@ -68,9 +66,9 @@ function char_mail(&$sqlr, &$sqlc)
                         <div id="tab_content">
                             <h1>'.$lang_char['mail'].'</h1>
                             <br />';
-            
+
             require_once 'core/char/char_header.php';
-      
+
             $output .= '
                             <br /><br />
                             <table class="lined" style="width: 100%">';
@@ -104,7 +102,7 @@ function char_mail(&$sqlr, &$sqlc)
                                     <th width="20%">'.$lang_mail['money'].'</th>
                                     <th width="5%">'.$lang_mail['checked'].'</th>
                                 </tr>';
-                
+
             while ($mail = $sqlc->fetch_assoc($query))
             {
                 $output .= '
@@ -134,7 +132,7 @@ function char_mail(&$sqlr, &$sqlc)
                         <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                         <br />
                     </center>

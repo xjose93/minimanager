@@ -25,7 +25,7 @@ function edit_user(&$sqlr, &$sqlc)
     {
         if ($acc['gmlevel'] == null)
             $acc['gmlevel'] = 0;
-            
+
         $output .= '
             <center>
                 <script type="text/javascript" src="libs/js/sha1.js"></script>
@@ -92,15 +92,15 @@ function edit_user(&$sqlr, &$sqlc)
                                     <td>
                                         <select name="expansion">
                                             <option value="2" ';
-            if($acc['expansion'] == 2) 
+            if($acc['expansion'] == 2)
                 $output .= 'selected="selected"';
             $output .= '>'.$lang_edit['wotlk'].'</option>
                             <option value="1" ';
-            if($acc['expansion'] == 1) 
+            if($acc['expansion'] == 1)
                 $output .= 'selected="selected"';
             $output .= '>'.$lang_edit['tbc'].'</option>
                             <option value="0" ';
-            if($acc['expansion'] == 0) 
+            if($acc['expansion'] == 0)
                 $output .= 'selected="selected"';
             $output .= '>'.$lang_edit['classic'].'</option>
                                         </select>
@@ -139,7 +139,7 @@ function edit_user(&$sqlr, &$sqlc)
                                     </td>
                                 </tr>';
                 }
-            } 
+            }
             unset($realm);
         }
         else
@@ -170,15 +170,15 @@ function edit_user(&$sqlr, &$sqlc)
         $output .= '
                                 <tr>
                                     <td>';
-                                    
+
         makebutton($lang_edit['update'], 'javascript:do_submit_data()" type="wrn', 130);
-        
+
         $output .= '
                                     </td>
                                     <td>';
-                    
+
         makebutton($lang_global['back'], 'javascript:window.history.back()" type="def', 130);
-        
+
         $output .= '
                                     </td>
                                 </tr>
@@ -221,9 +221,9 @@ function edit_user(&$sqlr, &$sqlc)
                                         </form>
                                     </td>
                                     <td>';
-                                    
+
         makebutton($lang_edit['save'], 'javascript:do_submit(\'form1\',0)', 130);
-        
+
         $output .= '
                                     </td>
                                 </tr>
@@ -259,9 +259,9 @@ function edit_user(&$sqlr, &$sqlc)
                                         </form>
                                     </td>
                                     <td>';
-                                    
+
         makebutton($lang_edit['save'], 'javascript:do_submit(\'form2\',0)', 130);
-        
+
         $output .= '
                                     </td>
                                 </tr>

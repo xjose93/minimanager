@@ -19,8 +19,8 @@ function char_skill(&$sqlr, &$sqlc)
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : 1;
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (preg_match('/^[01]{1}$/', $dir)); 
-    else 
+    if (preg_match('/^[01]{1}$/', $dir));
+    else
         $dir = 1;
 
     $order_dir = ($dir) ? 'ASC' : 'DESC';
@@ -50,9 +50,9 @@ function char_skill(&$sqlr, &$sqlc)
                                     <div id="tab_content">
                                         <h1>'.$lang_char['skills'].'</h1>
                                         <br />';
-              
+
             require_once 'core/char/char_header.php';
-      
+
             $output .= '
                                         <br /><br />
                                         <table class="lined" style="width: 550px;">
@@ -136,7 +136,7 @@ function char_skill(&$sqlr, &$sqlc)
                                                 <tr>
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['classskills'].'</th>
                                                 </tr>';
-                                                
+
             foreach ($class_array as $data)
             {
                 $output .= '
@@ -153,7 +153,7 @@ function char_skill(&$sqlr, &$sqlc)
                                                 <tr>
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['professions'].'</th>
                                                 </tr>';
-                                                
+
             foreach ($prof_1_array as $data)
                 $output .= '
                                                 <tr>
@@ -184,7 +184,7 @@ function char_skill(&$sqlr, &$sqlc)
                                                 <tr>
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['weaponskills'].'</th>
                                                 </tr>';
-                                                
+
             foreach ($weapon_array as $data)
                 $output .= '
                                                 <tr>
@@ -200,7 +200,7 @@ function char_skill(&$sqlr, &$sqlc)
                                                 <tr>
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['armorproficiencies'].'</th>
                                                 </tr>';
-                                                
+
             foreach ($armor_array as $data)
                 $output .= '
                                                 <tr>
@@ -215,7 +215,7 @@ function char_skill(&$sqlr, &$sqlc)
                                                 <tr>
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['languages'].'</th>
                                                 </tr>';
-                                                
+
             foreach ($language_array as $data)
                 $output .= '
                                                 <tr>
@@ -235,7 +235,7 @@ function char_skill(&$sqlr, &$sqlc)
                                     <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                                     <br />
                                 </center>

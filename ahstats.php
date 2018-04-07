@@ -27,11 +27,11 @@ function browse_auctions(&$sqlr, &$sqlc)
     else $start=0;
 
     $order_by = (isset($_GET['order_by'])) ? $sqlc->quote_smart($_GET['order_by']) : "time";
-    if (!preg_match("/^[_[:lower:]]{1,15}$/", $order_by)) 
+    if (!preg_match("/^[_[:lower:]]{1,15}$/", $order_by))
         $order_by="time";
 
     $dir = (isset($_GET['dir'])) ? $sqlc->quote_smart($_GET['dir']) : 1;
-    if (!preg_match("/^[01]{1}$/", $dir)) 
+    if (!preg_match("/^[01]{1}$/", $dir))
         $dir=1;
 
     $order_dir = ($dir) ? "ASC" : "DESC";
@@ -41,7 +41,7 @@ function browse_auctions(&$sqlr, &$sqlc)
     if( !$user_lvl && !$server[$realm_id]['both_factions'])
     {
         $result = $sqlc->query("SELECT `race` FROM `characters` WHERE `account` = $user_id AND `totaltime` = (SELECT MAX(totaltime) FROM `characters` WHERE `account` = $user_id) LIMIT 1");
-    
+
         if ($sqlc->num_rows($result))
         {
             $order_side = (in_array($sqlc->result($result, 0, 'race'),array(2,5,6,8,10))) ? " AND `characters`.`race` IN (2,5,6,8,10) " : " AND `characters`.`race` IN (1,3,4,7,11) ";
@@ -49,7 +49,7 @@ function browse_auctions(&$sqlr, &$sqlc)
         else
             $order_side = "";
     }
-    else 
+    else
         $order_side = "";
 
     //==========================Browse/Search CHECK==============================
@@ -71,61 +71,61 @@ function browse_auctions(&$sqlr, &$sqlc)
             case "item_name":
                 if(( ($search_class >= 0) || ($search_quality >= 0)) && (!isset($search_value) ))
                 {
-                    if ($search_class >= 0) 
+                    if ($search_class >= 0)
                         $search_filter = "AND item_template.class = '$search_class'";
-                    if ($search_quality >= 0) 
+                    if ($search_quality >= 0)
                         $search_filter = "AND item_template.Quality = '$search_quality'";
                 }
                 else
                 {
                     $item_prefix = "";
-                    if ($search_class >= 0) 
+                    if ($search_class >= 0)
                         $item_prefix .= "AND item_template.class = '$search_class' ";
-                    if ($search_quality >= 0) 
+                    if ($search_quality >= 0)
                         $item_prefix .= "AND item_template.Quality = '$search_quality' ";
-                        
+
                     $result = $sqlc->query("SELECT `entry` FROM `".$world_db[$realm_id]['name']."`.`item_template` WHERE `name` LIKE '%$search_value%' $item_prefix");
                     $search_filter = "AND item_instance.itemEntry IN(0";
-                    
+
                     while ($item = $sqlc->fetch_row($result))
                         $search_filter .= ", $item[0]";
-                        
+
                     $search_filter .= ")";
                 }
                 break;
-            
+
             case "item_id":
                 $search_filter = "AND item_instance.itemEntry = '$search_value'";
                 break;
-            
+
             case "seller_name":
                 if(( ($search_class >= 0) || ($search_quality >= 0)) && (!isset($search_value) ))
                 {
-                    if ($search_class >= 0) 
+                    if ($search_class >= 0)
                         $search_filter = "AND item_template.class = '$search_class'";
-                    if ($search_quality >= 0) 
+                    if ($search_quality >= 0)
                         $search_filter = "AND item_template.Quality = '$search_quality'";
                 }
                 else
                 {
                     $item_prefix = "";
-                    if ($search_class >= 0) 
+                    if ($search_class >= 0)
                         $item_prefix .= "AND item_template.class = '$search_class' ";
-                    if ($search_quality >= 0) 
+                    if ($search_quality >= 0)
                         $item_prefix .= "AND item_template.Quality = '$search_quality' ";
-                        
+
                     $result = $sqlc->query("SELECT `guid` FROM `characters` WHERE `name` LIKE '%$search_value%'");
                     $search_filter = $item_prefix;
                     $search_filter .= "AND auctionhouse.itemowner IN(0";
-                    
+
                     while ($char = $sqlc->fetch_row($result))
                         $search_filter .= ", $char[0]";
-                    
+
                     $search_filter .= ")";
                     $search_filter .= $item_prefix;
                 }
                 break;
-            
+
             case "buyer_name":
                 if(( ($search_class >= 0) || ($search_quality >= 0)) && (!isset($search_value) ))
                 {
@@ -135,22 +135,22 @@ function browse_auctions(&$sqlr, &$sqlc)
                 else
                 {
                     $item_prefix = "";
-                    if ($search_class >= 0) 
+                    if ($search_class >= 0)
                         $item_prefix .= "AND item_template.class = '$search_class' ";
-                    if ($search_quality >= 0) 
+                    if ($search_quality >= 0)
                         $item_prefix .= "AND item_template.Quality = '$search_quality' ";
-                    
+
                     $result = $sqlc->query("SELECT guid FROM `characters` WHERE name LIKE '%$search_value%'");
                     $search_filter = $item_prefix;
                     $search_filter .= "AND auctionhouse.buyguid IN(-1";
-                    
+
                     while ($char = $sqlc->fetch_row($result))
                         $search_filter .= ", $char[0]";
-                        
+
                     $search_filter .= ")";
                 }
                 break;
-            
+
             default:
                 redirect("ahstats.php?error=1");
         }
@@ -213,15 +213,15 @@ function browse_auctions(&$sqlr, &$sqlc)
                                         </select>
                                     </td>
                                     <td>";
-                                    
+
     makebutton($lang_global['search'], "javascript:do_submit()",80);
-    
+
     $output .= "
                                     </td>
                                     <td>";
-                                    
+
     (($search_by && $search_value) || ($search_class != -1) || ($search_quality != -1)) ? makebutton($lang_global['back'], "javascript:window.history.back()",80) : $output .= "";
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -229,7 +229,7 @@ function browse_auctions(&$sqlr, &$sqlc)
                         </form>
                     </td>
                     <td width=\"25%\" align=\"right\">";
-                    
+
     $output .= generate_pagination("ahstats.php?order_by=$order_by".( (($search_by && $search_value) || ($search_class != -1) || ($search_quality != -1)) ? "&amp;search_by=$search_by&amp;search_value=$search_value&amp;search_quality=$search_quality&amp;search_class=$search_class&amp;error=2" : "" )."&amp;dir=".(($dir) ? 0 : 1), $all_record, $itemperpage, $start);
     $output .= "
                     </td>

@@ -42,9 +42,9 @@ $go_type = Array(
 function get_go_type($flag){
     global $lang_game_object, $go_type;
 
-    if (isset($go_type[$flag])) 
+    if (isset($go_type[$flag]))
         return $go_type[$flag][1];
-    else 
+    else
         return $lang_game_object['unknown'];
 }
 
@@ -84,7 +84,7 @@ function search() {
                                     <td colspan=\"3\">
                                         <select name=\"type\">
                                             <option value=\"-1\">{$lang_game_object['select']}</option>";
-    foreach ($go_type as $type) 
+    foreach ($go_type as $type)
         $output .= "
                                             <option value=\"$type[0]\">($type[0]) $type[1]</option>";
     $output .= "
@@ -103,9 +103,9 @@ function search() {
                                     <td>{$lang_game_object['custom_search']}:</td>
                                     <td colspan=\"3\"><input type=\"text\" size=\"45\" maxlength=\"512\" name=\"custom_search\" /></td>
                                     <td colspan=\"2\">";
-                                
+
     makebutton($lang_game_object['search'], "javascript:do_submit()",150);
-    
+
     $output .= "
                                     </td>
                                 </tr>
@@ -115,9 +115,9 @@ function search() {
                                 <tr>
                                     <td></td>
                                     <td colspan=\"2\">";
-                                
+
     makebutton($lang_game_object['add_new'], "game_object.php?action=add_new&error=3",200);
-    
+
     $output .= "
                                     </td>
                                     <td colspan=\"3\">{$lang_game_object['tot_go_templ']}: $tot_go</td>
@@ -142,7 +142,7 @@ function do_search() {
 
     if((!isset($_POST['entry'])||$_POST['entry'] === '')&&(!isset($_POST['name'])||$_POST['name'] === '')&&(!isset($_POST['ScriptName'])||$_POST['ScriptName'] === '')&&(!isset($_POST['displayId'])||$_POST['displayId'] === '')
         &&(!isset($_POST['faction'])||$_POST['faction'] === '')&&(!isset($_POST['flags'])||$_POST['flags'] === '')&&(!isset($_POST['custom_search'])||$_POST['custom_search'] === '')
-        &&($_POST['type'] == -1 )) 
+        &&($_POST['type'] == -1 ))
     {
         redirect("game_object.php?error=1");
     }
@@ -150,46 +150,46 @@ function do_search() {
     $sql = new SQL;
     $sql->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
 
-    if ($_POST['entry'] != '') 
+    if ($_POST['entry'] != '')
         $entry = $sql->quote_smart($_POST['entry']);
-    if ($_POST['name'] != '') 
+    if ($_POST['name'] != '')
         $name = $sql->quote_smart($_POST['name']);
-    if ($_POST['type'] != -1) 
+    if ($_POST['type'] != -1)
         $type = $sql->quote_smart($_POST['type']);
-    if ($_POST['ScriptName'] != '') 
+    if ($_POST['ScriptName'] != '')
         $ScriptName = $sql->quote_smart($_POST['ScriptName']);
-    if ($_POST['displayId'] != '') 
+    if ($_POST['displayId'] != '')
         $displayId = $sql->quote_smart($_POST['displayId']);
-    if ($_POST['faction'] != '') 
+    if ($_POST['faction'] != '')
         $faction = $sql->quote_smart($_POST['faction']);
-    if ($_POST['flags'] != '') 
+    if ($_POST['flags'] != '')
         $flags = $sql->quote_smart($_POST['flags']);
-    if ($_POST['custom_search'] != '') 
+    if ($_POST['custom_search'] != '')
         $custom_search = $sql->quote_smart($_POST['custom_search']);
-    else 
+    else
         $custom_search = "";
 
     $where = "WHERE gameobject_template.entry > 0 ";
-    if($custom_search != "") 
+    if($custom_search != "")
         $where .= " $custom_search ";
-    if(isset($entry)) 
+    if(isset($entry))
         $where .= "AND gameobject_template.entry = '$entry' ";
-    if(isset($name)) 
+    if(isset($name))
         $where .= "AND IFNULL(".($deplang<>0?"name_loc$deplang":"NULL").",`name`) LIKE '%$name%' ";
-    if(isset($type)) 
+    if(isset($type))
         $where .= "AND type = '$type' ";
-    if(isset($ScriptName)) 
+    if(isset($ScriptName))
         $where .= "AND ScriptName LIKE '%$ScriptName%' ";
-    if(isset($displayId)) 
+    if(isset($displayId))
         $where .= "AND displayId = '$displayId' ";
-    if(isset($faction)) 
+    if(isset($faction))
         $where .= "AND faction = '$faction' ";
-    if(isset($flags)) 
+    if(isset($flags))
         $where .= "AND flags = '$flags' ";
 
-    if($where == "WHERE gameobject_template.entry > 0 ") 
+    if($where == "WHERE gameobject_template.entry > 0 ")
         redirect("game_object.php?error=1");
-        
+
     $result = $sql->query("SELECT gameobject_template.entry, type, displayId, IFNULL(".($deplang<>0?"name_loc$deplang":"NULL").",`name`) as name, faction FROM gameobject_template LEFT JOIN locales_gameobject ON gameobject_template.entry = locales_gameobject.entry $where ORDER BY gameobject_template.entry LIMIT $sql_search_limit");
     $total_found = $sql->num_rows($result);
 
@@ -198,9 +198,9 @@ function do_search() {
                     <table class=\"top_hidden\"></td>
                         <tr>
                             <td>";
-                        
+
     makebutton($lang_game_object['new_search'], "game_object.php",160);
-    
+
     $output .= "
                             </td>
                             <td align=\"right\">{$lang_game_object['tot_found']} : $total_found : {$lang_global['limit']} $sql_search_limit</td>
@@ -280,7 +280,7 @@ function add_new() {
                                             <td>".makeinfocell($lang_game_object['type'],$lang_game_object['type_desc'])."</td>
                                             <td colspan=\"3\">
                                                 <select name=\"type\">";
-    foreach ($go_type as $type) 
+    foreach ($go_type as $type)
         $output .= "
                                                     <option value=\"$type[0]\">($type[0]) $type[1]</option>";
     $output .= "
@@ -407,11 +407,11 @@ function add_new() {
                         <table class=\"hidden\">
                             <tr>
                                 <td>";
-                                
+
     makebutton($lang_game_object['save_to_db'], "javascript:do_submit('form1',0)",180);
     makebutton($lang_game_object['save_to_script'], "javascript:do_submit('form1',1)",180);
     makebutton($lang_game_object['lookup_go'], "game_object.php",180);
-    
+
     $output .= "
                                 </td>
                             </tr>
@@ -428,7 +428,7 @@ function edit() {
             $go_type, $quest_datasite;
     wowhead_tt();
 
-    if (!isset($_GET['entry'])) 
+    if (!isset($_GET['entry']))
         redirect("game_object.php?error=1");
 
     $sql = new SQL;
@@ -454,7 +454,7 @@ function edit() {
                             <ul class=\"jtabs\">
                                 <li><a href=\"#\" onclick=\"return showPane('pane1', this)\" id=\"tab1\">{$lang_game_object['general']}</a></li>
                                 <li><a href=\"#\" onclick=\"return showPane('pane2', this)\">{$lang_game_object['datas']}</a></li>";
-        if ($go['type'] == 3) 
+        if ($go['type'] == 3)
             $output .= "
                                 <li><a href=\"#\" onclick=\"return showPane('pane3', this)\">{$lang_game_object['loot']}</a></li>";
         $output .= "
@@ -487,7 +487,7 @@ function edit() {
         {
             $output .= "
                                                     <option value=\"$type[0]\" ";
-            if ($type[0] == $go['type']) 
+            if ($type[0] == $go['type'])
                 $output .= "selected=\"selected\" ";
             $output .= ">($type[0]) $type[1]</option>";
         }
@@ -640,7 +640,7 @@ function edit() {
                                                         <br /><input type=\"checkbox\" name=\"del_loot_items[]\" value=\"$item[0]\" />
                                                     </td>";
 
-                if ($cel_counter >= 16) 
+                if ($cel_counter >= 16)
                 {
                     $cel_counter = 0;
                     $output .= "
@@ -649,7 +649,7 @@ function edit() {
                     $row_flag++;
                 }
             };
-            if ($row_flag) 
+            if ($row_flag)
                 $output .= "
                                                     <td colspan=\"".(16 - $cel_counter)."\"></td>";
             $output .= "
@@ -756,20 +756,20 @@ function edit() {
                 <table class=\"hidden\">
                     <tr>
                         <td>";
-                        
+
         makebutton($lang_game_object['save_to_db'], "javascript:do_submit('form1',0)",180);
         makebutton($lang_game_object['del_go'], "game_object.php?action=delete&amp;entry=$entry",180);
         makebutton($lang_game_object['del_spawns'], "game_object.php?action=delete_spwn&amp;entry=$entry",180);
         makebutton($lang_game_object['save_to_script'], "javascript:do_submit('form1',1)",180);
-    
+
         $output .= "
                         </td>
                     </tr>
                     <tr>
                         <td>";
-                        
+
         makebutton($lang_game_object['lookup_go'], "game_object.php",760);
-    
+
         $output .= "
                         </td>
                     </tr>
@@ -777,8 +777,8 @@ function edit() {
             </center>";
 
         $sql->close();
-    } 
-    else 
+    }
+    else
     {
         $sql->close();
         error($lang_game_object['tmpl_not_found']);
@@ -793,192 +793,192 @@ function edit() {
 function do_update() {
     global $world_db, $realm_id;
 
-    if (!isset($_POST['opp_type']) || $_POST['opp_type'] === '') 
+    if (!isset($_POST['opp_type']) || $_POST['opp_type'] === '')
         redirect("game_object.php?error=1");
-    if (!isset($_POST['entry']) || $_POST['entry'] === '') 
+    if (!isset($_POST['entry']) || $_POST['entry'] === '')
         redirect("game_object.php?error=1");
 
     $sql = new SQL;
     $sql->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
 
     $entry = $sql->quote_smart($_POST['entry']);
-    if (isset($_POST['type']) && $_POST['type'] != '') 
+    if (isset($_POST['type']) && $_POST['type'] != '')
         $type = $sql->quote_smart($_POST['type']);
-    else 
+    else
         $type = 0;
-    if (isset($_POST['displayId']) && $_POST['displayId'] != '') 
+    if (isset($_POST['displayId']) && $_POST['displayId'] != '')
         $displayId = $sql->quote_smart($_POST['displayId']);
-    else 
+    else
         $displayId = 0;
-    if (isset($_POST['name']) && $_POST['name'] != '') 
+    if (isset($_POST['name']) && $_POST['name'] != '')
         $name = $sql->quote_smart($_POST['name']);
-    else 
+    else
         $name = "";
-    if (isset($_POST['faction']) && $_POST['faction'] != '') 
+    if (isset($_POST['faction']) && $_POST['faction'] != '')
         $faction = $sql->quote_smart($_POST['faction']);
-    else 
+    else
         $faction = 0;
-    if (isset($_POST['flags']) && $_POST['flags'] != '') 
+    if (isset($_POST['flags']) && $_POST['flags'] != '')
         $flags = $sql->quote_smart($_POST['flags']);
-    else 
+    else
         $flags = 0;
-    if (isset($_POST['size']) && $_POST['size'] != '') 
+    if (isset($_POST['size']) && $_POST['size'] != '')
         $size = $sql->quote_smart($_POST['size']);
-    else 
+    else
         $size = 0;
-    if (isset($_POST['ScriptName']) && $_POST['ScriptName'] != '') 
+    if (isset($_POST['ScriptName']) && $_POST['ScriptName'] != '')
         $ScriptName = $sql->quote_smart($_POST['ScriptName']);
-    else 
+    else
         $ScriptName = "";
-    if (isset($_POST['data0']) && $_POST['data0'] != '') 
+    if (isset($_POST['data0']) && $_POST['data0'] != '')
         $data0 = $sql->quote_smart($_POST['data0']);
-    else 
+    else
         $data0 = 0;
-    if (isset($_POST['data1']) && $_POST['data1'] != '') 
+    if (isset($_POST['data1']) && $_POST['data1'] != '')
         $data1 = $sql->quote_smart($_POST['data1']);
-    else 
+    else
         $data1 = 0;
-    if (isset($_POST['data2']) && $_POST['data2'] != '') 
+    if (isset($_POST['data2']) && $_POST['data2'] != '')
         $data2 = $sql->quote_smart($_POST['data2']);
-    else 
+    else
         $data2 = 0;
-    if (isset($_POST['data3']) && $_POST['data3'] != '') 
+    if (isset($_POST['data3']) && $_POST['data3'] != '')
         $data3 = $sql->quote_smart($_POST['data3']);
-    else 
+    else
         $data3 = 0;
-    if (isset($_POST['data4']) && $_POST['data4'] != '') 
+    if (isset($_POST['data4']) && $_POST['data4'] != '')
         $data4 = $sql->quote_smart($_POST['data4']);
-    else 
+    else
         $data4 = 0;
-    if (isset($_POST['data5']) && $_POST['data5'] != '') 
+    if (isset($_POST['data5']) && $_POST['data5'] != '')
         $data5 = $sql->quote_smart($_POST['data5']);
-    else 
+    else
         $data5 = 0;
-    if (isset($_POST['data6']) && $_POST['data6'] != '') 
+    if (isset($_POST['data6']) && $_POST['data6'] != '')
         $data6 = $sql->quote_smart($_POST['data6']);
-    else 
+    else
         $data6 = 0;
-    if (isset($_POST['data7']) && $_POST['data7'] != '') 
+    if (isset($_POST['data7']) && $_POST['data7'] != '')
         $data7 = $sql->quote_smart($_POST['data7']);
-    else 
+    else
         $data7 = 0;
-    if (isset($_POST['data8']) && $_POST['data8'] != '') 
+    if (isset($_POST['data8']) && $_POST['data8'] != '')
         $data8 = $sql->quote_smart($_POST['data8']);
-    else 
+    else
         $data8 = 0;
-    if (isset($_POST['data9']) && $_POST['data9'] != '') 
+    if (isset($_POST['data9']) && $_POST['data9'] != '')
         $data9 = $sql->quote_smart($_POST['data9']);
-    else 
+    else
         $data9 = 0;
-    if (isset($_POST['data10']) && $_POST['data10'] != '') 
+    if (isset($_POST['data10']) && $_POST['data10'] != '')
         $data10 = $sql->quote_smart($_POST['data10']);
-    else 
+    else
         $data10 = 0;
-    if (isset($_POST['data11']) && $_POST['data11'] != '') 
+    if (isset($_POST['data11']) && $_POST['data11'] != '')
         $data11 = $sql->quote_smart($_POST['data11']);
-    else 
+    else
         $data11 = 0;
-    if (isset($_POST['data12']) && $_POST['data12'] != '') 
+    if (isset($_POST['data12']) && $_POST['data12'] != '')
         $data12 = $sql->quote_smart($_POST['data12']);
-    else 
+    else
         $data12 = 0;
-    if (isset($_POST['data13']) && $_POST['data13'] != '') 
+    if (isset($_POST['data13']) && $_POST['data13'] != '')
         $data13 = $sql->quote_smart($_POST['data13']);
-    else 
+    else
         $data13 = 0;
-    if (isset($_POST['data14']) && $_POST['data14'] != '') 
+    if (isset($_POST['data14']) && $_POST['data14'] != '')
         $data14 = $sql->quote_smart($_POST['data14']);
-    else 
+    else
         $data14 = 0;
-    if (isset($_POST['data15']) && $_POST['data15'] != '') 
+    if (isset($_POST['data15']) && $_POST['data15'] != '')
         $data15 = $sql->quote_smart($_POST['data15']);
-    else 
+    else
         $data15 = 0;
-    if (isset($_POST['data16']) && $_POST['data16'] != '') 
+    if (isset($_POST['data16']) && $_POST['data16'] != '')
         $data16 = $sql->quote_smart($_POST['data16']);
-    else 
+    else
         $data16 = 0;
-    if (isset($_POST['data17']) && $_POST['data17'] != '') 
+    if (isset($_POST['data17']) && $_POST['data17'] != '')
         $data17 = $sql->quote_smart($_POST['data17']);
-    else 
+    else
         $data17 = 0;
-    if (isset($_POST['data18']) && $_POST['data18'] != '') 
+    if (isset($_POST['data18']) && $_POST['data18'] != '')
         $data18 = $sql->quote_smart($_POST['data18']);
-    else 
+    else
         $data18 = 0;
     if (isset($_POST['data19']) && $_POST['data19'] != '')
         $data19 = $sql->quote_smart($_POST['data19']);
-    else 
+    else
         $data19 = 0;
-    if (isset($_POST['data20']) && $_POST['data20'] != '') 
+    if (isset($_POST['data20']) && $_POST['data20'] != '')
         $data20 = $sql->quote_smart($_POST['data20']);
-    else 
+    else
         $data20 = 0;
     if (isset($_POST['data21']) && $_POST['data21'] != '')
         $data21 = $sql->quote_smart($_POST['data21']);
-    else 
+    else
         $data21 = 0;
     if (isset($_POST['data22']) && $_POST['data22'] != '')
         $data22 = $sql->quote_smart($_POST['data22']);
-    else 
+    else
         $data22 = 0;
     if (isset($_POST['data23']) && $_POST['data23'] != '')
         $data23 = $sql->quote_smart($_POST['data23']);
-    else 
+    else
         $data23 = 0;
 
-    if (isset($_POST['ChanceOrQuestChance']) && $_POST['ChanceOrQuestChance'] != '') 
+    if (isset($_POST['ChanceOrQuestChance']) && $_POST['ChanceOrQuestChance'] != '')
         $ChanceOrQuestChance = $sql->quote_smart($_POST['ChanceOrQuestChance']);
-    else 
+    else
         $ChanceOrQuestChance = 0;
     if (isset($_POST['groupid']) && $_POST['groupid'] != '')
         $groupid = $sql->quote_smart($_POST['groupid']);
-    else 
+    else
         $groupid = 0;
-    if (isset($_POST['mincountOrRef']) && $_POST['mincountOrRef'] != '') 
+    if (isset($_POST['mincountOrRef']) && $_POST['mincountOrRef'] != '')
         $mincountOrRef = $sql->quote_smart($_POST['mincountOrRef']);
-    else 
+    else
         $mincountOrRef = 0;
     if (isset($_POST['maxcount']) && $_POST['maxcount'] != '')
         $maxcount = $sql->quote_smart($_POST['maxcount']);
-    else 
+    else
         $maxcount = 0;
     if (isset($_POST['lootcondition']) && $_POST['lootcondition'] != '')
         $lootcondition = $sql->quote_smart($_POST['lootcondition']);
-    else 
+    else
         $lootcondition = 0;
-    if (isset($_POST['condition_value1']) && $_POST['condition_value1'] != '') 
+    if (isset($_POST['condition_value1']) && $_POST['condition_value1'] != '')
         $condition_value1 = $sql->quote_smart($_POST['condition_value1']);
-    else 
+    else
         $condition_value1 = 0;
-    if (isset($_POST['condition_value2']) && $_POST['condition_value2'] != '') 
+    if (isset($_POST['condition_value2']) && $_POST['condition_value2'] != '')
         $condition_value2 = $sql->quote_smart($_POST['condition_value2']);
-    else 
+    else
         $condition_value2 = 0;
-    if (isset($_POST['item']) && $_POST['item'] != '') 
+    if (isset($_POST['item']) && $_POST['item'] != '')
         $item = $sql->quote_smart($_POST['item']);
-    else 
+    else
         $item = 0;
-    if (isset($_POST['del_loot_items']) && $_POST['del_loot_items'] != '') 
+    if (isset($_POST['del_loot_items']) && $_POST['del_loot_items'] != '')
         $del_loot_items = $sql->quote_smart($_POST['del_loot_items']);
-    else 
+    else
         $del_loot_items = NULL;
 
-    if (isset($_POST['involvedrelation']) && $_POST['involvedrelation'] != '') 
+    if (isset($_POST['involvedrelation']) && $_POST['involvedrelation'] != '')
         $involvedrelation = $sql->quote_smart($_POST['involvedrelation']);
-    else 
+    else
         $involvedrelation = 0;
-    if (isset($_POST['del_involvedrelation']) && $_POST['del_involvedrelation'] != '') 
+    if (isset($_POST['del_involvedrelation']) && $_POST['del_involvedrelation'] != '')
         $del_involvedrelation = $sql->quote_smart($_POST['del_involvedrelation']);
-    else 
+    else
         $del_involvedrelation = NULL;
-    if (isset($_POST['questrelation']) && $_POST['questrelation'] != '') 
+    if (isset($_POST['questrelation']) && $_POST['questrelation'] != '')
         $questrelation = $sql->quote_smart($_POST['questrelation']);
-    else 
+    else
         $questrelation = 0;
-    if (isset($_POST['del_questrelation']) && $_POST['del_questrelation'] != '') 
+    if (isset($_POST['del_questrelation']) && $_POST['del_questrelation'] != '')
         $del_questrelation = $sql->quote_smart($_POST['del_questrelation']);
-    else 
+    else
         $del_questrelation = NULL;
 
     if ($_POST['opp_type'] == "add_new")
@@ -1000,65 +1000,65 @@ function do_update() {
 
         if ($go_templ = $sql->fetch_assoc($result))
         {
-            if ($go_templ['type'] != $type) 
+            if ($go_templ['type'] != $type)
                 $sql_query .= "type='$type',";
-            if ($go_templ['displayId'] != 
+            if ($go_templ['displayId'] !=
                 $displayId) $sql_query .= "displayId='$displayId',";
-            if ($go_templ['name'] != $name) 
+            if ($go_templ['name'] != $name)
                 $sql_query .= "name='$name',";
-            if ($go_templ['faction'] != $faction) 
+            if ($go_templ['faction'] != $faction)
                 $sql_query .= "faction='$faction',";
-            if ($go_templ['flags'] != $flags) 
+            if ($go_templ['flags'] != $flags)
                 $sql_query .= "flags='$flags',";
             if ($go_templ['size'] != $size)
                 $sql_query .= "size='$size',";
-            if ($go_templ['data0'] != $data0) 
+            if ($go_templ['data0'] != $data0)
             $sql_query .= "data0='$data0',";
-            if ($go_templ['data1'] != $data1) 
+            if ($go_templ['data1'] != $data1)
                 $sql_query .= "data1='$data1',";
-            if ($go_templ['data2'] != $data2) 
+            if ($go_templ['data2'] != $data2)
                 $sql_query .= "data2='$data2',";
-            if ($go_templ['data3'] != $data3) 
+            if ($go_templ['data3'] != $data3)
                 $sql_query .= "data3='$data3',";
             if ($go_templ['data4'] != $data4)
                 $sql_query .= "data4='$data4',";
-            if ($go_templ['data5'] != $data5) 
+            if ($go_templ['data5'] != $data5)
                 $sql_query .= "data5='$data5',";
-            if ($go_templ['data6'] != $data6) 
+            if ($go_templ['data6'] != $data6)
                 $sql_query .= "data6='$data6',";
-            if ($go_templ['data7'] != $data7) 
+            if ($go_templ['data7'] != $data7)
                 $sql_query .= "data7='$data7',";
-            if ($go_templ['data8'] != $data8) 
+            if ($go_templ['data8'] != $data8)
                 $sql_query .= "data8='$data8',";
-            if ($go_templ['data9'] != $data9) 
+            if ($go_templ['data9'] != $data9)
                 $sql_query .= "data9='$data9',";
-            if ($go_templ['data10'] != $data10) 
+            if ($go_templ['data10'] != $data10)
                 $sql_query .= "data10='$data10',";
-            if ($go_templ['data11'] != $data11) 
+            if ($go_templ['data11'] != $data11)
                 $sql_query .= "data11='$data11',";
-            if ($go_templ['data12'] != $data12) 
+            if ($go_templ['data12'] != $data12)
                 $sql_query .= "data12='$data12',";
-            if ($go_templ['data13'] != $data13) 
+            if ($go_templ['data13'] != $data13)
                 $sql_query .= "data13='$data13',";
-            if ($go_templ['data14'] != $data14) 
+            if ($go_templ['data14'] != $data14)
                 $sql_query .= "data14='$data14',";
-            if ($go_templ['data15'] != $data15) 
+            if ($go_templ['data15'] != $data15)
                 $sql_query .= "data15='$data15',";
-            if ($go_templ['data16'] != $data16) 
+            if ($go_templ['data16'] != $data16)
                 $sql_query .= "data16='$data16',";
-            if ($go_templ['data17'] != $data17) 
+            if ($go_templ['data17'] != $data17)
                 $sql_query .= "data17='$data17',";
-            if ($go_templ['data18'] != $data18) 
+            if ($go_templ['data18'] != $data18)
                 $sql_query .= "data18='$data18',";
-            if ($go_templ['data19'] != $data19) 
+            if ($go_templ['data19'] != $data19)
                 $sql_query .= "data19='$data19',";
-            if ($go_templ['data20'] != $data20) 
+            if ($go_templ['data20'] != $data20)
                 $sql_query .= "data20='$data20',";
-            if ($go_templ['data21'] != $data21) 
+            if ($go_templ['data21'] != $data21)
                 $sql_query .= "data21='$data21',";
-            if ($go_templ['data22'] != $data22) 
+            if ($go_templ['data22'] != $data22)
                 $sql_query .= "data22='$data22',";
-            if ($go_templ['data23'] != $data23) 
+            if ($go_templ['data23'] != $data23)
                 $sql_query .= "data23='$data23',";
             if ($go_templ['ScriptName'] != $ScriptName) $sql_query .= "ScriptName='$ScriptName',";
 
@@ -1070,51 +1070,46 @@ function do_update() {
             {
                 $sql->close();
                 redirect("game_object.php?action=edit&entry=$entry&error=6");
-            } 
-            else 
+            }
+            else
             {
                 if ($sql_query != "UPDATE gameobject_template SET ")
                 {
                     $sql_query[strlen($sql_query)-1] = " ";
                     $sql_query .= " WHERE entry = '$entry';\n";
-                } 
-                else 
+                }
+                else
                     $sql_query = "";
             }
 
             if ($item)
                 $sql_query .= "INSERT INTO gameobject_loot_template (entry, item, ChanceOrQuestChance, `groupid`, mincountOrRef, maxcount, lootcondition, condition_value1, condition_value2)
                                 VALUES ($data1,$item,'$ChanceOrQuestChance', '$groupid' ,$mincountOrRef ,$maxcount ,$lootcondition ,$condition_value1 ,$condition_value2);\n";
-    
+
             if ($del_loot_items)
                 foreach($del_loot_items as $item_id)
                     $sql_query .= "DELETE FROM gameobject_loot_template WHERE entry = $data1 AND item = $item_id;\n";
-  
 
             if ($questrelation)
                 $sql_query .= "INSERT INTO gameobject_questrelation (id, quest) VALUES ($entry,$questrelation);\n";
-  
-
             if ($involvedrelation)
                 $sql_query .= "INSERT INTO gameobject_involvedrelation (id, quest) VALUES ($entry,$involvedrelation);\n";
-  
 
             if ($del_questrelation)
                 foreach($del_questrelation as $quest_id)
                     $sql_query .= "DELETE FROM gameobject_questrelation WHERE id = $entry AND quest = $quest_id;\n";
-  
 
             if ($del_involvedrelation)
                 foreach($del_involvedrelation as $quest_id)
                     $sql_query .= "DELETE FROM gameobject_involvedrelation WHERE id = $entry AND quest = $quest_id;\n";
-        } 
-        else 
+        }
+        else
         {
             $sql->close();
             redirect("game_object.php?error=5");
         }
-    } 
-    else 
+    }
+    else
     {
         $sql->close();
         redirect("game_object.php?error=5");
@@ -1128,33 +1123,32 @@ function do_update() {
         echo $sql_query;
         exit();
         redirect("game_object.php?action=edit&entry=$entry&error=4");
-    } 
-    else 
+    }
+    else
     {
         $sql_query = explode(';',$sql_query);
-        foreach($sql_query as $tmp_query) 
-            if(($tmp_query)&&($tmp_query != "\n")) 
+        foreach($sql_query as $tmp_query)
+            if(($tmp_query)&&($tmp_query != "\n"))
                 $result = $sql->query($tmp_query);
-                
+
         $sql->close();
     }
 
-    if ($result) 
+    if ($result)
         redirect("game_object.php?action=edit&entry=$entry&error=4");
-    else 
+    else
         redirect("game_object.php");
 }
-
 
 //#######################################################################################################
 //  DELETE GO TEMPLATE
 //#######################################################################################################
 function delete() {
     global $lang_global, $lang_game_object, $output;
-    
-    if(isset($_GET['entry'])) 
+
+    if(isset($_GET['entry']))
         $entry = $_GET['entry'];
-    else 
+    else
         redirect("game_object.php?error=1");
 
     $output .= "
@@ -1171,10 +1165,10 @@ function delete() {
                     <table class=\"hidden\">
                         <tr>
                             <td>";
-                        
+
     makebutton($lang_global['yes'], "game_object.php?action=do_delete&amp;entry=$entry",120);
      akebutton($lang_global['no'], "game_object.php",120);
-     
+
     $output .= "
                             </td>
                         </tr>
@@ -1190,19 +1184,19 @@ function delete() {
 function do_delete() {
     global $world_db, $realm_id;
 
-    if(isset($_GET['entry'])) 
+    if(isset($_GET['entry']))
         $entry = $_GET['entry'];
-    else 
+    else
         redirect("game_object.php?error=1");
 
     $sql = new SQL;
     $sql->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
 
     $result = $sql->query("SELECT guid FROM gameobject WHERE id = '$entry'");
-    
+
     while ($guid = $sql->fetch_row($result))
         $result = $sql->query("DELETE FROM gameobject_respawn WHERE guid = '$guid'");
-    
+
     $sql->query("DELETE FROM gameobject_involvedrelation WHERE id = '$entry'");
     $sql->query("DELETE FROM gameobject_questrelation WHERE id = '$entry'");
     $sql->query("DELETE FROM gameobject_loot_template WHERE entry = '$data1'");
@@ -1221,7 +1215,7 @@ function delete_spwn() {
 
     if(isset($_GET['entry']))
         $entry = $_GET['entry'];
-    else 
+    else
         redirect("game_object.php?error=1");
 
     $sql = new SQL;
@@ -1239,7 +1233,7 @@ $err = (isset($_GET['error'])) ? $_GET['error'] : NULL;
 
 $output .= "
         <div class=\"top\">";
-switch ($err) 
+switch ($err)
 {
     case 1:
         $output .= "

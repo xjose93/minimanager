@@ -12,12 +12,12 @@ function guild_bank(&$sqlr, &$sqlc)
     global  $output, $lang_global, $lang_guildbank, $realm_id, $characters_db, $mmfpm_db, $world_db, $item_datasite, $item_icons;
     wowhead_tt();
 
-    if (empty($_GET['id'])) 
+    if (empty($_GET['id']))
         error($lang_global['empty_fields']);
 
     // this is multi realm support, as of writing still under development
     //  this page is already implementing it
-    if (empty($_GET['realm'])) 
+    if (empty($_GET['realm']))
         $realmid = $realm_id;
     else
     {
@@ -29,17 +29,17 @@ function guild_bank(&$sqlr, &$sqlc)
     }
 
     $guild_id = $sqlc->quote_smart($_GET['id']);
-    if (is_numeric($guild_id)); 
-    else 
+    if (is_numeric($guild_id));
+    else
         $guild_id = 0;
 
-    if (empty($_GET['tab'])) 
+    if (empty($_GET['tab']))
         $current_tab = 0;
-    else 
+    else
         $current_tab = $sqlc->quote_smart($_GET['tab']);
-        
-    if (is_numeric($current_tab) || ($current_tab > 6)); 
-    else 
+
+    if (is_numeric($current_tab) || ($current_tab > 6));
+    else
         $current_tab = 0;
 
     $result = $sqlc->query('SELECT name, BankMoney FROM guild WHERE guildid = '.$guild_id.' LIMIT 1');
@@ -50,12 +50,12 @@ function guild_bank(&$sqlr, &$sqlc)
         $bank_gold   = $sqlc->result($result, 0, 'BankMoney');
         $result = $sqlc->query('SELECT TabId, TabName, TabIcon FROM guild_bank_tab WHERE guildid = '.$guild_id.' LIMIT 6');
         $tabs = array();
-        
+
         while ($tab = $sqlc->fetch_assoc($result))
         {
             $tabs[$tab['TabId']] = $tab;
         }
-        
+
         $output .= '
                 <div class="top">
                     <h1>'.$guild_name.' '.$lang_guildbank['guildbank'].'</h1>
@@ -95,14 +95,14 @@ function guild_bank(&$sqlr, &$sqlc)
                         </ul>
                     </div>
                     <div id="tab_content">';
-                    
+
         $result = $sqlc->query('SELECT gbi.SlotId, itemEntry, count as stack_count FROM guild_bank_item gbi INNER JOIN item_instance ii on ii.guid = gbi.item_guid WHERE gbi.guildid = '.$guild_id.' AND TabID = '.$current_tab.'');
         $gb_slots = array();
-        
+
         while ($tab = $sqlc->fetch_assoc($result))
             if ($tab['itemEntry'])
                 $gb_slots[$tab['SlotId']] = $tab;
-                
+
         $output .= '
                         <table style="width: 510px;">
                             <tr>
@@ -150,9 +150,9 @@ function guild_bank(&$sqlr, &$sqlc)
                     <table class="hidden">
                         <tr>
                             <td>';
-                            
+
         makebutton($lang_guildbank['guild'], 'guild.php?action=view_guild&amp;realm='.$realmid.'&amp;error=3&amp;id='.$guild_id.'', 130);
-        
+
         $output .= '
                             </td>
                         </tr>

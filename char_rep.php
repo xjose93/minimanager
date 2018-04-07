@@ -43,9 +43,9 @@ function char_rep(&$sqlr, &$sqlc)
                             <div id="tab_content">
                             <h1>'.$lang_char['reputation'].'</h1>
                             <br />';
-              
+
             require_once 'core/char/char_header.php';
-      
+
             $output .= '
                             <br /><br />';
 
@@ -243,7 +243,7 @@ function char_rep(&$sqlr, &$sqlc)
                         <br />';
 
             require_once 'core/char/char_footer.php';
-      
+
             $output .='
                         <br />
                     </center>

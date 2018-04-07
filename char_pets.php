@@ -26,7 +26,7 @@ function char_pets(&$sqlr, &$sqlc)
         $owner_gmlvl = $sqlr->result($result, 0, 'gmlevel');
         if (empty($owner_gmlvl))
             $owner_gmlvl = 0;
-      
+
         if (($user_lvl > $owner_gmlvl)||($owner_name === $user_name))
         {
             $output .= '
@@ -34,13 +34,13 @@ function char_pets(&$sqlr, &$sqlc)
                         <div id="tab_content">
                         <h1>'.$lang_char['pets'].'</h1>
                         <br />';
-              
+
             require_once 'core/char/char_header.php';
-      
+
             $output .= '
                         <br /><br />';
             $result = $sqlc->query('SELECT id, level, exp, name, curhappiness FROM character_pet WHERE owner = '.$id.'');
-            
+
             if ($sqlc->num_rows($result))
             {
                 $sqlm = new SQL;
@@ -101,7 +101,7 @@ function char_pets(&$sqlr, &$sqlc)
                 unset($happiness);
                 unset($pet);
             }
-            
+
             $output .= '
                     </div>
                     </div>

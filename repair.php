@@ -27,15 +27,15 @@ function repair_form()
                                         </select>
                                     </td>
                                     <td>';
-                                    
+
         makebutton($lang_repair['start'], 'javascript:do_submit()" type="wrn', 130);
-        
+
         $output .= '
                                     </td>
                                     <td>';
-                                    
+
         makebutton($lang_global['back'], 'javascript:window.history.back()" type="def', 130);
-        
+
         $output .= '
                                     </td>
                                 </tr>
@@ -57,7 +57,7 @@ function repair_form()
                             </table>';
     $sql = new SQL;
     $mm_dbs=array($realm_db, $mmfpm_db);
-    
+
     foreach ($mm_dbs as $db)
     {
         $output.= '
@@ -93,7 +93,7 @@ function repair_form()
                             </table>';
     }
     $mm_dbs=array($world_db, $characters_db);
-    
+
     foreach ($mm_dbs as $dbs)
     {
         foreach ($dbs as $dbr => $db)
@@ -138,7 +138,7 @@ function repair_form()
     unset($result1);
     unset($table);
     unset($mm_dbs);
-    
+
     $output .= '
                         </form>
                     </fieldset>
@@ -177,9 +177,9 @@ function do_repair()
             $sql->connect($characters_db[$table_data[1]]['addr'], $characters_db[$table_data[1]]['user'], $characters_db[$table_data[1]]['pass']);
         $action_result = $sql->fetch_row($sql->query(''.$table_action.' TABLE '.$table_data[2].'.'.$table_data[3].''));
 
-        if ($action_result[3] === 'OK') 
+        if ($action_result[3] === 'OK')
             ++$counter;
-        else 
+        else
             $err = $action_result[3];
     }
     unset($action_result);
