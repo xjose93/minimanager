@@ -22,7 +22,7 @@ if (function_exists ('date_default_timezone_set'))
 //}
 //else
 //{
-    $tt_script = 'http://www.wowhead.com/widgets/power.js';
+    $tt_script = 'https://www.wowhead.com/widgets/power.js';
 //}
 
 
