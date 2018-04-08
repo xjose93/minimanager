@@ -1499,7 +1499,7 @@ function do_insert_update($do_insert)
                 }
             };
 
-            if ($row_flag) 
+            if ($row_flag)
                 $output .= "
                                                                 <td colspan=\"".(16 - $cel_counter)."\"></td>";
             $output .= "
@@ -1785,7 +1785,7 @@ function do_update() {
             redirect("creature.php?error=9");
         $db_action_creature = "REPLACE";
     }
-    //($del_trainer_spell || $del_loot_items || $del_skin_items || $del_pp_items || $del_questrelation || $del_involvedrelation || $del_vendor_item ) && 
+    //($del_trainer_spell || $del_loot_items || $del_skin_items || $del_pp_items || $del_questrelation || $del_involvedrelation || $del_vendor_item ) &&
     if ( $user_lvl < $action_permission['delete'] )
         redirect("creature.php?error=9");
     $deplang = get_lang_id();

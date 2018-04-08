@@ -483,7 +483,7 @@ function edit() {
                                             <td>".makeinfocell($lang_game_object['type'],$lang_game_object['type_desc'])."</td>
                                             <td colspan=\"3\">
                                                 <select name=\"type\">";
-        foreach ($go_type as $type) 
+        foreach ($go_type as $type)
         {
             $output .= "
                                                     <option value=\"$type[0]\" ";
@@ -1279,7 +1279,7 @@ $output .= "
 
 $action = (isset($_GET['action'])) ? $_GET['action'] : NULL;
 
-switch ($action) 
+switch ($action)
 {
     case "search":
         search();

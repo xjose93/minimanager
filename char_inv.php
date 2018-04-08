@@ -103,7 +103,7 @@ function char_inv(&$sqlr, &$sqlc)
                     {
                         if(isset($bag[0][$slot['slot']-23]))
                             $bag[0][$slot['slot']-23][0]++;
-                        else 
+                        else
                             $bag[0][$slot['slot']-23] = array($slot['itemEntry'],0,$slot['stack_count']);
                     }
                     elseif($slot['slot'] < 67) // SLOT 39 TO 66 (Bank)

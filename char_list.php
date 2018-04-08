@@ -502,14 +502,14 @@ switch ($err)
                 <font class=\"error\">{$lang_global['err_no_search_passed']}</font>
             </h1>";
         break;
-        
+
     case 3:
         $output .="
             <h1>
                 <font class=\"error\">{$lang_char_list['search_results']}:</font>
             </h1>";
         break;
-        
+
     default:
         $output .= "
             <h1>{$lang_char_list['browse_chars']}</h1>";

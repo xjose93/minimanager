@@ -2878,7 +2878,7 @@ function do_update() {
                       '$itemset', '$MaxDurability', '$area', '$BagFamily', '$Map', '$ScriptName', '$DisenchantID', '$RequiredDisenchantSkill','$ArmorDamageModifier','$unk0','$RandomSuffix', '$TotemCategory', '$socketColor_1', '$socketContent_1', '$socketColor_2',
                       '$socketContent_2', '$socketColor_3', '$socketContent_3', '$socketBonus', '$GemProperties')";
 
-    } 
+    }
     elseif ($_POST['type'] == "edit")
     {
         $sql_query = "UPDATE item_template SET  ";

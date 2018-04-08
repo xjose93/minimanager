@@ -468,9 +468,9 @@ function backup_user()
     $sql = new SQL;
     $sql->connect($realm_db['addr'], $realm_db['user'], $realm_db['pass'], $realm_db['name']);
 
-    if(isset($_GET['check'])) 
+    if(isset($_GET['check']))
         $check = $sql->quote_smart($_GET['check']);
-    else 
+    else
         redirect("user.php?error=1");
 
     require_once("libs/tab_lib.php");
@@ -762,7 +762,7 @@ function edit_user()
         require_once 'libs/misc_lib.php';
     }
 
-    if (empty($_GET['id'])) 
+    if (empty($_GET['id']))
         redirect("user.php?error=10");
 
     $sqlr = new SQL;
