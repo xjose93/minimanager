@@ -21,10 +21,10 @@ Q - I get another error - Table 'mmfpm.dbc_*' doesn't exist - whats the problem 
 A - You didnt import sql files from /SQL/ to mmfpm.
 
 
-Q - Another error - Table 'mmfpm.ip2nationcountries' doesn't exist - whats up?
-A - if you have on your config
+Q - How to show country flags from players?
+A - set at config
      $showcountryflag =  true;
-     you need to import to mmfpm database /SQL/ip2nation.sql
+     and update ip2location database, you can download latest at https://lite.ip2location.com/
 
 
 Q - New Error - Table 'mmfpm.forum_posts' doesn't exist - whats wrong?
