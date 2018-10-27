@@ -108,13 +108,15 @@
         echo '
                     <table>
                         <tr>
-                            <td align="left">';
+                            <td align="left">
+                                <pre>';
         $arrayObj = new ArrayObject(get_defined_vars());
         for($iterator = $arrayObj->getIterator(); $iterator->valid(); $iterator->next())
         {
             echo '
-                                <br />'.$iterator->key() . ' => ' . $iterator->current();
+                                <br />'.$iterator->key() . ' => ' . print_r($iterator->current(), true);
         }
+        echo '                                </pre>';
         unset($iterator);
         unset($arrayObj);
         // debug mode 3 lists all global vars and their values, but not for arrays
