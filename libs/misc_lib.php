@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/libs/IP2Location/IP2Location.php';
+require_once __DIR__ . '/IP2Location/IP2Location.php';
 
 //#############################################################################
 //get country code and country name by IP
@@ -9,7 +9,7 @@ require_once __DIR__ . '/libs/IP2Location/IP2Location.php';
 
 function misc_get_country_by_ip($ip, &$sqlm)
 {
-    $db = new \IP2Location\Database(__DIR__ . '/libs/IP2Location/databases/IP2LOCATION-LITE-DB1.BIN', \IP2Location\Database::FILE_IO);
+    $db = new \IP2Location\Database(__DIR__ . '/IP2Location/databases/IP2LOCATION-LITE-DB1.BIN', \IP2Location\Database::FILE_IO);
     $records = $db->lookup($ip, \IP2Location\Database::ALL);
     $country = array("code" => strtolower($records['countryCode']), "country" => $records['countryName']);
 
