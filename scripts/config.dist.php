@@ -158,14 +158,15 @@ $proxy_cfg['pass'] = '';
 //#############################################################################
 //---- External Links ----
 
-$tt_lang                    = 'www';// wowhead tooltip language. choices are 'fr', 'de', 'es', 'ru' (for 'en' use www)
-$item_datasite              = 'http://'.$tt_lang.'.wowhead.com/?item=';
-$quest_datasite             = 'http://'.$tt_lang.'.wowhead.com/?quest=';
-$creature_datasite          = 'http://'.$tt_lang.'.wowhead.com/?npc=';
-$spell_datasite             = 'http://'.$tt_lang.'.wowhead.com/?spell=';
-$skill_datasite             = 'http://'.$tt_lang.'.wowhead.com/?spells=';
-$go_datasite                = 'http://'.$tt_lang.'.wowhead.com/?object=';
-$achievement_datasite       = 'http://'.$tt_lang.'.wowhead.com/?achievement=';
+$tooltip_script             = 'http://wow.zamimg.com/widgets/power.js';
+$tooltip_url                = 'http://www.wowhead.com';
+$item_datasite              = $tooltip_url . '/?item=';
+$quest_datasite             = $tooltip_url . '/?quest=';
+$creature_datasite          = $tooltip_url . '/?npc=';
+$spell_datasite             = $tooltip_url . '/?spell=';
+$skill_datasite             = $tooltip_url . '/?spells=';
+$go_datasite                = $tooltip_url . '/?object=';
+$achievement_datasite       = $tooltip_url . '/?achievement=';
 $talent_calculator_datasite = 'http://www.wowarmory.com/talent-calc.xml?cid=';
 
 $get_icons_from_web         =  false;      // wherever to get icons from the web.
