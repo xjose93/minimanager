@@ -1795,7 +1795,7 @@ $lang_game_object = array(
   'condition_value2_desc' => 'Flag Condition Valeur 2',
   'datas' => 'Données complémentaires',
   'data' => 'Donnée',
-  'data_desc' => 'Champs spécifiques pour des valeurs de champs de type différent. Chaque type a un champ unique.<br />Pour plus d\'infos, visitez http://trinitycore.info/index.php/Main_Page'
+  'data_desc' => 'Champs spécifiques pour des valeurs de champs de type différent. Chaque type a un champ unique.<br />Pour plus d\'infos, visitez https://trinitycore.info/index.php/Main_Page'
   );
 
 

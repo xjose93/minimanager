@@ -1,12 +1,12 @@
 /**
  * Subsys_JsHttpRequest_Js: JavaScript DHTML data loader.
- * (C) 2005 Dmitry Koterov, http://forum.dklab.ru/users/DmitryKoterov/
+ * (C) 2005 Dmitry Koterov, https://forum.dklab.ru/users/DmitryKoterov/
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * See http://www.gnu.org/copyleft/lesser.html
+ * See https://www.gnu.org/copyleft/lesser.html
  *
  * Do not remove this comment if you want to use script!
  * Не удаляйте данный комментарий, если вы хотите использовать скрипт!

@@ -8,7 +8,7 @@ session_start();
 * Date: 03/08/06
 * Updated: 07/02/07
 * Requirements: PHP 4/5 with GD and FreeType libraries
-* Link: http://www.white-hat-web-design.co.uk/articles/php-captcha.php
+* Link: https://www.white-hat-web-design.co.uk/articles/php-captcha.php
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -19,7 +19,7 @@ session_start();
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 * GNU General Public License for more details:
-* http://www.gnu.org/licenses/gpl.html
+* https://www.gnu.org/licenses/gpl.html
 */
 
 require_once("../../scripts/config.php");

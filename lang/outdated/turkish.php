@@ -1594,7 +1594,7 @@ $lang_game_object = array( //TODO:
 	'condition_value2_desc' => 'Condition Value 2 flag',
 	'datas' => 'Additional Datas',
 	'data' => 'Data',
-	'data_desc' => 'Data fields specific for different type field values. Each type has unique fields.<br />For more informaton visit http://trinitycore.info/index.php/Main_Page'
+	'data_desc' => 'Data fields specific for different type field values. Each type has unique fields.<br />For more informaton visit https://trinitycore.info/index.php/Main_Page'
 	);
 
 $lang_auctionhouse = array( //TODO

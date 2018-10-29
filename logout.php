@@ -18,7 +18,7 @@ setcookie ('p_hash',   '', time() - 3600);
 
 if (strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') === false)
 {
-    header('Location: http://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/login.php');
+    header('Location: https://'.$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER['PHP_SELF']), '/\\').'/login.php');
     exit();
 }
 else

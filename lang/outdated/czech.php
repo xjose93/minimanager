@@ -3,7 +3,7 @@
  * Project Name: MiniManager for Trinity
  * Date: 20.5.2009 (0.13) 
  * Progress: 95% complete
- * From: http://www.heroesoffantasy.cz/trac/wow/browser/trunk/minimanager/lang/czech.php
+ * From: https://www.heroesoffantasy.cz/trac/wow/browser/trunk/minimanager/lang/czech.php
  * Author: Chronos
  * Email: robie@centrum.cz
  * License: GNU General Public License v2(GPL)
@@ -1582,7 +1582,7 @@ $lang_game_object = array(
  	'condition_value2_desc' => 'Vlajka hodnoty podmÃ­nky 2',
 	'datas' => 'PÅ™Ã­davnÃ¡ data',
 	'data' => 'Data',
-	'data_desc' => 'DatovÃ© poloÅ¾ky s rÅ¯znÃ½m vÃ½znamem pro rÅ¯znÃ½ typ polÃ­Äek. KaÅ¾dÃ½ typ mÃ¡ jedineÄnÃ© poloÅ¾ky.<br />Pro vÃ­ce informacÃ­ navÅ¡tivte http://trinitycore.info/index.php/Main_Page'
+	'data_desc' => 'DatovÃ© poloÅ¾ky s rÅ¯znÃ½m vÃ½znamem pro rÅ¯znÃ½ typ polÃ­Äek. KaÅ¾dÃ½ typ mÃ¡ jedineÄnÃ© poloÅ¾ky.<br />Pro vÃ­ce informacÃ­ navÅ¡tivte https://trinitycore.info/index.php/Main_Page'
 );
 
 $lang_auctionhouse = array(

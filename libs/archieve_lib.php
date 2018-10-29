@@ -147,7 +147,7 @@ function achieve_get_icon($achieveid, &$sqlm)
 
     if($get_icons_from_web)
     {
-        $xmlfilepath='http://www.wowhead.com/achievement=';
+        $xmlfilepath='https://www.wowhead.com/achievement=';
         $proxy = $proxy_cfg['addr'];
         $port = $proxy_cfg['port'];
 
@@ -215,7 +215,7 @@ function achieve_get_icon($achieveid, &$sqlm)
         else
             return 'img/INV/INV_blank_32.gif';
         $iconfilename = strtolower($achieve);
-        $file = 'http://static.wowhead.com/images/icons/medium/'.$iconfilename.'.jpg';
+        $file = 'https://static.wowhead.com/images/icons/medium/'.$iconfilename.'.jpg';
         $out = "GET $file HTTP/1.0\r\nHost: static.wowhead.com\r\n";
         if (isset($proxy_cfg['user']))
             $out .= "Proxy-Authorization: Basic ". base64_encode ("{$proxy_cfg['user']}:{$proxy_cfg['pass']}")."\r\n";

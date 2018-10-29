@@ -7,7 +7,7 @@
     Show tooltip with location, race, class and level of player.
     Show realm status.
 
-    16.09.2006      http://pomm.da.ru/
+    16.09.2006      https://pomm.da.ru/
 
     Created by mirage666 (c) (mailto:mirage666@pisem.net icq# 152263154)
     2006-2009 Modified by killdozer.

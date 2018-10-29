@@ -9,7 +9,7 @@ To tell if you have GD/FreeType enabled:
 Open the included doc/captcha/test.php and uncomment the code block.
 Save the changes.
 Open your browser and type the direct link to "doc/captcha/test.php",
- ex: http://www.mysite.com/doc/captcha/test.php
+ ex: https://www.mysite.com/doc/captcha/test.php
 
 You should see a page showing you your PHP configuration.
 Scroll down and look for the gd section to see if they are enabled.

@@ -1,11 +1,11 @@
 RECOMMENDED REQUIREMENTS:
 
  WebServer with PHP support.
- MySQL 5.0.61 and above.     ( http://dev.mysql.com/downloads/mysql/5.0.html#downloads )
- PHP 5.1.0 and above.        ( http://www.php.net/downloads.php)
+ MySQL 5.0.61 and above.     ( https://dev.mysql.com/downloads/mysql/5.0.html#downloads )
+ PHP 5.1.0 and above.        ( https://www.php.net/downloads.php)
 
  For windows users:
-  If you are using Apache2,  ( http://httpd.apache.org/ )
+  If you are using Apache2,  ( https://httpd.apache.org/ )
    we recommend PHP VC6 TS.
   If you are not using Apache2,
    we recommend PHP VC9 NTS.

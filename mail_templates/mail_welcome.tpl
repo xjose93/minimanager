@@ -1,6 +1,6 @@
 Subject: Welcome to <title>.
 
-Thank you for registering in our Trinity server at <a href="http://<base_url>"><base_url></a>.
+Thank you for registering in our Trinity server at <a href="https://<base_url>"><base_url></a>.
 
 <b>Your account details are</b>:
 Username: <username>

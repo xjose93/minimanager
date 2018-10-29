@@ -121,7 +121,7 @@ function fact_get_fact_id()
 
 
 //#############################################################################
-//get reputation ranks lengths - http://www.wowwiki.com/Reputation
+//get reputation ranks lengths - https://www.wowwiki.com/Reputation
 
 function fact_get_reputation_rank_length()
 {
@@ -130,7 +130,7 @@ function fact_get_reputation_rank_length()
 
 
 //#############################################################################
-//get reputation ranks by its id - http://www.wowwiki.com/Reputation
+//get reputation ranks by its id - https://www.wowwiki.com/Reputation
 
 function fact_get_reputation_rank_arr()
 {
@@ -246,7 +246,7 @@ function fact_get_base_reputation_rank($id, $race, &$sqlm)
 
 //#############################################################################
 //get reputation at to rank by its id
-//- http://code.google.com/p/trinitycore/source/browse/src/game/ReputationMgr.h
+//- https://code.google.com/p/trinitycore/source/browse/src/game/ReputationMgr.h
 
 function fact_reputation_at_to_rank($standing, $type)
 {

@@ -4,7 +4,7 @@
 // sanitize.inc.php
 // Sanitization functions for PHP
 // by: Gavin Zuchlinski, Jamie Pratt, Hokkaido
-// webpage: http://libox.net
+// webpage: https://libox.net
 // Last modified: September 27, 2003
 //
 // Many thanks to those on the webappsec list for helping me improve these functions

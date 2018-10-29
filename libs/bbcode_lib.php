@@ -135,7 +135,7 @@ function bbcode_add_editor()
 function bbcode_bbc2html($text)
 {
   $bbcode_emoticons = bbcode_emoticons();
-  // By BlackWizard, http://www.phpcs.com/codes/BBCODE-SIMPLEMENT_17638.aspx
+  // By BlackWizard, https://www.phpcs.com/codes/BBCODE-SIMPLEMENT_17638.aspx
   $text = preg_replace("#\[img\]((ht|f)tp://)([^\r\n\t<\"]*?)\[/img\]#sie", "'<img src=\\1' . str_replace(' ', '%20', '\\3') . ' />'", $text);
   $text = preg_replace("#\[url=((ht|f)tp://)([^\r\n\t<\"]*?)\](.+?)\[\/url\]#sie", "'<a href=\"\\1' . str_replace(' ', '%20', '\\3') . '\" target=blank>\\4</a>'", $text);
   $text = preg_replace("#\[url\]((ht|f)tp://)([^\r\n\t<\"]*?)\[/url\]#sie", "'<a href=\"\\1' . str_replace(' ', '%20', '\\3') . '\" target=blank>\\1\\3</a>'", $text);
@@ -154,7 +154,7 @@ function bbcode_bbc2html($text)
   $text = preg_replace("#\[right\](.+?)\[\/right\]#sie", "'<p style=\"text-align:right;\">\\1</p>'", $text);
   $text = preg_replace("#\[center\](.+?)\[\/center\]#sie", "'<center>\\1</center>'", $text);
   $text = preg_replace( "/([^\/=\"\]])((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>",  $text);
-  $text = preg_replace('/([^\/=\"\]])(www\.)(\S+)/', '\\1<a href="http://\\2\\3" target="_blank">\\2\\3</a>', $text);
+  $text = preg_replace('/([^\/=\"\]])(www\.)(\S+)/', '\\1<a href="https://\\2\\3" target="_blank">\\2\\3</a>', $text);
   $text = preg_replace('#\r\n#', '<br />', $text);
   $text = str_replace('#\r#', '<br />', $text);
 

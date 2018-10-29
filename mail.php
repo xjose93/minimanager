@@ -186,7 +186,7 @@ function send_mail()
             $body = str_replace("\r", " ", $body);
             $body = str_replace(array("\r\n", "\n", "\r"), '<br />', $body);
             $body = preg_replace( "/([^\/=\"\]])((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>",  $body);
-            $body = preg_replace('/([^\/=\"\]])(www\.)(\S+)/', '\\1<a href="http://\\2\\3" target="_blank">\\2\\3</a>', $body);
+            $body = preg_replace('/([^\/=\"\]])(www\.)(\S+)/', '\\1<a href="https://\\2\\3" target="_blank">\\2\\3</a>', $body);
 
             $mail->Body = $body;
             $mail->WordWrap = 50;

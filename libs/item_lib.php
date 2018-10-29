@@ -133,7 +133,7 @@ function get_item_icon($itemid, &$sqlm=0, &$sqlw=0)
 
     if($get_icons_from_web)
     {
-        $xmlfilepath="http://www.wowhead.com/item=";
+        $xmlfilepath="https://www.wowhead.com/item=";
         $proxy = $proxy_cfg['addr'];
         $port = $proxy_cfg['port'];
 
@@ -197,7 +197,7 @@ function get_item_icon($itemid, &$sqlm=0, &$sqlw=0)
         if (!$fp)
             return "img/INV/INV_blank_32.gif";
         $iconfilename = strtolower($item);
-        $file = "http://static.wowhead.com/images/icons/medium/$iconfilename.jpg";
+        $file = "https://static.wowhead.com/images/icons/medium/$iconfilename.jpg";
         $out = "GET $file HTTP/1.0\r\nHost: static.wowhead.com\r\n";
         if (!empty($proxy_cfg['user']))
             $out .= "Proxy-Authorization: Basic ". base64_encode ("{$proxy_cfg['user']}:{$proxy_cfg['pass']}")."\r\n";

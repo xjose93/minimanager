@@ -2,7 +2,7 @@
 
 
 function bbcode_editor_js(){
-    //By Tucefa, http://www.4claverie.com/forums/index.php?showtopic=3904
+    //By Tucefa, https://www.4claverie.com/forums/index.php?showtopic=3904
     return "<script type=\"text/javascript\">
 function ajtTexte(txt){
   var obj = document.getElementsByName(\"msg\")[0], sel;
@@ -55,12 +55,12 @@ onmouseover=\"toolTip('".addslashes(get_item_tooltip($item[1]))."','item_tooltip
 function handle_url_tag($url, $link = ''){
     // From PunBB
     $full_url = str_replace(array(' ', '\'', '`', '"'), array('%20', '', '', ''), $url);
-    if (strpos($url, 'www.') === 0)            // If it starts with www, we add http://
-        $full_url = 'http://'.$full_url;
+    if (strpos($url, 'www.') === 0)            // If it starts with www, we add https://
+        $full_url = 'https://'.$full_url;
     else if (strpos($url, 'ftp.') === 0)    // Else if it starts with ftp, we add ftp://
         $full_url = 'ftp://'.$full_url;
-    else if (!preg_match('#^([a-z0-9]{3,6})://#', $url, $bah))     // Else if it doesn't start with abcdef://, we add http://
-        $full_url = 'http://'.$full_url;
+    else if (!preg_match('#^([a-z0-9]{3,6})://#', $url, $bah))     // Else if it doesn't start with abcdef://, we add https://
+        $full_url = 'https://'.$full_url;
     // Ok, not very pretty :-)
     $link = ($link == '' || $link == $url) ? ((strlen($url) > 55) ? substr($url, 0 , 39).' &hellip; '.substr($url, -10) : $url) : stripslashes($link);
     return '<a href="'.$full_url.'">'.$link.'</a>';
@@ -80,7 +80,7 @@ function do_clickable($text){
 }
 
 function bbcode_parse($text, $brfix = 1, $emoticons = 1, $wow = 1){
-    // By BlackWizard, http://www.phpcs.com/codes/BBCODE-SIMPLEMENT_17638.aspx
+    // By BlackWizard, https://www.phpcs.com/codes/BBCODE-SIMPLEMENT_17638.aspx
     global $forum_lang, $userid;
     $text = preg_replace("#\[img\]((ht|f)tp://)([^\r\n\t<\"]*?)\[/img\]#sie", "'<img border=\"0\" src=\\1' . str_replace(' ', '%20', '\\3') . '>'", $text);
     $text = preg_replace("#\[url\]((ht|f)tp://)([^\r\n\t<\"]*?)\[/url\]#sie", "'<a href=\"\\1' . str_replace(' ', '%20', '\\3') . '\" target=blank>\\1\\3</a>'", $text);
@@ -129,14 +129,14 @@ function bbcode_parse($text, $brfix = 1, $emoticons = 1, $wow = 1){
 
     $text = do_clickable(htmlspecialchars_decode($text));
     //WindowMediaPlayer
-    $text = preg_replace("#\[media:$uid\](.*?)\[/media:$uid\]#si", "<object id=\"WMP\" type=\"video/x-ms-asf\" data=\"video.asx\" src=\"\\1\" width=\"450\" height=\"350\"><param name=\"AutoStart\" value=\"0\"> <embed width=\"450\" height=\"350\" AutoStart=\"0\" src=\"\\1\" ShowTracker=\"true\" ShowControls=\"true\" ShowGotoBar=\"true\" ShowDisplay=\"true\" ShowStatusBar=\"true\" AutoSize=\"true\" pluginspage=\"http://www.microsoft.com/windows/windowsmedia/download/\"></embed></OBJECT>", $text);
+    $text = preg_replace("#\[media:$uid\](.*?)\[/media:$uid\]#si", "<object id=\"WMP\" type=\"video/x-ms-asf\" data=\"video.asx\" src=\"\\1\" width=\"450\" height=\"350\"><param name=\"AutoStart\" value=\"0\"> <embed width=\"450\" height=\"350\" AutoStart=\"0\" src=\"\\1\" ShowTracker=\"true\" ShowControls=\"true\" ShowGotoBar=\"true\" ShowDisplay=\"true\" ShowStatusBar=\"true\" AutoSize=\"true\" pluginspage=\"https://www.microsoft.com/windows/windowsmedia/download/\"></embed></OBJECT>", $text);
     $text = str_replace("[/win:$uid]", "", $text);
     //youtube
     $text = preg_replace("#\[youtube:$uid\](.*?)\[/youtube:$uid\]#si", "<object width=\"425\" height=\"350\"><param name=\"movie\" value=\"\\1\"></param><embed src=\"\\1\" type=\"application/x-shockwave-flash\" width=\"425\" height=\"350\"></embed></object>"."[/youtube:$uid]", $text);
     $text = str_replace("[/youtube:$uid]", "", $text);
-    $text = str_replace("http://www.youtube.com/watch?v=", "http://www.youtube.com/v/", $text);
-    $text = str_replace("http://www.youtube.com", "http://youtube.com", $text);
-    $text = str_replace("http://www.youtube.com", "http://fr.youtube.com", $text);
+    $text = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/v/", $text);
+    $text = str_replace("https://www.youtube.com", "https://youtube.com", $text);
+    $text = str_replace("https://www.youtube.com", "https://fr.youtube.com", $text);
     return $text;
 }
 

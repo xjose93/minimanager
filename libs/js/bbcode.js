@@ -62,7 +62,7 @@ function addText(textarea_id, text)
 function add_url(textarea_id)
 {
   var target = (document.getElementById) ? document.getElementById(textarea_id) : document.all[textarea_id];
-  var url = prompt('URL:', 'http://');
+  var url = prompt('URL:', 'https://');
   var text = '';
 
   if (document.selection)
@@ -150,13 +150,13 @@ function add_img(textarea_id)
     target.focus();
     var text_sel = document.selection.createRange();
     text_sel = text_sel.text;
-    var url = prompt('URL image:', ((text_sel) ? text_sel : 'http://'));
+    var url = prompt('URL image:', ((text_sel) ? text_sel : 'https://'));
     if (url) addText(textarea_id, '[img]' + url + '[/img]');
   }
   else if (target.selectionStart >= 0 && target.selectionEnd >= 0)
   {
     var text_sel = target.value.substring(target.selectionStart, target.selectionEnd);
-    var url = prompt('URL image:', ((text_sel) ? text_sel : 'http://'));
+    var url = prompt('URL image:', ((text_sel) ? text_sel : 'https://'));
     if (url) addbbcode(textarea_id, 'img', '', url);
   }
 }

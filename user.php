@@ -1251,7 +1251,7 @@ require_once 'scripts/config.php';
 $command = "error";
 
    $client = new SoapClient(NULL, array(
-       'location' => "http://$soapaddr:$soap_port/",
+       'location' => "https://$soapaddr:$soap_port/",
        'uri'      => 'urn:TC',
        'login'    => $soap_user,
        'password' => $soap_pass,

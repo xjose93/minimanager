@@ -17,7 +17,7 @@ function getBrowserWidth()
 }
 
 // changeLayout is based on setActiveStyleSheet function by Paul Sowdon 
-// http://www.alistapart.com/articles/alternate/
+// https://www.alistapart.com/articles/alternate/
 function dynamicLayout()
 {
   var i, a;

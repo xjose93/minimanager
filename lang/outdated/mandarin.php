@@ -1591,7 +1591,7 @@ $lang_game_object = array(
 	'condition_value2_desc' => '×´¿öÖµ 2 ±êÖ¾',
 	'datas' => 'ÁíÍâµÄÊý¾Ý',
 	'data' => 'Êý¾Ý',
-	'data_desc' => 'Êý¾ÝÎª²»Í¬ÀàÐÍµÄÖµ. Ã¿¸öÀàÐÍÓÐ¶ÀÌØµÄÁìÓò.<br />¸ü¶àÐÅÏ¢²Î¿¼ http://trinitycore.info/index.php/Main_Page'
+	'data_desc' => 'Êý¾ÝÎª²»Í¬ÀàÐÍµÄÖµ. Ã¿¸öÀàÐÍÓÐ¶ÀÌØµÄÁìÓò.<br />¸ü¶àÐÅÏ¢²Î¿¼ https://trinitycore.info/index.php/Main_Page'
 	);
 
 $lang_auctionhouse = array(

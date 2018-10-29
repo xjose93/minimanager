@@ -66,7 +66,7 @@ function spell_get_icon($auraid, &$sqlm)
 
     if($get_icons_from_web)
     {
-        $xmlfilepath='http://www.wowhead.com/spell=';
+        $xmlfilepath='https://www.wowhead.com/spell=';
         $proxy = $proxy_cfg['addr'];
         $port = $proxy_cfg['port'];
 
@@ -132,7 +132,7 @@ function spell_get_icon($auraid, &$sqlm)
         else
             return 'img/INV/INV_blank_32.gif';
         $iconfilename = strtolower($aura);
-        $file = 'http://static.wowhead.com/images/icons/medium/'.$iconfilename.'.jpg';
+        $file = 'https://static.wowhead.com/images/icons/medium/'.$iconfilename.'.jpg';
         $out = "GET $file HTTP/1.0rnHost: static.wowhead.comrn";
         if (isset($proxy_cfg['user']))
             $out .= "Proxy-Authorization: Basic ". base64_encode ("{$proxy_cfg['user']}:{$proxy_cfg['pass']}")."rn";

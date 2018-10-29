@@ -158,8 +158,8 @@ $proxy_cfg['pass'] = '';
 //#############################################################################
 //---- External Links ----
 
-$tooltip_script             = 'http://wow.zamimg.com/widgets/power.js';
-$tooltip_url                = 'http://www.wowhead.com';
+$tooltip_script             = 'https://wow.zamimg.com/widgets/power.js';
+$tooltip_url                = 'https://www.wowhead.com';
 $item_datasite              = $tooltip_url . '/?item=';
 $quest_datasite             = $tooltip_url . '/?quest=';
 $creature_datasite          = $tooltip_url . '/?npc=';
@@ -167,7 +167,7 @@ $spell_datasite             = $tooltip_url . '/?spell=';
 $skill_datasite             = $tooltip_url . '/?spells=';
 $go_datasite                = $tooltip_url . '/?object=';
 $achievement_datasite       = $tooltip_url . '/?achievement=';
-$talent_calculator_datasite = 'http://www.wowarmory.com/talent-calc.xml?cid=';
+$talent_calculator_datasite = 'https://www.wowarmory.com/talent-calc.xml?cid=';
 
 $get_icons_from_web         =  false;      // wherever to get icons from the web.
 $item_icons                 = 'img/icons'; // and this is where it will save to and get from.
@@ -228,7 +228,7 @@ $showcountryflag     =  true;
 
 $theme               = 'Sulfur';    // file/folder name of theme to use from themes directory by default
 $language            = 'english';   // default site language
-$timezone            = 'UTC';       // default timezone (use your local timezone code) http://www.php.net/manual/en/timezones.php
+$timezone            = 'UTC';       // default timezone (use your local timezone code) https://www.php.net/manual/en/timezones.php
 $gm_online           = '1';         // display GM Characters in the Online Character List and Player Map (1 = enable, 0 = disable)
 $gm_online_count     = '1';         // include GM Characters in the Online User Count and Player Map (1 = enable, 0 = disable)
 $motd_display_poster = '1';         // display the poserter info in the MOTD (1 = enable, 0 = disable)

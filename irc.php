@@ -34,7 +34,7 @@ $output .= '
                         <param name="pixx:highlightnick" value="true" />
                         <param name="pixx:nickfield" value="true" />
                         <param name="pixx:showabout" value="false" />
-                        <param name="pixx:helppage" value="http://www.trinityscripts.xe.cx" />
+                        <param name="pixx:helppage" value="https://www.trinityscripts.xe.cx" />
                         <param name="pixx:timestamp" value="true" />
                         <param name="pixx:color5"  value="2a2a2a" />
                         <param name="pixx:color6"  value="383838" />

@@ -1,5 +1,5 @@
 Willkommen bei <title>
-Vielen Dank f&uuml;r deine Anmeldung bei <a href="http://<base_url>"><base_url></a>.
+Vielen Dank f&uuml;r deine Anmeldung bei <a href="https://<base_url>"><base_url></a>.
 
 <b>Deine Daten sind</b>:
 Username: <username>

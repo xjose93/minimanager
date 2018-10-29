@@ -8,7 +8,7 @@
  */
 html{
 	overflow-x:auto;	/* fixes MSIE scrollbar bug DO NOT REMOVE,has no effect in Mozilla,or Opera */
-						/* http://www.blooberry.com/indexdot/css/properties/position/overflowx.htm */
+						/* https://www.blooberry.com/indexdot/css/properties/position/overflowx.htm */
 }
 html,body{
 	background-color:#000000;

@@ -15,7 +15,7 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; If not, see <http://www.gnu.org/licenses/>.
+ * License along with this library; If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -1642,7 +1642,7 @@ class Database {
       $ifields[] = self::IP_NUMBER;
     }
     // turn into a uniquely-valued array the fast way
-    // (see: http://php.net/manual/en/function.array-unique.php#77743)
+    // (see: https://php.net/manual/en/function.array-unique.php#77743)
     $afields = array_keys(array_flip($ifields));
     // sorting them in reverse order warrants that by the time we get to
     // SINGULAR fields, its MULTIPLE counterparts, if at all present, have
