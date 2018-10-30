@@ -99,7 +99,7 @@ function login(&$sqlr)
                                     <td>'.$lang_login['password'].' : <input type="password" name="login_pass" size="24" maxlength="40" /></td>
                                 </tr>';
 
-    $result = $sqlr->query('SELECT id, name FROM realmlist LIMIT 10');
+    $result = $sqlr->query('SELECT id, name FROM realmlist ORDER BY id ASC LIMIT 10');
 
     if ($sqlr->num_rows($result) > 1 && (count($server) > 1) && (count($characters_db) > 1))
     {
