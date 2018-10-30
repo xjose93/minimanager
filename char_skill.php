@@ -74,7 +74,7 @@ function char_skill(&$sqlr, &$sqlc)
             $language_array = array();
 
             $skill_rank_array = array(
-                75 => $lang_char['apprentice'],
+                75  => $lang_char['apprentice'],
                 150 => $lang_char['journeyman'],
                 225 => $lang_char['expert'],
                 300 => $lang_char['artisan'],
@@ -82,6 +82,7 @@ function char_skill(&$sqlr, &$sqlc)
                 450 => $lang_char['inherent'],
                 385 => $lang_char['wise']
             );
+            krsort($skill_rank_array, SORT_NUMERIC);
 
             $result = $sqlc->query('SELECT skill, value, max FROM character_skills WHERE guid = '.$id.'');
 
@@ -155,14 +156,26 @@ function char_skill(&$sqlr, &$sqlc)
                                                 </tr>';
 
             foreach ($prof_1_array as $data)
+            {
+                $rankName = "";
+                foreach ($skill_rank_array as $k => $v)
+                {
+                    if ($data[3] >= $k)
+                    {
+                        $rankName = $v;
+                        break;
+                    }
+                }
+
                 $output .= '
                                                 <tr>
                                                     '.($user_lvl ? '<td>'.$data[0].'</td>' : '').'
                                                     <td align="right"><a href="'.$skill_datasite.'11.'.$data[0].'" target="_blank">'.$data[1].'</a></td>
                                                     <td valign="center" class="bar skill_bar" style="background-position: '.(round(450*$data[2]/$data[3])-450).'px;">
-                                                        <span>'.$data[2].'/'.$data[3].' ('.$skill_rank_array[$data[3]].')</span>
+                                                        <span>'.$data[2].'/'.$data[3].' ('.$rankName.')</span>
                                                     </td>
                                                 </tr>';
+            }
 
             if(count($prof_2_array))
                 $output .= '
@@ -170,14 +183,26 @@ function char_skill(&$sqlr, &$sqlc)
                                                     <th class="title" colspan="'.($user_lvl ? '3' : '2').'" align="left">'.$lang_char['secondaryskills'].'</th>
                                                 </tr>';
             foreach ($prof_2_array as $data)
+            {
+                $rankName = "";
+                foreach ($skill_rank_array as $k => $v)
+                {
+                    if ($data[3] >= $k)
+                    {
+                        $rankName = $v;
+                        break;
+                    }
+                }
+
                 $output .= '
                                                 <tr>
                                                     '.($user_lvl ? '<td>'.$data[0].'</td>' : '').'
                                                     <td align="right"><a href="'.$skill_datasite.'9.'.$data[0].'" target="_blank">'.$data[1].'</a></td>
                                                     <td valign="center" class="bar skill_bar" style="background-position: '.(round(450*$data[2]/$data[3])-450).'px;">
-                                                        <span>'.$data[2].'/'.$data[3].' ('.$skill_rank_array[$data[3]].')</span>
+                                                        <span>'.$data[2].'/'.$data[3].' ('.$rankName.')</span>
                                                     </td>
                                                 </tr>';
+            }
 
             if(count($weapon_array))
                 $output .= '
