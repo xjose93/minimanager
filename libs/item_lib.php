@@ -50,8 +50,8 @@ function get_item_name($item_id, &$sqlw=0)
             $sqlw->connect($world_db[$realm_id]['addr'], $world_db[$realm_id]['user'], $world_db[$realm_id]['pass'], $world_db[$realm_id]['name']);
         }
 
-        $deplang = get_lang_id();
-        $result = $sqlw->query('SELECT IFNULL('.($deplang<>0 ? 'name_loc'.$deplang.'' : 'NULL').', name) as name FROM item_template LEFT JOIN locales_item ON item_template.entry = locales_item.entry WHERE item_template.entry = '.$item_id.'');
+        $localeStr = get_localestr_by_lang_cookie();
+        $result = $sqlw->query('SELECT IFNULL(item_template_locale.Name, item_template.name) as name FROM item_template LEFT JOIN item_template_locale ON item_template.entry = item_template_locale.ID AND item_template_locale.locale = \'' . $localeStr . '\' WHERE item_template.entry = '.$item_id.'');
         $item_name = (1 == $sqlw->num_rows($result)) ? $sqlw->result($result, 0, 'name') : 'ItemID: '.$item_id.' Not Found' ;
 
         return $item_name;
