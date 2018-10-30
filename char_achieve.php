@@ -413,7 +413,7 @@ function char_achievements(&$sqlr, &$sqlc)
                                 $total_sub_cat = $total_sub_cat + $j;
                                 if($j)
                                 {
-                                    $sub_cat['name01'] = str_replace('&', '&amp;', $sub_cat['name01']);
+                                    $sub_cat = str_replace('&', '&amp;', $sub_cat);
                                     $output_sub_cat .='
                                         <tr>
                                             <th align="left">
