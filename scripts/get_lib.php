@@ -140,12 +140,8 @@ function get_lang_id()
        #  7 = Spanish Mexico
        #  8 = Russian
        #  9 = Unknown
-       # 10 = Unknown
-       # 11 = Unknown
-       # 12 = Unknown
-       # 13 = Unknown
-       # 14 = Unknown
-       # 15 = Unknown */
+       # 10 = Brazilian
+       # 11 = Italian */
 
     global $language;
     if (isset($_COOKIE["lang"]))
@@ -178,10 +174,54 @@ function get_lang_id()
         case 'russian':
             return 8;
             break;
+        case 'brazilian':
+            return 10;
+            break;
+        case 'italian':
+            return 11;
+            break;
         default:
             return 0;
             break;
     }
+}
+
+//#############################################################################
+// get DBC locale from cookie
+
+function get_localestr_by_lang_cookie()
+{
+    global $language;
+    if (isset($_COOKIE['lang']))
+        $language = strtolower($_COOKIE['lang']);
+
+    switch ($language)
+    {
+        case 'korean':
+            return "koKR";
+        case 'french':
+            return "frFR";
+        case 'german':
+            return "deDE";
+        case 'chinese':
+            return "zhCN";
+        case 'taiwanese':
+            return "zhTW";
+        case 'spanish':
+            return "esES";
+        case 'mexican':
+            return "esMX";
+        case 'russian':
+            return "ruRU";
+        case 'brazilian':
+            return 'ptBR';
+        case 'italian':
+            return 'itIT';
+        default:
+            break;
+    }
+
+    return "enUS";
 }
 
 

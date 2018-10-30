@@ -71,23 +71,24 @@ function char_quest(&$sqlr, &$sqlc)
                                     <th width="78%"><a href="char_quest.php?id='.$id.'&amp;realm='.$realmid.'&amp;start='.$start.'&amp;order_by=2&amp;dir='.$dir.'"'.($order_by == 2 ? ' class="'.$order_dir.'"' : '').'>'.$lang_char['quest_title'].'</a></th>
                                     <th width="5%"><img src="img/aff_qst.png" width="14" height="14" border="0" alt="" /></th>
                                 </tr>';
-            $result = $sqlc->query('SELECT quest, status FROM character_queststatus WHERE guid = '.$id.' AND ( status = 3 OR status = 1 ) ORDER BY status DESC');
+            $result = $sqlc->query('SELECT quest, status, -1 as rewarded FROM character_queststatus WHERE guid = '.$id.' AND status IN (1, 3) UNION SELECT quest, -1, active AS rewarded FROM character_queststatus_rewarded WHERE guid = ' . $id . ';');
 
             $quests_1 = array();
             $quests_3 = array();
+            $questStatus = array(0 => "None (0)", 1 => "Completed but not delivered (1)", 2 => "Not available (2)", 3 => "Incomplete (3)", 4 => "Available (4)", 5 => "Failed (5)");
 
             if ($sqlc->num_rows($result))
             {
                 while ($quest = $sqlc->fetch_assoc($result))
                 {
-                    $deplang = get_lang_id();
-                    $query1 = $sqlc->query('SELECT Level, IFNULL('.($deplang<>0 ? '`title_loc'.$deplang.'`' : 'NULL').', title) as Title FROM `'.$world_db[$realmid]['name'].'`.`quest_template` LEFT JOIN `'.$world_db[$realmid]['name'].'`.`locales_quest` ON `quest_template`.`id` = `locales_quest`.`entry` WHERE `quest_template`.`id` = \''.$quest['quest'].'\'');
+                    $localeStr = get_localestr_by_lang_cookie();
+                    $query1 = $sqlc->query('SELECT QuestLevel, IFNULL(quest_template_locale.Title, quest_template.LogTitle) AS Title FROM ' . $world_db[$realmid]['name'] . '.quest_template LEFT JOIN ' . $world_db[$realmid]['name'] . '.quest_template_locale ON quest_template.ID = quest_template_locale.ID AND quest_template_locale.locale = \'' . $localeStr . '\' WHERE quest_template.ID = ' . $quest['quest'] . ';');
                     $quest_info = $sqlc->fetch_assoc($query1);
 
-                    if(1 == $quest['status'])
-                        array_push($quests_1, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title'], $quest['rewarded']));
+                    if ($quest['rewarded'] == 1 || $quest['status'] == 1)
+                        array_push($quests_1, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title'], $quest['status'], $quest['rewarded']));
                     else
-                        array_push($quests_3, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title']));
+                        array_push($quests_3, array($quest['quest'], $quest_info['QuestLevel'], $quest_info['Title'], $quest['status'], $quest['rewarded']));
                 }
 
                 unset($quest);
@@ -108,7 +109,7 @@ function char_quest(&$sqlr, &$sqlc)
                                     <td>'.$data[0].'</td>
                                     <td>('.$data[1].')</td>
                                     <td align="left"><a href="'.$quest_datasite.$data[0].'" target="_blank">'.htmlentities($data[2]).'</a></td>
-                                    <td><img src="img/aff_qst.png" width="14" height="14" alt="" /></td>
+                                    <td><img src="img/aff_qst.png" width="14" height="14" alt="" onmousemove="toolTip(\'' . $questStatus[$data[3]] . '\', \'item_tooltip\')" onmouseout="toolTip()" /></td>
                                 </tr>';
                 }
 
@@ -145,14 +146,15 @@ function char_quest(&$sqlr, &$sqlc)
                                     <td>'.$data[0].'</td>
                                     <td>('.$data[1].')</td>
                                     <td align="left"><a href="'.$quest_datasite.$data[0].'" target="_blank">'.htmlentities($data[2]).'</a></td>
-                                    <td><img src="img/aff_'.($data[3] ? 'tick' : 'qst' ).'.png" width="14" height="14" alt="" /></td>
-                                    <td><img src="img/aff_tick.png" width="14" height="14" alt="" /></td>
+                                    <td><img src="img/aff_'.($data[4] == 1 ? 'tick' : 'qst' ).'.png" width="14" height="14" alt="" /></td>
+                                    <td><img src="img/aff_tick.png" width="14" height="14" alt="" onmousemove="toolTip(\'' . $questStatus[$data[3]] . '\', \'item_tooltip\')" onmouseout="toolTip()" /></td>
                                 </tr>';
                         $i++;
                     }
 
                     unset($data);
                     unset($quest_1);
+                    unset($questStatus);
                     $output .= '
                                 <tr align="right">
                                     <td colspan="5">';
