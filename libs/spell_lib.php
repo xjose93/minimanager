@@ -53,7 +53,24 @@ function spell_get_icon($auraid, &$sqlm)
                     }
                 }
                 else
-                    $aura = '';
+                {
+                    $aura = explode('\\', $aura, 3)[2];
+                    if (file_exists(''.$item_icons.'/'.$aura.'.jpg'))
+                    {
+                        if (filesize(''.$item_icons.'/'.$aura.'.jpg') > 349)
+                            return ''.$item_icons.'/'.$aura.'.jpg';
+                        else
+                        {
+                            $sqlm->query('DELETE FROM dbc_spellicon WHERE id = '.$displayid.'');
+                           
+                            if (file_exists(''.$item_icons.'/'.$aura.'.jpg'))
+                                unlink(''.$item_icons.'/'.$aura.'.jpg');
+                            $aura = '';
+                        }
+                    }
+                    else
+                        $aura = '';
+                }
             }
             else
                 $aura = '';
