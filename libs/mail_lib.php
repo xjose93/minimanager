@@ -12,7 +12,7 @@ function get_char_name($id)
         $sqlc = new SQL;
         $sqlc->connect($characters_db[$realm_id]['addr'], $characters_db[$realm_id]['user'], $characters_db[$realm_id]['pass'], $characters_db[$realm_id]['name']);
 
-        $result = $sqlc->query("SELECT `name` FROM `characters` WHERE `guid` = '$id'");
+        $result = $sqlc->query("SELECT BINARY `name` AS `name` FROM `characters` WHERE `guid` = '$id'");
         $player_name = $sqlc->result($result, 0);
 
         return $player_name;

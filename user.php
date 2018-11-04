@@ -552,7 +552,7 @@ function backup_user()
                 fwrite($fp, "USE {$db['name']};\n\n")or die (error($lang_backup['file_write_err']));
 
                 $sql->connect($db['addr'], $db['user'], $db['pass'], $db['name']);
-                $all_char_query = $sql->query("SELECT guid,name FROM `characters` WHERE account = $acc[0]");
+                $all_char_query = $sql->query("SELECT guid, BINARY name AS name FROM `characters` WHERE account = $acc[0]");
 
                 while ($char = $sql->fetch_array($all_char_query))
                 {
@@ -1035,7 +1035,7 @@ function edit_user()
                                         </tr>";
                 if ($chars_on_realm)
                 {
-                    $char_array = $sqlc->query("SELECT guid, name, race, class, level, gender FROM `characters` WHERE account = $id");
+                    $char_array = $sqlc->query("SELECT guid, BINARY name AS name, race, class, level, gender FROM `characters` WHERE account = $id");
                     while ($char = $sqlc->fetch_array($char_array))
                     {
                         $output .= "
@@ -1069,7 +1069,7 @@ function edit_user()
                                         </tr>";
             if ($chars_on_realm)
             {
-                $char_array = $sqlc->query("SELECT guid,name,race,class, level, gender FROM `characters` WHERE account = $id");
+                $char_array = $sqlc->query("SELECT guid,BINARY name AS name,race,class, level, gender FROM `characters` WHERE account = $id");
                 while ($char = $sqlc->fetch_array($char_array))
                 {
                     $output .= "
@@ -1215,7 +1215,7 @@ function doupdate_referral($referredby, $user_id)
 
     if ($result == NULL)
     {
-        $referred_by = $sqlc->fetch_row($sqlc->query("SELECT guid FROM characters WHERE name = '$referredby'"));
+        $referred_by = $sqlc->fetch_row($sqlc->query("SELECT guid FROM characters WHERE BINARY name = '$referredby'"));
         $referred_by = $referred_by[0];
 
         if ($referred_by != NULL)

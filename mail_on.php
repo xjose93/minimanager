@@ -163,7 +163,7 @@ function search() {
     $order_dir = ($dir) ? "ASC" : "DESC";
     $dir = ($dir) ? 0 : 1;
 
-    $temp = $sql->query("SELECT guid FROM `characters` WHERE name = '$search_value'");
+    $temp = $sql->query("SELECT guid FROM `characters` WHERE BINARY name = '$search_value'");
     $search_value = $sql->result($temp, 0, 'guid');
 
     $query_1 = $sql->query("SELECT count(*) FROM `mail`");

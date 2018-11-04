@@ -114,7 +114,7 @@ function browse_auctions(&$sqlr, &$sqlc)
                     if ($search_quality >= 0)
                         $item_prefix .= "AND item_template.Quality = '$search_quality' ";
 
-                    $result = $sqlc->query("SELECT `guid` FROM `characters` WHERE `name` LIKE '%$search_value%'");
+                    $result = $sqlc->query("SELECT `guid` FROM `characters` WHERE BINARY `name` LIKE '%$search_value%'");
                     $search_filter = $item_prefix;
                     $search_filter .= "AND auctionhouse.itemowner IN(0";
 
@@ -140,7 +140,7 @@ function browse_auctions(&$sqlr, &$sqlc)
                     if ($search_quality >= 0)
                         $item_prefix .= "AND item_template.Quality = '$search_quality' ";
 
-                    $result = $sqlc->query("SELECT guid FROM `characters` WHERE name LIKE '%$search_value%'");
+                    $result = $sqlc->query("SELECT guid FROM `characters` WHERE BINARY name LIKE '%$search_value%'");
                     $search_filter = $item_prefix;
                     $search_filter .= "AND auctionhouse.buyguid IN(-1";
 
@@ -161,7 +161,7 @@ function browse_auctions(&$sqlr, &$sqlc)
         $query_1 = $sqlc->query("SELECT count(*) FROM auctionhouse");
     }
 
-    $result = $sqlc->query("SELECT `characters`.`name` AS `seller`, `item_instance`.`itemEntry` AS `itemid`, `item_template`.`name` AS `itemname`, `auctionhouse`.`buyoutprice` AS `buyout`, `auctionhouse`.`time`-unix_timestamp(), `c2`.`name` AS `encherisseur`, `auctionhouse`.`lastbid`, `auctionhouse`.`startbid`, `item_instance`.`count` AS qty, `characters`.`race` AS seller_race, `c2`.`race` AS buyer_race FROM `".$characters_db[$realm_id]['name']."`.`characters` , `".$characters_db[$realm_id]['name']."`.`item_instance` , `".$world_db[$realm_id]['name']."`.`item_template` , `".$characters_db[$realm_id]['name']."`.`auctionhouse` LEFT JOIN `".$characters_db[$realm_id]['name']."`.`characters` c2 ON `c2`.`guid`=`auctionhouse`.`buyguid` WHERE `auctionhouse`.`itemowner`=`characters`.`guid` AND `item_instance`.`itemEntry`=`item_template`.`entry` AND `auctionhouse`.`itemguid`=`item_instance`.`guid` $search_filter $order_side ORDER BY `auctionhouse`.`$order_by` $order_dir LIMIT $start, $itemperpage");
+    $result = $sqlc->query("SELECT BINARY `characters`.`name` AS `seller`, `item_instance`.`itemEntry` AS `itemid`, `item_template`.`name` AS `itemname`, `auctionhouse`.`buyoutprice` AS `buyout`, `auctionhouse`.`time`-unix_timestamp(), BINARY `c2`.`name` AS `encherisseur`, `auctionhouse`.`lastbid`, `auctionhouse`.`startbid`, `item_instance`.`count` AS qty, `characters`.`race` AS seller_race, `c2`.`race` AS buyer_race FROM `".$characters_db[$realm_id]['name']."`.`characters` , `".$characters_db[$realm_id]['name']."`.`item_instance` , `".$world_db[$realm_id]['name']."`.`item_template` , `".$characters_db[$realm_id]['name']."`.`auctionhouse` LEFT JOIN `".$characters_db[$realm_id]['name']."`.`characters` c2 ON `c2`.`guid`=`auctionhouse`.`buyguid` WHERE `auctionhouse`.`itemowner`=`characters`.`guid` AND `item_instance`.`itemEntry`=`item_template`.`entry` AND `auctionhouse`.`itemguid`=`item_instance`.`guid` $search_filter $order_side ORDER BY `auctionhouse`.`$order_by` $order_dir LIMIT $start, $itemperpage");
     $all_record = $sqlc->result($query_1,0);
 
     //=====================top tage navigaion starts here========================
