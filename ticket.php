@@ -39,7 +39,7 @@ function browse_tickets(&$sqlc)
     $all_record = $sqlc->result($query_1,0);
     unset($query_1);
 
-    $query = $sqlc->query("SELECT gm_tickets.guid, gm_tickets.guid, SUBSTRING_INDEX(gm_tickets.message,' ',6), characters.name, characters.online
+    $query = $sqlc->query("SELECT gm_tickets.guid, gm_tickets.guid, SUBSTRING_INDEX(gm_tickets.message,' ',6), BINARY characters.name AS name, characters.online
                             FROM gm_tickets,characters
                                 WHERE gm_tickets.guid = characters.guid
                                   ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
