@@ -167,7 +167,7 @@ function edit_ticket()
     else
         redirect("ticket.php?error=1");
 
-    $query = $sqlc->query("SELECT gm_tickets.guid, gm_tickets.message text, `characters`.name
+    $query = $sqlc->query("SELECT gm_tickets.guid, gm_tickets.message text, BINARY `characters`.name AS name
                             FROM gm_tickets,`characters`
                             LEFT JOIN gm_tickets k1 ON k1.`guid`=`characters`.`guid`
                             WHERE gm_tickets.guid = `characters`.`guid` AND gm_tickets.guid = '$id'");

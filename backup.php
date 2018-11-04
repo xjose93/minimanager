@@ -512,7 +512,7 @@ function dobackup()
                 fwrite($fp, "CREATE DATABASE /*!32312 IF NOT EXISTS*/ {$db['name']};\n")or die (error($lang_backup['file_write_err']));
                 fwrite($fp, "USE {$db['name']};\n\n")or die (error($lang_backup['file_write_err']));
                 $sql->connect($db['addr'], $db['user'], $db['pass'], $db['name']);
-                $all_char_query = $sql->query("SELECT guid,name FROM `characters` WHERE account = $acc[0]");
+                $all_char_query = $sql->query("SELECT guid, BINARY name AS name FROM `characters` WHERE account = $acc[0]");
 
                 while ($char = $sql->fetch_array($all_char_query))
                 {

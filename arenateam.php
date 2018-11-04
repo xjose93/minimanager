@@ -44,21 +44,21 @@ function browse_teams()
         switch($search_by)
         {
             case "atname":
-                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins FROM `arena_team` art
+                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, BINARY cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins FROM `arena_team` art
                 LEFT JOIN `characters` cCaptain on art.`captainguid` = cCaptain.`guid`
                 RIGHT JOIN `arena_team_member` atm on atm.`arenateamid` = art.`arenateamid`
                 WHERE art.`name` LIKE '%$search_value%' GROUP BY atid ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
                 $query_1 = $sqlc->query("SELECT count(*) FROM arena_team WHERE arena_team.name LIKE '%$search_value%'");
                 break;
             case "leadername":
-                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins FROM `arena_team` art
+                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, BINARY cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins FROM `arena_team` art
                 LEFT JOIN `characters` cCaptain on art.`captainguid` = cCaptain.`guid`
                 RIGHT JOIN `arena_team_member` atm on atm.`arenateamid` = art.`arenateamid`
                 WHERE cCaptain.`name` LIKE '%$search_value%' GROUP BY atid ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
                 $query_1 = $sqlc->query("SELECT count(*) FROM arena_team WHERE arena_team.captainguid in (SELECT guid from characters where name like '%$search_value%')");
                 break;
             case "atid":
-                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins, COUNT(cOnlineCount.`guid`) as arenateam_online
+                $query = $sqlc->query("SELECT art.`arenateamid` as atid, art.`name` as atname, art.`captainguid` as lguid, art.`type` as attype, BINARY cCaptain.`name` as lname, COUNT(atm.`arenateamid`) as tot_chars, art.`rating` as atrating, art.`seasonGames` as atgames, art.`seasonWins` as atwins, COUNT(cOnlineCount.`guid`) as arenateam_online
                                                FROM `arena_team` art
                                                LEFT JOIN `characters` cCaptain on art.`captainguid` = cCaptain.`guid`
                                                RIGHT JOIN `arena_team_member` atm on atm.`arenateamid` = art.`arenateamid`
@@ -70,7 +70,7 @@ function browse_teams()
     }
     else
     {
-        $query = $sqlc->query("SELECT arena_team.arenateamid AS atid, arena_team.name AS atname, arena_team.captainguid AS lguid, arena_team.type AS attype, (SELECT NAME FROM `characters` WHERE guid = lguid) AS lname,(SELECT COUNT(*) FROM  arena_team_member WHERE arenateamid = atid) AS tot_chars, rating AS atrating, seasonGames AS atgames, seasonWins AS atwins, (SELECT COUNT(*) AS GCNT  FROM `arena_team_member`, `characters`, `arena_team` WHERE arena_team.arenateamid = atid AND arena_team_member.arenateamid = arena_team.arenateamid AND arena_team_member.guid = characters.guid AND characters.online = 1) AS arenateam_online FROM arena_team ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
+        $query = $sqlc->query("SELECT arena_team.arenateamid AS atid, arena_team.name AS atname, arena_team.captainguid AS lguid, arena_team.type AS attype, (SELECT BINARY NAME FROM `characters` WHERE guid = lguid) AS lname,(SELECT COUNT(*) FROM  arena_team_member WHERE arenateamid = atid) AS tot_chars, rating AS atrating, seasonGames AS atgames, seasonWins AS atwins, (SELECT COUNT(*) AS GCNT  FROM `arena_team_member`, `characters`, `arena_team` WHERE arena_team.arenateamid = atid AND arena_team_member.arenateamid = arena_team.arenateamid AND arena_team_member.guid = characters.guid AND characters.online = 1) AS arenateam_online FROM arena_team ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
         $query_1 = $sqlc->query("SELECT count(*) FROM arena_team");
     }
 

@@ -297,20 +297,20 @@ function send_mail()
                         $result = $sqlr->query("SELECT id FROM account_access WHERE gmlevel $group_sign '$group_value'");
                         while($acc = $sqlc->fetch_row($result))
                         {
-                            $result_2 = $sqlc->query("SELECT name FROM `characters` WHERE account = '$acc[0]'");
+                            $result_2 = $sqlc->query("SELECT BINARY name AS name FROM `characters` WHERE account = '$acc[0]'");
                             while($char = $sqlc->fetch_row($result_2))
                                 array_push($char_array, $char[0]);
                         }
                         break;
 
                     case "online":
-                        $result = $sqlc->query("SELECT name FROM `characters` WHERE online $group_sign '$group_value'");
+                        $result = $sqlc->query("SELECT BINARY name AS name FROM `characters` WHERE online $group_sign '$group_value'");
                         while($user = $sqlc->fetch_row($result))
                             array_push($char_array, $user[0]);
                         break;
 
                     case "char_level":
-                        $result = $sqlc->query("SELECT name FROM `characters` WHERE level $group_sign '$group_value'");
+                        $result = $sqlc->query("SELECT BINARY name AS name FROM `characters` WHERE level $group_sign '$group_value'");
                         while($user = $sqlc->fetch_row($result))
                             array_push($char_array, $user[0]);
                         break;
