@@ -38,7 +38,7 @@ function char_quest(&$sqlr, &$sqlc)
     $dir = ($dir) ? 0 : 1;
     //==========================$_GET and SECURE end=============================
 
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender
                             FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))

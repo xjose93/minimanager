@@ -18,7 +18,7 @@ function edit_user(&$sqlr, &$sqlc)
     $sqlm->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
 
     $refguid = $sqlm->result($sqlm->query('SELECT InvitedBy FROM mm_point_system_invites WHERE PlayersAccount = \''.$user_id.'\''), 0, 'InvitedBy');
-    $referred_by = $sqlc->result($sqlc->query('SELECT name FROM characters WHERE guid = \''.$refguid.'\''), 0, 'name');
+    $referred_by = $sqlc->result($sqlc->query('SELECT BINARY name AS name FROM characters WHERE guid = \''.$refguid.'\''), 0, 'name');
     unset($refguid);
 
     if ($acc = $sqlc->fetch_assoc($sqlr->query('SELECT email, gmlevel, joindate, expansion, last_ip FROM account LEFT JOIN account_access ON account.id=account_access.id WHERE username = \''.$user_name.'\'')))
@@ -118,7 +118,7 @@ function edit_user(&$sqlr, &$sqlc)
             while ($realm = $sqlr->fetch_assoc($realms))
             {
                 $sqlc->connect($characters_db[$realm['id']]['addr'], $characters_db[$realm['id']]['user'], $characters_db[$realm['id']]['pass'], $characters_db[$realm['id']]['name']);
-                $result = $sqlc->query('SELECT guid, name, race, class, level, gender FROM characters WHERE account = '.$user_id.'');
+                $result = $sqlc->query('SELECT guid, BINARY name AS name, race, class, level, gender FROM characters WHERE account = '.$user_id.'');
 
                 $output .= '
                                 <tr>
@@ -144,7 +144,7 @@ function edit_user(&$sqlr, &$sqlc)
         }
         else
         {
-            $result = $sqlc->query('SELECT guid, name, race, class, level, gender FROM characters WHERE account = '.$user_id.'');
+            $result = $sqlc->query('SELECT guid, BINARY name AS name, race, class, level, gender FROM characters WHERE account = '.$user_id.'');
 
             $output .= '
                                 <tr>

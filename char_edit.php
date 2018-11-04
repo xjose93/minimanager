@@ -43,7 +43,7 @@ function edit_char() { //form needs update, uneditable fields have been removed 
         {
             $sql->connect($characters_db[$realm_id]['addr'], $characters_db[$realm_id]['user'], $characters_db[$realm_id]['pass'], $characters_db[$realm_id]['name']);
 
-            $result = $sql->query("SELECT characters.guid,characters.account,characters.name,characters.race,characters.class,characters.position_x,characters.position_y,characters.map,characters.online,characters.totaltime,characters.position_z,characters.zone,characters.level,characters.gender,
+            $result = $sql->query("SELECT characters.guid,characters.account,BINARY characters.name AS name,characters.race,characters.class,characters.position_x,characters.position_y,characters.map,characters.online,characters.totaltime,characters.position_z,characters.zone,characters.level,characters.gender,
                                 COALESCE(guild_member.guildid,0) AS guildid, COALESCE(guild_member.rank,0) AS grank, characters.totalHonorpoints, characters.totalKills, characters.arenaPoints, characters.equipmentCache, characters.money
                                 FROM characters LEFT JOIN guild_member ON characters.guid = guild_member.guid WHERE characters.guid = '$id'");
             $char = $sql->fetch_assoc($result);

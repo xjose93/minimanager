@@ -38,7 +38,7 @@ function char_friends(&$sqlr, &$sqlc)
         $order_by = 'zone '.$order_dir.', map';
 
     // getting character data from database
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender
                             FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))
@@ -77,7 +77,7 @@ function char_friends(&$sqlr, &$sqlc)
             $sqlm = new SQL;
             $sqlm->connect($mmfpm_db['addr'], $mmfpm_db['user'], $mmfpm_db['pass'], $mmfpm_db['name']);
 
-            $result = $sqlc->query('SELECT name, race, class, map, zone, level, gender, online, account, guid
+            $result = $sqlc->query('SELECT BINARY name AS name, race, class, map, zone, level, gender, online, account, guid
                                     FROM characters WHERE guid in (SELECT friend FROM character_social WHERE guid = '.$id.' and flags <= 1) ORDER BY '.$order_by.' '.$order_dir.'');
 
             if ($sqlc->num_rows($result))
@@ -119,7 +119,7 @@ function char_friends(&$sqlr, &$sqlc)
                 }
             }
 
-            $result = $sqlc->query('SELECT name, race, class, map, zone, level, gender, online, account, guid
+            $result = $sqlc->query('SELECT BINARY name AS name, race, class, map, zone, level, gender, online, account, guid
                                     FROM characters WHERE guid in (SELECT guid FROM character_social WHERE friend = '.$id.' and flags <= 1) ORDER BY '.$order_by.' '.$order_dir.'');
 
             if ($sqlc->num_rows($result))
@@ -167,7 +167,7 @@ function char_friends(&$sqlr, &$sqlc)
                                         // ]]>
                                         </script>';
 
-            $result = $sqlc->query('SELECT name, race, class, map, zone, level, gender, online, account, guid
+            $result = $sqlc->query('SELECT BINARY name AS name, race, class, map, zone, level, gender, online, account, guid
                                     FROM characters WHERE guid in (SELECT friend FROM character_social WHERE guid = '.$id.' and flags > 1) ORDER BY '.$order_by.' '.$order_dir.'');
 
             if ($sqlc->num_rows($result))
@@ -209,7 +209,7 @@ function char_friends(&$sqlr, &$sqlc)
                 }
             }
 
-            $result = $sqlc->query('SELECT name, race, class, map, zone, level, gender, online, account, guid
+            $result = $sqlc->query('SELECT BINARY name AS name, race, class, map, zone, level, gender, online, account, guid
                                     FROM characters WHERE guid in (SELECT guid FROM character_social WHERE friend = '.$id.' and flags > 1) ORDER BY '.$order_by.' '.$order_dir.'');
 
             if ($sqlc->num_rows($result))

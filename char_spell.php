@@ -22,7 +22,7 @@ function char_spell(&$sqlr, &$sqlc)
     $start = (isset($_GET['start'])) ? $sqlc->quote_smart($_GET['start']) : 0;
     if (is_numeric($start)); else $start=0;
 
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender
                             FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))

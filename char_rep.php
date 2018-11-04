@@ -20,7 +20,7 @@ function char_rep(&$sqlr, &$sqlc)
 
     require_once 'core/char/char_security.php';
 
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender FROM characters WHERE guid = '.$id.' LIMIT 1');
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))
     {

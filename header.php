@@ -245,7 +245,7 @@ if (isset($_SESSION['user_lvl']) && isset($_SESSION['uname']) && isset($_SESSION
     }
     else
     {
-        $result = $sqlc->query('SELECT guid, name, race, class, level, gender
+        $result = $sqlc->query('SELECT guid, BINARY name AS name, race, class, level, gender
                             FROM characters
                             WHERE account = '.$user_id.'');
 

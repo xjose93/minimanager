@@ -26,7 +26,7 @@ function char_skill(&$sqlr, &$sqlc)
     $order_dir = ($dir) ? 'ASC' : 'DESC';
     $dir = ($dir) ? 0 : 1;
 
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender FROM characters WHERE guid = '.$id.' LIMIT 1');
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))
     {
@@ -42,7 +42,7 @@ function char_skill(&$sqlr, &$sqlc)
 
         if (($user_lvl > $owner_gmlvl)||($owner_name === $user_name))
         {
-            $result = $sqlc->query('SELECT name, race, class, level, gender FROM characters WHERE guid = '.$id.'');
+            $result = $sqlc->query('SELECT BINARY name AS name, race, class, level, gender FROM characters WHERE guid = '.$id.'');
             $char = $sqlc->fetch_assoc($result);
 
             $output .= '

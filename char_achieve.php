@@ -28,7 +28,7 @@ function char_achievements(&$sqlr, &$sqlc)
         else $show_type = 0;
 
     // getting character data from database
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender
                             FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     // no point going further if character does not exist
