@@ -201,7 +201,7 @@ function front(&$sqlr, &$sqlc, &$sqlm)
         if($order_by == 'ip')
             $result = $sqlr->query('SELECT id, last_ip FROM account WHERE online = 1 ORDER BY last_ip '.$order_dir.' LIMIT '.$start.', '.$itemperpage.'');
         else
-            $result = $sqlc->query('SELECT characters.guid,  characters.name,  characters.race,  characters.class,  characters.zone,  characters.map,  characters.level,  characters.account,  characters.gender,  characters.totalHonorPoints, COALESCE(guild_member.guildid,0) AS guildid FROM characters LEFT JOIN guild_member ON guild_member.guid = characters.guid WHERE characters.online = 1 '.($gm_online == '0' ? 'AND characters.extra_flags &1 = 0 ' : '').$order_side.' ORDER BY '.$order_by.' '.$order_dir.' LIMIT '.$start.', '.$itemperpage);
+            $result = $sqlc->query('SELECT characters.guid,  BINARY characters.name AS name,  characters.race,  characters.class,  characters.zone,  characters.map,  characters.level,  characters.account,  characters.gender,  characters.totalHonorPoints, COALESCE(guild_member.guildid,0) AS guildid FROM characters LEFT JOIN guild_member ON guild_member.guid = characters.guid WHERE characters.online = 1 '.($gm_online == '0' ? 'AND characters.extra_flags &1 = 0 ' : '').$order_side.' ORDER BY '.$order_by.' '.$order_dir.' LIMIT '.$start.', '.$itemperpage);
         $total_online = $sqlc->result($sqlc->query('SELECT count(*) FROM characters WHERE online= 1'.(($gm_online_count == '0') ? ' AND extra_flags &1 = 0' : '')), 0);
         $replace = '
               <tr>
@@ -244,7 +244,7 @@ function front(&$sqlr, &$sqlc, &$sqlm)
         {
             if($order_by == 'ip')
             {
-                $temp = $sqlc->fetch_assoc($sqlc->query('SELECT characters.guid,  characters.name,  characters.race,  characters.class,  characters.zone,  characters.map,  characters.level,  characters.account,  characters.gender,  characters.totalHonorPoints, COALESCE(guild_member.guildid,0) AS guildid FROM characters LEFT JOIN guild_member ON guild_member.guid = characters.guid WHERE characters.online= 1 '.($gm_online == '0' ? 'AND characters.extra_flags &1 = 0 ' : '').$order_side.' and account = '.$char['id']));
+                $temp = $sqlc->fetch_assoc($sqlc->query('SELECT characters.guid,  BINARY characters.name AS name,  characters.race,  characters.class,  characters.zone,  characters.map,  characters.level,  characters.account,  characters.gender,  characters.totalHonorPoints, COALESCE(guild_member.guildid,0) AS guildid FROM characters LEFT JOIN guild_member ON guild_member.guid = characters.guid WHERE characters.online= 1 '.($gm_online == '0' ? 'AND characters.extra_flags &1 = 0 ' : '').$order_side.' and account = '.$char['id']));
                 if(isset($temp['guid']))
                     $char = $temp;
                 else

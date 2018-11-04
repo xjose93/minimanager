@@ -272,7 +272,7 @@ function send_mail()
             if($to)
             {
                 //single Recipient
-                $result = $sqlc->query("SELECT name FROM characters WHERE name = '$to'");
+                $result = $sqlc->query("SELECT BINARY name AS name FROM characters WHERE BINARY name = '$to'");
                 if ($sqlc->num_rows($result) == 1)
                 {
                     $receiver = $sqlc->result($result, 0, 'name');

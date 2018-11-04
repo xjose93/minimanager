@@ -165,7 +165,7 @@ function browse_chars(&$sqlr, &$sqlc)
 
                     $where_out ="characters.".$search_by." LIKE '%".$search_value."%'";
         }
-        $sql_query = "SELECT characters.guid, characters.name, characters.account, characters.race, characters.class, characters.zone, characters.map, characters.online, characters.level, characters.gender, characters.logout_time, COALESCE(guild_member.guildid,0) AS gname FROM characters LEFT JOIN guild_member ON characters.guid = guild_member.guid WHERE $where_out AND name != '' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage";
+        $sql_query = "SELECT characters.guid, BINARY characters.name AS name, characters.account, characters.race, characters.class, characters.zone, characters.map, characters.online, characters.level, characters.gender, characters.logout_time, COALESCE(guild_member.guildid,0) AS gname FROM characters LEFT JOIN guild_member ON characters.guid = guild_member.guid WHERE $where_out AND name != '' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage";
 
         $query_1 = $sqlc->query("SELECT count(*) FROM `characters` where $where_out");
         $query = $sqlc->query($sql_query);
@@ -173,7 +173,7 @@ function browse_chars(&$sqlr, &$sqlc)
     else
     {
         $query_1 = $sqlc->query("SELECT count(*) FROM `characters`");
-        $query = $sqlc->query("SELECT C.guid,C.name,C.account,C.race,C.class,C.zone,C.map,C.online,C.level, C.gender, C.logout_time,COALESCE(guild_member.guildid,0) as gname FROM characters C LEFT JOIN guild_member ON guild_member.guid = C.guid WHERE name != '' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
+        $query = $sqlc->query("SELECT C.guid,BINARY C.name AS name,C.account,C.race,C.class,C.zone,C.map,C.online,C.level, C.gender, C.logout_time,COALESCE(guild_member.guildid,0) as gname FROM characters C LEFT JOIN guild_member ON guild_member.guid = C.guid WHERE name != '' ORDER BY $order_by $order_dir LIMIT $start, $itemperpage");
     }
 
     $all_record = $sqlc->result($query_1,0);
@@ -387,7 +387,7 @@ function del_char_form(&$sqlc)
     $n_check = count($check);
     for ($i=0; $i<$n_check; ++$i)
     {
-        $name = $sqlc->result($sqlc->query('SELECT name FROM characters WHERE guid = '.$check[$i].''), 0);
+        $name = $sqlc->result($sqlc->query('SELECT BINARY name AS name FROM characters WHERE guid = '.$check[$i].''), 0);
         $output .= '
                         <a href="char.php?id='.$check[$i].'" target="_blank">'.$name.', </a>';
         $pass_array .= '&amp;check%5B%5D='.$check[$i].'';

@@ -22,7 +22,7 @@ function char_extra(&$sqlr, &$sqlc, &$sqlw)
 
     require_once 'core/char/char_security.php';
 
-    $result = $sqlc->query('SELECT account, name, race, class, gender, level
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, gender, level
                             FROM characters
                             WHERE guid = '.$id.' LIMIT 1');
 

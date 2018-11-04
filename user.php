@@ -779,7 +779,7 @@ function edit_user()
 
     $refguid = $sqlm->fetch_assoc($sqlm->query('SELECT InvitedBy FROM mm_point_system_invites WHERE PlayersAccount = '.$data['id'].''));
     $refguid = $refguid['InvitedBy'];
-    $referred_by = $sqlc->fetch_assoc($sqlc->query("SELECT name FROM characters WHERE guid = '$refguid'"));
+    $referred_by = $sqlc->fetch_assoc($sqlc->query("SELECT BINARY name AS name FROM characters WHERE guid = '$refguid'"));
     unset($refguid);
     $referred_by = $referred_by['name'];
 

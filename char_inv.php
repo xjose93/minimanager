@@ -24,7 +24,7 @@ function char_inv(&$sqlr, &$sqlc)
     require_once 'core/char/char_security.php';
 
     // getting character data from database
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender, money
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender, money
                             FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     // no point going further if character does not exist

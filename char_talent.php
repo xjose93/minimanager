@@ -21,7 +21,7 @@ function char_talent(&$sqlr, &$sqlc)
 
     require_once 'core/char/char_security.php';
 
-    $result = $sqlc->query('SELECT account, name, race, class, level, gender, (SELECT count(spell) FROM character_talent WHERE guid = '.$id.' AND spec = (SELECT activespec FROM characters WHERE guid = '.$id.')) AS talent_points
+    $result = $sqlc->query('SELECT account, BINARY name AS name, race, class, level, gender, (SELECT count(spell) FROM character_talent WHERE guid = '.$id.' AND talentGroup = (SELECT activeTalentGroup FROM characters WHERE guid = '.$id.')) AS talent_points
         FROM characters WHERE guid = '.$id.' LIMIT 1');
 
     if ($sqlc->num_rows($result))
@@ -203,7 +203,7 @@ function char_talent(&$sqlr, &$sqlc)
                 unset($talent_points_used);
                 unset($talent_points_left);
 
-                $result = $sqlc->query('SELECT * FROM character_glyphs WHERE guid = '.$id.' AND spec = (SELECT activespec FROM characters WHERE guid = '.$id.')');
+                $result = $sqlc->query('SELECT * FROM character_glyphs WHERE guid = '.$id.' AND talentGroup = (SELECT activeTalentGroup FROM characters WHERE guid = '.$id.')');
                 if ($sqlc->num_rows($result))
                 {
                     $glyphs = $sqlc->fetch_assoc($result);
